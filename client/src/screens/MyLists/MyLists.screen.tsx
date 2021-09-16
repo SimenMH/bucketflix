@@ -1,7 +1,5 @@
 import './styles.css';
 
-import AddIcon from '../../assets/icons/add-icon.svg';
-
 interface Props {}
 
 const MyLists: React.FC<Props> = () => {

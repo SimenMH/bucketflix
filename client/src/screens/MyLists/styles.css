@@ -1,0 +1,17 @@
+.mylists-screen {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: calc(100% - 100px);
+  min-height: 250px;
+  width: 100%;
+}
+
+.mylists-sidebar {
+  height: 100%;
+  width: 240px;
+  background-color: #5f6769;
+  -webkit-box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.3);
+          box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.3);
+}
+/*# sourceMappingURL=styles.css.map */

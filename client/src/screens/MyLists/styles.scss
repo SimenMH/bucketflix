@@ -1,0 +1,16 @@
+.mylists-screen {
+  display: flex;
+  height: calc(100% - 100px);
+  min-height: 250px;
+  width: 100%;
+}
+
+.mylists-sidebar {
+  height: 100%;
+  width: 240px;
+  background-color: #5f6769;
+  box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.3);
+}
+
+.mylists-conten {
+}

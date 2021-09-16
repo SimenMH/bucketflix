@@ -5,7 +5,7 @@ import MyLists from './screens/MyLists/MyLists.screen';
 
 const App: React.FC = () => {
   return (
-    <div className='app'>
+    <div className='app-container'>
       <NavBar />
       <MyLists />
     </div>

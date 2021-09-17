@@ -6,7 +6,8 @@
 }
 
 .mylists-sidebar {
-  width: 240px;
+  position: relative;
+  min-width: 240px;
   height: 100%;
   background-color: #5f6769;
   box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.3);
@@ -21,9 +22,9 @@
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
 }
 .mylists-title-container h2 {
-  margin: 0;
-  font-weight: 500;
   font-size: 32px;
+  font-weight: 500;
+  margin: 0;
   margin-left: 25px;
   margin-right: 20px;
 }
@@ -62,18 +63,18 @@
 }
 
 .mylists-list-name h3 {
-  margin: 0;
-  font-weight: 400;
   font-size: 24px;
+  font-weight: 400;
+  margin: 0;
   margin-left: 5px;
 }
 
 .mylists-selector {
-  fill: #000;
-  fill-opacity: 0; // 0.5
-  margin-top: 5px;
   width: 15px;
   height: 15px;
+  margin-top: 5px;
+  fill: #000;
+  fill-opacity: 0; // 0.5
 }
 
 .mylists-item .faded-seperator {
@@ -83,4 +84,68 @@
 
 .mylists-item:hover .mylists-selector {
   fill-opacity: 0.25;
+}
+
+.mylists-content {
+  width: 100%;
+  padding: 40px;
+  overflow: auto;
+}
+
+.mylists-option-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 10px;
+}
+
+.mylists-options-left {
+  display: flex;
+  justify-content: space-between;
+  min-width: 150px;
+}
+
+.mylists-filter-button {
+  color: #9c9c9c;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.mylists-filter-button:hover {
+  text-decoration: underline;
+}
+
+// Temporary - Styling for currently selected filter
+.mylists-filter-button:first-child {
+  color: inherit;
+  text-decoration: underline;
+}
+//
+
+.mylists-options-right {
+  display: flex;
+}
+
+.mylists-add-new-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 190px;
+  height: 33px;
+  border-radius: 5px;
+  background-color: #526774;
+  cursor: pointer;
+}
+
+.mylists-add-new-button p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.add-new-plus {
+  width: 12px;
+  height: 12px;
+  margin-right: 3px;
+  fill: #fff;
 }

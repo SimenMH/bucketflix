@@ -8,7 +8,8 @@
 }
 
 .mylists-sidebar {
-  width: 240px;
+  position: relative;
+  min-width: 240px;
   height: 100%;
   background-color: #5f6769;
   -webkit-box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.3);
@@ -30,9 +31,9 @@
 }
 
 .mylists-title-container h2 {
-  margin: 0;
-  font-weight: 500;
   font-size: 32px;
+  font-weight: 500;
+  margin: 0;
   margin-left: 25px;
   margin-right: 20px;
 }
@@ -80,18 +81,18 @@
 }
 
 .mylists-list-name h3 {
-  margin: 0;
-  font-weight: 400;
   font-size: 24px;
+  font-weight: 400;
+  margin: 0;
   margin-left: 5px;
 }
 
 .mylists-selector {
-  fill: #000;
-  fill-opacity: 0;
-  margin-top: 5px;
   width: 15px;
   height: 15px;
+  margin-top: 5px;
+  fill: #000;
+  fill-opacity: 0;
 }
 
 .mylists-item .faded-seperator {
@@ -101,5 +102,83 @@
 
 .mylists-item:hover .mylists-selector {
   fill-opacity: 0.25;
+}
+
+.mylists-content {
+  width: 100%;
+  padding: 40px;
+  overflow: auto;
+}
+
+.mylists-option-buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 0 10px;
+}
+
+.mylists-options-left {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  min-width: 150px;
+}
+
+.mylists-filter-button {
+  color: #9c9c9c;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.mylists-filter-button:hover {
+  text-decoration: underline;
+}
+
+.mylists-filter-button:first-child {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.mylists-options-right {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.mylists-add-new-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 190px;
+  height: 33px;
+  border-radius: 5px;
+  background-color: #526774;
+  cursor: pointer;
+}
+
+.mylists-add-new-button p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.add-new-plus {
+  width: 12px;
+  height: 12px;
+  margin-right: 3px;
+  fill: #fff;
 }
 /*# sourceMappingURL=styles.css.map */

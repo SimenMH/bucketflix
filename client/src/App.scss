@@ -2,3 +2,13 @@
   height: 100vh;
   max-height: 100vh;
 }
+
+.faded-seperator {
+  width: 100%;
+  height: 2px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  filter: blur(1px);
+}

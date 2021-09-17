@@ -49,5 +49,38 @@
   fill: #c6cfd3;
 }
 
-.mylists-content {
+.mylists-item {
+  height: 45px;
+  margin-top: 7px;
+  cursor: pointer;
+}
+
+.mylists-list-name {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.mylists-list-name h3 {
+  margin: 0;
+  font-weight: 400;
+  font-size: 24px;
+  margin-left: 5px;
+}
+
+.mylists-selector {
+  fill: #000;
+  fill-opacity: 0; // 0.5
+  margin-top: 5px;
+  width: 15px;
+  height: 15px;
+}
+
+.mylists-item .faded-seperator {
+  width: 80%;
+  margin-top: 7px;
+}
+
+.mylists-item:hover .mylists-selector {
+  fill-opacity: 0.25;
 }

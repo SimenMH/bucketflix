@@ -1,4 +1,4 @@
-interface Media {
+export interface Media {
   title: string;
   year: string;
   type: string;

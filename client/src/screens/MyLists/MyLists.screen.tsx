@@ -1,6 +1,6 @@
 import './styles.css';
 
-import { tempMovies, tempSeries } from './TempData';
+import { Media, tempMovies, tempSeries } from './TempData';
 
 const tempLists: Array<string> = ['Personal', 'Lille Bolle', 'Harrison'];
 
@@ -29,23 +29,12 @@ const MyLists: React.FC<Props> = () => {
     });
   };
 
-  const renderMovies = (): JSX.Element[] => {
-    return tempMovies.map(movie => {
+  const renderMedia = (mediaArray: Array<Media>): JSX.Element[] => {
+    return mediaArray.map(media => {
       return (
         <div className='media-list-item'>
-          <img src={movie.poster} alt='movie-poster' />
-          <h3>{movie.title}</h3>
-        </div>
-      );
-    });
-  };
-
-  const renderSeries = (): JSX.Element[] => {
-    return tempSeries.map(series => {
-      return (
-        <div className='media-list-item'>
-          <img src={series.poster} alt='series-poster' />
-          <h3>{series.title}</h3>
+          <img src={media.poster} alt='movie-poster' />
+          <h3>{media.title}</h3>
         </div>
       );
     });
@@ -99,10 +88,10 @@ const MyLists: React.FC<Props> = () => {
             <div className='faded-seperator' />
           </div>
           <div className='media-list-items-container'>
-            {renderMovies()}
-            {renderMovies()}
-            {renderMovies()}
-            {renderMovies()}
+            {renderMedia(tempMovies)}
+            {renderMedia(tempMovies)}
+            {renderMedia(tempMovies)}
+            {renderMedia(tempMovies)}
           </div>
           {/*  */}
           {/* TV-Series */}
@@ -111,10 +100,10 @@ const MyLists: React.FC<Props> = () => {
             <div className='faded-seperator' />
           </div>
           <div className='media-list-items-container'>
-            {renderSeries()}
-            {renderSeries()}
-            {renderSeries()}
-            {renderSeries()}
+            {renderMedia(tempSeries)}
+            {renderMedia(tempSeries)}
+            {renderMedia(tempSeries)}
+            {renderMedia(tempSeries)}
           </div>
           {/*  */}
         </div>

@@ -1,5 +1,7 @@
 import './styles.css';
 
+import { tempMovies, tempSeries } from './TempData';
+
 const tempLists: Array<string> = ['Personal', 'Lille Bolle', 'Harrison'];
 
 interface Props {}
@@ -22,6 +24,28 @@ const MyLists: React.FC<Props> = () => {
             <h3>{list}</h3>
           </div>
           <div className='faded-seperator' />
+        </div>
+      );
+    });
+  };
+
+  const renderMovies = (): JSX.Element[] => {
+    return tempMovies.map(movie => {
+      return (
+        <div className='media-list-item'>
+          <img src={movie.poster} alt='movie-poster' />
+          <h3>{movie.title}</h3>
+        </div>
+      );
+    });
+  };
+
+  const renderSeries = (): JSX.Element[] => {
+    return tempSeries.map(series => {
+      return (
+        <div className='media-list-item'>
+          <img src={series.poster} alt='series-poster' />
+          <h3>{series.title}</h3>
         </div>
       );
     });
@@ -75,27 +99,10 @@ const MyLists: React.FC<Props> = () => {
             <div className='faded-seperator' />
           </div>
           <div className='media-list-items-container'>
-            <div className='media-list-item'>
-              <img
-                src='https://m.media-amazon.com/images/M/MV5BMTg0NjEwNjUxM15BMl5BanBnXkFtZTcwMzk0MjQ5Mg@@._V1_SX300.jpg'
-                alt='movie-poster'
-              />
-              <h3>Sherlock</h3>
-            </div>
-            <div className='media-list-item'>
-              <img
-                src='https://m.media-amazon.com/images/M/MV5BMTg0NjEwNjUxM15BMl5BanBnXkFtZTcwMzk0MjQ5Mg@@._V1_SX300.jpg'
-                alt='movie-poster'
-              />
-              <h3>Sherlock</h3>
-            </div>
-            <div className='media-list-item'>
-              <img
-                src='https://m.media-amazon.com/images/M/MV5BMTg0NjEwNjUxM15BMl5BanBnXkFtZTcwMzk0MjQ5Mg@@._V1_SX300.jpg'
-                alt='movie-poster'
-              />
-              <h3>Sherlock</h3>
-            </div>
+            {renderMovies()}
+            {renderMovies()}
+            {renderMovies()}
+            {renderMovies()}
           </div>
           {/*  */}
           {/* TV-Series */}
@@ -104,27 +111,10 @@ const MyLists: React.FC<Props> = () => {
             <div className='faded-seperator' />
           </div>
           <div className='media-list-items-container'>
-            <div className='media-list-item'>
-              <img
-                src='https://m.media-amazon.com/images/M/MV5BMTg0NjEwNjUxM15BMl5BanBnXkFtZTcwMzk0MjQ5Mg@@._V1_SX300.jpg'
-                alt='movie-poster'
-              />
-              <h3>Sherlock</h3>
-            </div>
-            <div className='media-list-item'>
-              <img
-                src='https://m.media-amazon.com/images/M/MV5BMTg0NjEwNjUxM15BMl5BanBnXkFtZTcwMzk0MjQ5Mg@@._V1_SX300.jpg'
-                alt='movie-poster'
-              />
-              <h3>Sherlock</h3>
-            </div>
-            <div className='media-list-item'>
-              <img
-                src='https://m.media-amazon.com/images/M/MV5BMTg0NjEwNjUxM15BMl5BanBnXkFtZTcwMzk0MjQ5Mg@@._V1_SX300.jpg'
-                alt='movie-poster'
-              />
-              <h3>Sherlock</h3>
-            </div>
+            {renderSeries()}
+            {renderSeries()}
+            {renderSeries()}
+            {renderSeries()}
           </div>
           {/*  */}
         </div>

@@ -86,6 +86,12 @@
   fill-opacity: 0.25;
 }
 
+// Temporary - Styling for currently selected list
+.mylists-item:first-child .mylists-selector {
+  fill-opacity: 0.5;
+}
+//
+
 .mylists-content {
   width: 100%;
   padding: 15px 40px;
@@ -151,19 +157,44 @@
   fill: #fff;
 }
 
-.list-container {
+.media-list-container {
   height: 150vh;
+  padding: 0 55px;
   background-color: #616161;
 }
 
-.list-category {
-  padding: 20px 40px;
+.media-category {
+  padding: 20px 0;
 }
 
-.list-category h2 {
-  margin: 0;
-  margin-bottom: 15px;
-  margin-left: 5px;
+.media-category h2 {
   font-size: 36px;
   font-weight: 400;
+  margin: 0 0 15px 5px;
+}
+
+.media-list-category .faded-seperator {
+  width: calc(100% + 40px);
+  margin: 0 -20px;
+}
+
+.media-list-items-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.media-list-item {
+  margin: 0 10px 15px;
+}
+
+.media-list-item img {
+  width: 175px;
+  box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.25);
+}
+
+.media-list-item h3 {
+  font-size: 22px;
+  font-weight: 400;
+  margin: -3px 0 0 3px;
+  text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
 }

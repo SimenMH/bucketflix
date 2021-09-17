@@ -44,7 +44,7 @@ const MyLists: React.FC<Props> = () => {
             </svg>
           </div>
         </div>
-        {renderLists()}
+        <div>{renderLists()}</div>
       </div>
       <div className='mylists-content'>
         <div className='mylists-option-buttons'>
@@ -68,15 +68,65 @@ const MyLists: React.FC<Props> = () => {
             </div>
           </div>
         </div>
-        <div className='list-container'>
-          <div className='list-category'>
+        <div className='media-list-container'>
+          {/* Movies */}
+          <div className='media-category'>
             <h2>Movies</h2>
             <div className='faded-seperator' />
           </div>
-          <div className='list-category'>
+          <div className='media-list-items-container'>
+            <div className='media-list-item'>
+              <img
+                src='https://m.media-amazon.com/images/M/MV5BMTg0NjEwNjUxM15BMl5BanBnXkFtZTcwMzk0MjQ5Mg@@._V1_SX300.jpg'
+                alt='movie-poster'
+              />
+              <h3>Sherlock</h3>
+            </div>
+            <div className='media-list-item'>
+              <img
+                src='https://m.media-amazon.com/images/M/MV5BMTg0NjEwNjUxM15BMl5BanBnXkFtZTcwMzk0MjQ5Mg@@._V1_SX300.jpg'
+                alt='movie-poster'
+              />
+              <h3>Sherlock</h3>
+            </div>
+            <div className='media-list-item'>
+              <img
+                src='https://m.media-amazon.com/images/M/MV5BMTg0NjEwNjUxM15BMl5BanBnXkFtZTcwMzk0MjQ5Mg@@._V1_SX300.jpg'
+                alt='movie-poster'
+              />
+              <h3>Sherlock</h3>
+            </div>
+          </div>
+          {/*  */}
+          {/* TV-Series */}
+          <div className='media-category'>
             <h2>TV-Series</h2>
             <div className='faded-seperator' />
           </div>
+          <div className='media-list-items-container'>
+            <div className='media-list-item'>
+              <img
+                src='https://m.media-amazon.com/images/M/MV5BMTg0NjEwNjUxM15BMl5BanBnXkFtZTcwMzk0MjQ5Mg@@._V1_SX300.jpg'
+                alt='movie-poster'
+              />
+              <h3>Sherlock</h3>
+            </div>
+            <div className='media-list-item'>
+              <img
+                src='https://m.media-amazon.com/images/M/MV5BMTg0NjEwNjUxM15BMl5BanBnXkFtZTcwMzk0MjQ5Mg@@._V1_SX300.jpg'
+                alt='movie-poster'
+              />
+              <h3>Sherlock</h3>
+            </div>
+            <div className='media-list-item'>
+              <img
+                src='https://m.media-amazon.com/images/M/MV5BMTg0NjEwNjUxM15BMl5BanBnXkFtZTcwMzk0MjQ5Mg@@._V1_SX300.jpg'
+                alt='movie-poster'
+              />
+              <h3>Sherlock</h3>
+            </div>
+          </div>
+          {/*  */}
         </div>
       </div>
     </div>

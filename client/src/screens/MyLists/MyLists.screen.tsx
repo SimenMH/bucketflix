@@ -1,12 +1,16 @@
 import './styles.css';
+import { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import { updateActiveList, addList } from '../../redux/lists';
+import Modal from 'react-modal';
 
 import { Media } from '../../redux/TempData';
 
 interface Props {}
 
 const MyLists: React.FC<Props> = () => {
+  const [listModalIsOpen, setListModalIsOpen] = useState(false);
+  const [newListName, setNewListName] = useState('');
   const { activeList, lists } = useAppSelector(state => state.lists);
   const dispatch = useAppDispatch();
 
@@ -56,7 +60,7 @@ const MyLists: React.FC<Props> = () => {
           <h2>My Lists</h2>
           <div
             className='add-list-button'
-            onClick={() => dispatch(addList('New List'))}
+            onClick={() => setListModalIsOpen(true)}
           >
             <svg
               className='add-list-plus'
@@ -70,6 +74,45 @@ const MyLists: React.FC<Props> = () => {
           </div>
         </div>
         <div>{renderLists()}</div>
+        <Modal
+          className='modal add-list-modal'
+          overlayClassName='modal-overlay'
+          isOpen={listModalIsOpen}
+          onRequestClose={() => setListModalIsOpen(false)}
+          shouldCloseOnOverlayClick={true}
+          contentLabel='Example Modal'
+        >
+          <div
+            className='modal-close'
+            onClick={() => setListModalIsOpen(false)}
+          />
+          <div className='modal-title'>Create New List</div>
+          <div className='faded-seperator' />
+          <div className='add-list-modal-content'>
+            <p>Name your list!</p>
+            <input
+              type='text'
+              placeholder='List Name'
+              maxLength={15}
+              value={newListName}
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                setNewListName(e.currentTarget.value)
+              }
+            />
+            <div
+              className='confirm-add-list'
+              onClick={() => {
+                if (newListName) {
+                  dispatch(addList(newListName));
+                  setListModalIsOpen(false);
+                  setNewListName('');
+                }
+              }}
+            >
+              Create List
+            </div>
+          </div>
+        </Modal>
       </div>
       <div className='mylists-content'>
         <div className='mylists-option-buttons'>

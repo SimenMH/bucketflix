@@ -1,5 +1,6 @@
 import './styles.css';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+import { updateActiveList, addList } from '../../redux/lists';
 
 import { Media } from '../../redux/TempData';
 
@@ -7,14 +8,21 @@ interface Props {}
 
 const MyLists: React.FC<Props> = () => {
   const { activeList, lists } = useAppSelector(state => state.lists);
+  const dispatch = useAppDispatch();
 
   const renderLists = (): JSX.Element[] => {
     return lists.map((list, idx) => {
       return (
-        <div className='mylists-item' key={idx}>
+        <div
+          className='mylists-item'
+          key={idx}
+          onClick={() => dispatch(updateActiveList(idx))}
+        >
           <div className='mylists-list-name'>
             <svg
-              className='mylists-selector'
+              className={`mylists-selector ${
+                idx === activeList ? 'mylists-active-selector' : ''
+              }`}
               width='15'
               height='15'
               viewBox='0 0 13 13'
@@ -46,7 +54,10 @@ const MyLists: React.FC<Props> = () => {
       <div className='mylists-sidebar'>
         <div className='mylists-title-container'>
           <h2>My Lists</h2>
-          <div className='add-list-button'>
+          <div
+            className='add-list-button'
+            onClick={() => dispatch(addList('New List'))}
+          >
             <svg
               className='add-list-plus'
               width='448'
@@ -90,9 +101,6 @@ const MyLists: React.FC<Props> = () => {
           </div>
           <div className='media-list-items-container'>
             {renderMedia(lists[activeList].movies)}
-            {renderMedia(lists[activeList].movies)}
-            {renderMedia(lists[activeList].movies)}
-            {renderMedia(lists[activeList].movies)}
           </div>
           {/*  */}
           {/* TV-Series */}
@@ -101,9 +109,6 @@ const MyLists: React.FC<Props> = () => {
             <div className='faded-seperator' />
           </div>
           <div className='media-list-items-container'>
-            {renderMedia(lists[activeList].series)}
-            {renderMedia(lists[activeList].series)}
-            {renderMedia(lists[activeList].series)}
             {renderMedia(lists[activeList].series)}
           </div>
           {/*  */}

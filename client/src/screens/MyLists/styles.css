@@ -104,7 +104,7 @@
   fill-opacity: 0.25;
 }
 
-.mylists-item:first-child .mylists-selector {
+.mylists-active-selector {
   fill-opacity: 0.5;
 }
 

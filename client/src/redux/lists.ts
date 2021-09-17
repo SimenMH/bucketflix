@@ -9,22 +9,36 @@ export const listsSlice = createSlice({
     lists: [
       {
         name: 'Personal',
-        movies: tempMovies,
-        series: tempSeries,
+        movies: [...tempMovies, ...tempMovies],
+        series: [...tempSeries, ...tempSeries],
       },
       {
         name: 'Lille Bolle',
-        movies: tempMovies,
+        movies: [],
         series: tempSeries,
       },
       {
         name: 'Harrison',
         movies: tempMovies,
-        series: tempSeries,
+        series: [],
       },
     ],
   },
-  reducers: {},
+  reducers: {
+    updateActiveList: (state, action) => {
+      state.activeList = action.payload;
+    },
+    addList: (state, action) => {
+      state.lists.push({
+        name: action.payload,
+        movies: [],
+        series: [],
+      });
+      state.activeList = state.lists.length - 1;
+    },
+  },
 });
+
+export const { updateActiveList, addList } = listsSlice.actions;
 
 export default listsSlice.reducer;

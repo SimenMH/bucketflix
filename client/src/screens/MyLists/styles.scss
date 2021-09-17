@@ -88,14 +88,14 @@
 
 .mylists-content {
   width: 100%;
-  padding: 40px;
+  padding: 15px 40px;
   overflow: auto;
 }
 
 .mylists-option-buttons {
   display: flex;
   justify-content: space-between;
-  margin: 0 10px;
+  margin: 0 10px 10px;
 }
 
 .mylists-options-left {
@@ -109,6 +109,7 @@
   font-size: 18px;
   font-weight: 500;
   cursor: pointer;
+  align-self: flex-end;
 }
 
 .mylists-filter-button:hover {
@@ -148,4 +149,21 @@
   height: 12px;
   margin-right: 3px;
   fill: #fff;
+}
+
+.list-container {
+  height: 150vh;
+  background-color: #616161;
+}
+
+.list-category {
+  padding: 20px 40px;
+}
+
+.list-category h2 {
+  margin: 0;
+  margin-bottom: 15px;
+  margin-left: 5px;
+  font-size: 36px;
+  font-weight: 400;
 }

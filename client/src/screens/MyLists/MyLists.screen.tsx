@@ -68,6 +68,16 @@ const MyLists: React.FC<Props> = () => {
             </div>
           </div>
         </div>
+        <div className='list-container'>
+          <div className='list-category'>
+            <h2>Movies</h2>
+            <div className='faded-seperator' />
+          </div>
+          <div className='list-category'>
+            <h2>TV-Series</h2>
+            <div className='faded-seperator' />
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@
   left: 50%;
   right: auto;
   bottom: auto;
-  padding: 20px;
+  padding: 10px 20px;
   margin: 50px 50% 0 120px;
   transform: translate(-50%, -50%);
   background: #616161;
@@ -58,6 +58,7 @@
 
 .modal-title {
   font-size: 36px;
+  margin-bottom: 5px;
 }
 
 .faded-seperator {

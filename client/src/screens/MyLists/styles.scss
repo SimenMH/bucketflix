@@ -158,7 +158,7 @@
 }
 
 .media-list-container {
-  height: 150vh;
+  min-height: calc(100% - 50px);
   padding: 0 55px;
   background-color: #616161;
 }
@@ -185,6 +185,7 @@
 
 .media-list-item {
   margin: 0 10px 15px;
+  cursor: pointer;
 }
 
 .media-list-item img {

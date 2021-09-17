@@ -9,9 +9,9 @@ const MyLists: React.FC<Props> = () => {
   const { activeList, lists } = useAppSelector(state => state.lists);
 
   const renderLists = (): JSX.Element[] => {
-    return lists.map(list => {
+    return lists.map((list, idx) => {
       return (
-        <div className='mylists-item'>
+        <div className='mylists-item' key={idx}>
           <div className='mylists-list-name'>
             <svg
               className='mylists-selector'
@@ -31,9 +31,9 @@ const MyLists: React.FC<Props> = () => {
   };
 
   const renderMedia = (mediaArray: Array<Media>): JSX.Element[] => {
-    return mediaArray.map(media => {
+    return mediaArray.map((media, idx) => {
       return (
-        <div className='media-list-item'>
+        <div className='media-list-item' key={idx}>
           <img src={media.poster} alt='movie-poster' />
           <h3>{media.title}</h3>
         </div>

@@ -1,14 +1,15 @@
 import './styles.css';
+import { useAppSelector } from '../../redux/hooks';
 
-import { Media, tempMovies, tempSeries } from './TempData';
-
-const tempLists: Array<string> = ['Personal', 'Lille Bolle', 'Harrison'];
+import { Media } from '../../redux/TempData';
 
 interface Props {}
 
 const MyLists: React.FC<Props> = () => {
+  const { activeList, lists } = useAppSelector(state => state.lists);
+
   const renderLists = (): JSX.Element[] => {
-    return tempLists.map(list => {
+    return lists.map(list => {
       return (
         <div className='mylists-item'>
           <div className='mylists-list-name'>
@@ -21,7 +22,7 @@ const MyLists: React.FC<Props> = () => {
             >
               <path d='M10.5413 5.64324C11.2103 6.02396 11.2164 6.98619 10.5521 7.37525L2.33209 12.19C1.66785 12.579 0.831519 12.1031 0.826699 11.3333L0.767052 1.80725C0.762232 1.03746 1.59254 0.551128 2.2616 0.931846L10.5413 5.64324Z' />
             </svg>
-            <h3>{list}</h3>
+            <h3>{list.name}</h3>
           </div>
           <div className='faded-seperator' />
         </div>
@@ -88,10 +89,10 @@ const MyLists: React.FC<Props> = () => {
             <div className='faded-seperator' />
           </div>
           <div className='media-list-items-container'>
-            {renderMedia(tempMovies)}
-            {renderMedia(tempMovies)}
-            {renderMedia(tempMovies)}
-            {renderMedia(tempMovies)}
+            {renderMedia(lists[activeList].movies)}
+            {renderMedia(lists[activeList].movies)}
+            {renderMedia(lists[activeList].movies)}
+            {renderMedia(lists[activeList].movies)}
           </div>
           {/*  */}
           {/* TV-Series */}
@@ -100,10 +101,10 @@ const MyLists: React.FC<Props> = () => {
             <div className='faded-seperator' />
           </div>
           <div className='media-list-items-container'>
-            {renderMedia(tempSeries)}
-            {renderMedia(tempSeries)}
-            {renderMedia(tempSeries)}
-            {renderMedia(tempSeries)}
+            {renderMedia(lists[activeList].series)}
+            {renderMedia(lists[activeList].series)}
+            {renderMedia(lists[activeList].series)}
+            {renderMedia(lists[activeList].series)}
           </div>
           {/*  */}
         </div>

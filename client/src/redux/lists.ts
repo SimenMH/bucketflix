@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { tempMovies, tempSeries } from '../screens/MyLists/TempData';
+import { tempMovies, tempSeries } from './TempData';
 
 export const listsSlice = createSlice({
   name: 'lists',
@@ -26,3 +26,5 @@ export const listsSlice = createSlice({
   },
   reducers: {},
 });
+
+export default listsSlice.reducer;

@@ -9,8 +9,8 @@ import { Media } from '../../redux/TempData';
 interface Props {}
 
 const MyLists: React.FC<Props> = () => {
-  const [listModalIsOpen, setListModalIsOpen] = useState(false);
-  const [newListName, setNewListName] = useState('');
+  const [listModalIsOpen, setListModalIsOpen] = useState<boolean>(false);
+  const [newListName, setNewListName] = useState<string>('');
   const { activeList, lists } = useAppSelector(state => state.lists);
   const dispatch = useAppDispatch();
 

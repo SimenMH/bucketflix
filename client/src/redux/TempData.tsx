@@ -1,13 +1,8 @@
-export interface Media {
-  title: string;
-  year: string;
-  type: string;
-  plot: string;
-  poster: string;
-}
+import { Media } from '../types';
 
 export const tempMovies: Array<Media> = [
   {
+    imdbID: 'tt0093132',
     title: 'Hachikô monogatari',
     year: '1987',
     type: 'movie',
@@ -16,6 +11,7 @@ export const tempMovies: Array<Media> = [
       'https://m.media-amazon.com/images/M/MV5BN2RkM2I2MDQtYWFiNy00NzA1LTkyOGItYTU1MWQxYzkwODQ4XkEyXkFqcGdeQXVyNjYyMTYxMzk@._V1_SX300.jpg',
   },
   {
+    imdbID: 'tt1853728',
     title: 'Django Unchained',
     year: '2012',
     type: 'movie',
@@ -24,6 +20,7 @@ export const tempMovies: Array<Media> = [
       'https://m.media-amazon.com/images/M/MV5BMjIyNTQ5NjQ1OV5BMl5BanBnXkFtZTcwODg1MDU4OA@@._V1_SX300.jpg',
   },
   {
+    imdbID: 'tt1049413',
     title: 'Up',
     year: '2009',
     type: 'movie',
@@ -32,6 +29,7 @@ export const tempMovies: Array<Media> = [
       'https://m.media-amazon.com/images/M/MV5BMTk3NDE2NzI4NF5BMl5BanBnXkFtZTgwNzE1MzEyMTE@._V1_SX300.jpg',
   },
   {
+    imdbID: 'tt0362227',
     title: 'The Terminal',
     year: '2004',
     type: 'movie',
@@ -43,6 +41,7 @@ export const tempMovies: Array<Media> = [
 
 export const tempSeries: Array<Media> = [
   {
+    imdbID: 'tt1475582',
     title: 'Sherlock',
     year: '2010-2017',
     type: 'series',
@@ -51,6 +50,7 @@ export const tempSeries: Array<Media> = [
       'https://m.media-amazon.com/images/M/MV5BMWY3NTljMjEtYzRiMi00NWM2LTkzNjItZTVmZjE0MTdjMjJhL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNTQ4NTc5OTU@._V1_SX300.jpg',
   },
   {
+    imdbID: 'tt7335184',
     title: 'You',
     year: '2018-',
     type: 'series',
@@ -59,6 +59,7 @@ export const tempSeries: Array<Media> = [
       'https://m.media-amazon.com/images/M/MV5BZDJjOTg4OWYtYWIyOS00MjQ3LTg5ZDktYzU2N2RkNmYzNjZlXkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg',
   },
   {
+    imdbID: 'tt4052886',
     title: 'Lucifer',
     year: '2016-2021',
     type: 'series',
@@ -67,6 +68,7 @@ export const tempSeries: Array<Media> = [
       'https://m.media-amazon.com/images/M/MV5BNDJjMzc4NGYtZmFmNS00YWY3LThjMzQtYzJlNGFkZGRiOWI1XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg',
   },
   {
+    imdbID: 'tt2306299',
     title: 'Vikings',
     year: '2013-2020',
     type: 'series',

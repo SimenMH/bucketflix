@@ -42,15 +42,14 @@
   display: flex;
   justify-content: space-around;
   margin-right: 20px;
-}
+  a {
+    color: inherit;
+    font-size: 24px;
+    text-decoration: none;
+    margin: 0 20px;
 
-.navbar-links a {
-  color: inherit;
-  font-size: 24px;
-  text-decoration: none;
-  margin: 0 20px;
-}
-
-.navbar-links a:hover {
-  text-decoration: underline;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }

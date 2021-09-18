@@ -70,6 +70,15 @@
   cursor: pointer;
 }
 
+.mylists-item:hover .mylists-selector {
+  fill-opacity: 0.25;
+}
+
+.mylists-item .faded-seperator {
+  width: 80%;
+  margin-top: 7px;
+}
+
 .mylists-list-name {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -95,15 +104,6 @@
   margin-top: 5px;
   fill: #000;
   fill-opacity: 0;
-}
-
-.mylists-item .faded-seperator {
-  width: 80%;
-  margin-top: 7px;
-}
-
-.mylists-item:hover .mylists-selector {
-  fill-opacity: 0.25;
 }
 
 .mylists-active-selector {

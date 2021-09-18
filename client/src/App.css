@@ -43,8 +43,7 @@
   opacity: 1;
 }
 
-.modal-close:before,
-.modal-close:after {
+.modal-close:before, .modal-close:after {
   position: absolute;
   left: 15px;
   height: 33px;

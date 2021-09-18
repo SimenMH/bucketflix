@@ -1,12 +1,8 @@
 import './styles.css';
+import { useEffect, useState, useCallback } from 'react';
 import Modal from 'react-modal';
 
-const tempSuggestions = [
-  { title: 'Sherlock', type: 'TV-Series', year: '2010-2017' },
-  { title: 'Sherlock Holmes', type: 'Movie', year: '2009' },
-  { title: 'Sherlock Holmes: A Game of Shadows', type: 'Movie', year: '2011' },
-  { title: 'Sherlock Jr.', type: 'Movie', year: '1924' },
-];
+import { searchForTitle } from './SearchMediaAPI';
 
 interface Props {
   isOpen: boolean;
@@ -14,6 +10,55 @@ interface Props {
 }
 
 const AddMediaModal: React.FC<Props> = ({ isOpen, handleCloseModal }) => {
+  const [mediaInput, setMediaInput] = useState({
+    title: '',
+    timestamp: '',
+    whereToWatch: '',
+    list: '',
+    notes: '',
+  });
+
+  const [searchResult, setSearchResult] = useState<any>([]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value: string = e.currentTarget.value;
+
+    setMediaInput(prevState => {
+      return {
+        ...prevState,
+        title: value,
+      };
+    });
+
+    if (!value) {
+      setSearchResult([]);
+    }
+  };
+
+  const handleTitleSearch = useCallback(async () => {
+    const res = await searchForTitle(mediaInput.title);
+    if (res.Search) {
+      setSearchResult(res.Search);
+    } else {
+      setSearchResult([]);
+    }
+  }, [mediaInput.title]);
+
+  useEffect(() => {
+    let delayTitleSearch: NodeJS.Timeout | null = null;
+    if (mediaInput.title) {
+      delayTitleSearch = setTimeout(() => {
+        handleTitleSearch();
+      }, 1000);
+    }
+
+    return () => {
+      if (delayTitleSearch) {
+        clearTimeout(delayTitleSearch);
+      }
+    };
+  }, [mediaInput.title, handleTitleSearch]);
+
   return (
     <Modal
       className='modal add-media-modal'
@@ -34,16 +79,19 @@ const AddMediaModal: React.FC<Props> = ({ isOpen, handleCloseModal }) => {
           <div className='media-modal-top-left'>
             <div className='input-container'>
               <div className='input-item media-title-input'>
-                <input placeholder='Movie / Series Title' />
+                <input
+                  placeholder='Movie / Series Title'
+                  onChange={handleInputChange}
+                />
                 <div className='suggestions'>
-                  {tempSuggestions.map((media, idx: number) => {
+                  {searchResult.map((media: any, idx: number) => {
                     return (
                       <div className='suggestion-item' key={idx}>
                         <div className='suggestion-item-name'>
-                          {media.title}{' '}
+                          {media.Title}{' '}
                           <span>
-                            ({media.type === 'TV-Series' && media.type + ' '}
-                            {media.year})
+                            ({media.Type === 'series' && 'TV-Series '}
+                            {media.Year})
                           </span>
                         </div>
                       </div>

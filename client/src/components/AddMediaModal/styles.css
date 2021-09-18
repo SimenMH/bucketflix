@@ -3,7 +3,7 @@
 }
 
 .add-media-modal .faded-seperator {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .media-modal-content {
@@ -58,6 +58,10 @@
   margin-right: 40px;
 }
 
+.input-container .input-item {
+  margin-bottom: 20px;
+}
+
 .input-container input,
 .input-container select {
   -webkit-box-sizing: border-box;
@@ -66,7 +70,6 @@
   font-size: 18px;
   width: 345px;
   height: 40px;
-  margin-bottom: 20px;
   padding: 10px;
   border: none;
   background-color: #e5e5e5;
@@ -74,6 +77,43 @@
 
 .input-container select {
   padding: 0 10px;
+}
+
+.media-title-input input:focus + .suggestions {
+  display: block;
+}
+
+.suggestions {
+  display: none;
+  width: 345px;
+  position: absolute;
+  color: black;
+  background-color: #e5e5e5;
+  border: 1px solid #999999;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  max-height: 150px;
+  overflow: auto;
+}
+
+.suggestion-item {
+  min-height: 30px;
+  padding: 0 10px;
+  line-height: 27px;
+  border-bottom: 1px solid rgba(153, 153, 153, 0.1);
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-item .suggestion-item-name {
+  font-size: 14px;
+}
+
+.suggestion-item .suggestion-item-name span {
+  color: #a1a1a1;
 }
 
 .media-modal-media-info {

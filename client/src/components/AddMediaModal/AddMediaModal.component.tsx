@@ -1,14 +1,23 @@
 import './styles.css';
 import Modal from 'react-modal';
 
-interface Props {}
+const tempSuggestions = [
+  { title: 'Sherlock', type: 'TV-Series', year: '2010-2017' },
+  { title: 'Sherlock Holmes', type: 'Movie', year: '2009' },
+  { title: 'Sherlock Holmes: A Game of Shadows', type: 'Movie', year: '2011' },
+  { title: 'Sherlock Jr.', type: 'Movie', year: '1924' },
+];
 
-const AddMediaModal: React.FC<Props> = () => {
+interface Props {
+  isOpen: boolean;
+}
+
+const AddMediaModal: React.FC<Props> = ({ isOpen }) => {
   return (
     <Modal
       className='modal add-media-modal'
       overlayClassName='modal-overlay'
-      isOpen={true}
+      isOpen={isOpen}
       // onRequestClose={() => setListModalIsOpen(false)}
       shouldCloseOnOverlayClick={true}
       contentLabel='Add Media Modal'
@@ -26,16 +35,31 @@ const AddMediaModal: React.FC<Props> = () => {
           {/* Top Row */}
           <div className='media-modal-top-left'>
             <div className='input-container'>
-              <div>
+              <div className='input-item media-title-input'>
                 <input placeholder='Movie / Series Title' />
+                <div className='suggestions'>
+                  {tempSuggestions.map((media, idx: number) => {
+                    return (
+                      <div className='suggestion-item' key={idx}>
+                        <div className='suggestion-item-name'>
+                          {media.title}{' '}
+                          <span>
+                            ({media.type === 'TV-Series' && media.type + ' '}
+                            {media.year})
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-              <div>
+              <div className='input-item'>
                 <input placeholder='Current Timestamp / Episode (Optional)' />
               </div>
-              <div>
+              <div className='input-item'>
                 <input placeholder='Where to Watch (Optional)' />
               </div>
-              <div>
+              <div className='input-item'>
                 <select placeholder='List'>
                   <option>Personal</option>
                   <option>Lille Bolle</option>

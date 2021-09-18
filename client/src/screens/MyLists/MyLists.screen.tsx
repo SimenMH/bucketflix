@@ -23,7 +23,7 @@ const MyLists: React.FC<Props> = () => {
 
   return (
     <div className='mylists-screen'>
-      <AddMediaModal />
+      <AddMediaModal isOpen={true} />
       <MyListsSidebar lists={lists} activeList={activeList} />
       <div className='mylists-content'>
         <div className='mylists-option-buttons'>

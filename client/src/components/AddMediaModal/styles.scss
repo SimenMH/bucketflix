@@ -3,7 +3,7 @@
   width: 55%;
 
   .faded-seperator {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
 }
 
@@ -38,6 +38,10 @@
 .input-container {
   margin-right: 40px;
 
+  .input-item {
+    margin-bottom: 20px;
+  }
+
   input,
   select {
     box-sizing: border-box;
@@ -45,35 +49,77 @@
     font-size: 18px;
     width: 345px;
     height: 40px;
-    margin-bottom: 20px;
     padding: 10px;
     border: none;
     background-color: #e5e5e5;
   }
+
   select {
     padding: 0 10px;
   }
 }
 
+.media-title-input {
+  input:focus + .suggestions {
+    display: block;
+  }
+}
+
+.suggestions {
+  display: none;
+  width: 345px;
+  position: absolute;
+  color: black;
+  background-color: #e5e5e5;
+  border: 1px solid #999999;
+  box-sizing: border-box;
+  max-height: 150px;
+  overflow: auto;
+}
+
+.suggestion-item {
+  min-height: 30px;
+  padding: 0 10px;
+  line-height: 27px;
+  border-bottom: 1px solid rgba($color: #999999, $alpha: 0.1);
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .suggestion-item-name {
+    font-size: 14px;
+    span {
+      color: #a1a1a1;
+    }
+  }
+}
+
 .media-modal-media-info {
   margin-left: 5px;
+
   .media-modal-media-title {
     font-family: sans-serif;
     font-size: 36px;
     margin-left: -5px;
   }
+
   .media-modal-media-year {
     color: #ffffff6e;
     font-size: 28px;
     margin-top: -10px;
   }
+
   .media-modal-media-type {
     font-size: 18px;
   }
+
   .media-modal-media-description {
     font-size: 18px;
     color: #c0c0c0;
   }
+
   .faded-seperator {
     margin: 8px 0;
   }

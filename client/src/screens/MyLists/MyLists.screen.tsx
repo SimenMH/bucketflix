@@ -4,10 +4,12 @@ import { Media } from '../../types';
 
 import MyListsSidebar from '../../components/MyListsSidebar/MyListsSidebar.component';
 import AddMediaModal from '../../components/AddMediaModal/AddMediaModal.component';
+import { useState } from 'react';
 
 interface Props {}
 
 const MyLists: React.FC<Props> = () => {
+  const [addMediaModalVisible, setAddMediaModalVisible] = useState(false);
   const { activeList, lists } = useAppSelector(state => state.lists);
 
   const renderMedia = (mediaArray: Array<Media>): JSX.Element[] => {
@@ -21,9 +23,16 @@ const MyLists: React.FC<Props> = () => {
     });
   };
 
+  const handleAddMediaClose = () => {
+    setAddMediaModalVisible(false);
+  };
+
   return (
     <div className='mylists-screen'>
-      <AddMediaModal isOpen={true} />
+      <AddMediaModal
+        isOpen={addMediaModalVisible}
+        handleCloseModal={handleAddMediaClose}
+      />
       <MyListsSidebar lists={lists} activeList={activeList} />
       <div className='mylists-content'>
         <div className='mylists-option-buttons'>
@@ -33,7 +42,10 @@ const MyLists: React.FC<Props> = () => {
             <div className='mylists-filter-button'>Series</div>
           </div>
           <div className='mylists-options-right'>
-            <div className='mylists-add-new-button'>
+            <div
+              className='mylists-add-new-button'
+              onClick={() => setAddMediaModalVisible(true)}
+            >
               <svg
                 className='add-new-plus'
                 width='448'

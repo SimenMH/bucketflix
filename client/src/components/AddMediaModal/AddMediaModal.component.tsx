@@ -10,22 +10,20 @@ const tempSuggestions = [
 
 interface Props {
   isOpen: boolean;
+  handleCloseModal: Function;
 }
 
-const AddMediaModal: React.FC<Props> = ({ isOpen }) => {
+const AddMediaModal: React.FC<Props> = ({ isOpen, handleCloseModal }) => {
   return (
     <Modal
       className='modal add-media-modal'
       overlayClassName='modal-overlay'
       isOpen={isOpen}
-      // onRequestClose={() => setListModalIsOpen(false)}
+      onRequestClose={() => handleCloseModal()}
       shouldCloseOnOverlayClick={true}
       contentLabel='Add Media Modal'
     >
-      <div
-        className='modal-close'
-        // onClick={}
-      />
+      <div className='modal-close' onClick={() => handleCloseModal()} />
       <div className='modal-title'>Add New Movie or Series</div>
       <div className='faded-seperator' />
       {/* Content */}

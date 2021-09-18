@@ -100,6 +100,10 @@
   display: block;
 }
 
+.media-title-input .suggestions:hover {
+  display: block;
+}
+
 .suggestions {
   position: absolute;
   -webkit-box-sizing: border-box;

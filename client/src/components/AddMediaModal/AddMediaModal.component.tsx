@@ -2,7 +2,7 @@ import './styles.css';
 import { useEffect, useState, useCallback } from 'react';
 import Modal from 'react-modal';
 
-import { searchForTitle } from './SearchMediaAPI';
+import { searchForTitle, searchById } from './SearchMediaAPI';
 
 interface Props {
   isOpen: boolean;
@@ -17,8 +17,8 @@ const AddMediaModal: React.FC<Props> = ({ isOpen, handleCloseModal }) => {
     list: '',
     notes: '',
   });
-
   const [searchResult, setSearchResult] = useState<any>([]);
+  const [selectedMedia, setSelectedMedia] = useState<any>({});
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value: string = e.currentTarget.value;
@@ -29,9 +29,11 @@ const AddMediaModal: React.FC<Props> = ({ isOpen, handleCloseModal }) => {
         title: value,
       };
     });
-
     if (!value) {
       setSearchResult([]);
+    }
+    if (selectedMedia) {
+      setSelectedMedia({});
     }
   };
 
@@ -43,6 +45,11 @@ const AddMediaModal: React.FC<Props> = ({ isOpen, handleCloseModal }) => {
       setSearchResult([]);
     }
   }, [mediaInput.title]);
+
+  const handleSelectMedia = async (media: any) => {
+    const res = await searchById(media.imdbID);
+    setSelectedMedia(res);
+  };
 
   useEffect(() => {
     let delayTitleSearch: NodeJS.Timeout | null = null;
@@ -82,11 +89,25 @@ const AddMediaModal: React.FC<Props> = ({ isOpen, handleCloseModal }) => {
                 <input
                   placeholder='Movie / Series Title'
                   onChange={handleInputChange}
+                  value={mediaInput.title}
                 />
                 <div className='suggestions'>
                   {searchResult.map((media: any, idx: number) => {
                     return (
-                      <div className='suggestion-item' key={idx}>
+                      <div
+                        className='suggestion-item'
+                        key={idx}
+                        onClick={() => {
+                          handleSelectMedia(media);
+                          setMediaInput(prevState => {
+                            return {
+                              ...prevState,
+                              title: media.Title,
+                            };
+                          });
+                          setSearchResult([]);
+                        }}
+                      >
                         <div className='suggestion-item-name'>
                           {media.Title}{' '}
                           <span>
@@ -114,18 +135,23 @@ const AddMediaModal: React.FC<Props> = ({ isOpen, handleCloseModal }) => {
               </div>
             </div>
             {/* Title and description */}
-            <div className='media-modal-media-info'>
-              <div className='media-modal-media-title'>
-                Sherlock{' '}
-                <span className='media-modal-media-year'>(2010-2017)</span>
+            {selectedMedia.Title && (
+              <div className='media-modal-media-info'>
+                <div className='media-modal-media-title'>
+                  {selectedMedia.Title}{' '}
+                  <span className='media-modal-media-year'>
+                    ({selectedMedia.Year})
+                  </span>
+                </div>
+                <div className='media-modal-media-type'>
+                  {selectedMedia.Type === 'series' ? 'TV-Series' : 'Movie'}
+                </div>
+                <div className='faded-seperator' />
+                <div className='media-modal-media-description'>
+                  {selectedMedia.Plot}
+                </div>
               </div>
-              <div className='media-modal-media-type'>TV-Series</div>
-              <div className='faded-seperator' />
-              <div className='media-modal-media-description'>
-                A modern update finds the famous sleuth and his doctor partner
-                solving crime in 21st century London.
-              </div>
-            </div>
+            )}
           </div>
           {/* Notes Text Area */}
           <textarea placeholder='Notes (Optional)' />
@@ -133,8 +159,12 @@ const AddMediaModal: React.FC<Props> = ({ isOpen, handleCloseModal }) => {
         {/* Right Side Content */}
         <img
           className='media-modal-media-poster'
-          src='https://m.media-amazon.com/images/M/MV5BMWY3NTljMjEtYzRiMi00NWM2LTkzNjItZTVmZjE0MTdjMjJhL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNTQ4NTc5OTU@._V1_SX300.jpg'
-          alt='Sherlock Movie Poster'
+          src={
+            selectedMedia.Poster
+              ? selectedMedia.Poster
+              : 'http://www.theprintworks.com/wp-content/themes/psBella/assets/img/film-poster-placeholder.png'
+          }
+          alt='Movie Poster'
         />
       </div>
       <div

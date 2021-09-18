@@ -68,6 +68,9 @@
   input:focus + .suggestions {
     display: block;
   }
+  .suggestions:hover {
+    display: block;
+  }
 }
 
 .suggestions {

@@ -24,26 +24,43 @@
   font-size: 18px;
 }
 
+.media-modal-content input,
+.media-modal-content textarea,
+.media-modal-content select {
+  outline: none;
+}
+
+.media-modal-content input:focus,
+.media-modal-content textarea:focus,
+.media-modal-content select:focus {
+  -webkit-box-shadow: 0 0 2px 2px #81abb8;
+          box-shadow: 0 0 2px 2px #81abb8;
+}
+
 .media-modal-content input::-webkit-input-placeholder,
-.media-modal-content textarea::-webkit-input-placeholder {
+.media-modal-content textarea::-webkit-input-placeholder,
+.media-modal-content select::-webkit-input-placeholder {
   font-weight: 500;
   color: rgba(0, 0, 0, 0.25);
 }
 
 .media-modal-content input:-ms-input-placeholder,
-.media-modal-content textarea:-ms-input-placeholder {
+.media-modal-content textarea:-ms-input-placeholder,
+.media-modal-content select:-ms-input-placeholder {
   font-weight: 500;
   color: rgba(0, 0, 0, 0.25);
 }
 
 .media-modal-content input::-ms-input-placeholder,
-.media-modal-content textarea::-ms-input-placeholder {
+.media-modal-content textarea::-ms-input-placeholder,
+.media-modal-content select::-ms-input-placeholder {
   font-weight: 500;
   color: rgba(0, 0, 0, 0.25);
 }
 
 .media-modal-content input::placeholder,
-.media-modal-content textarea::placeholder {
+.media-modal-content textarea::placeholder,
+.media-modal-content select::placeholder {
   font-weight: 500;
   color: rgba(0, 0, 0, 0.25);
 }

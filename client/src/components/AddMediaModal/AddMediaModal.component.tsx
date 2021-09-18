@@ -88,6 +88,12 @@ const AddMediaModal: React.FC<Props> = ({ isOpen, handleCloseModal }) => {
           alt='Sherlock Movie Poster'
         />
       </div>
+      <div
+        className='modal-add-media-button'
+        onClick={() => handleCloseModal()} // Temporary onClick function
+      >
+        Add Movie/Series
+      </div>
     </Modal>
   );
 };

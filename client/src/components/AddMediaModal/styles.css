@@ -15,13 +15,13 @@
 
 .media-modal-content textarea {
   font-family: inherit;
+  font-size: 18px;
   width: 60%;
   min-width: 325px;
   height: 170px;
-  margin-bottom: 20px;
   padding: 10px;
+  margin-bottom: 20px;
   resize: none;
-  font-size: 18px;
 }
 
 .media-modal-content input,
@@ -40,29 +40,29 @@
 .media-modal-content input::-webkit-input-placeholder,
 .media-modal-content textarea::-webkit-input-placeholder,
 .media-modal-content select::-webkit-input-placeholder {
-  font-weight: 500;
   color: rgba(0, 0, 0, 0.25);
+  font-weight: 500;
 }
 
 .media-modal-content input:-ms-input-placeholder,
 .media-modal-content textarea:-ms-input-placeholder,
 .media-modal-content select:-ms-input-placeholder {
-  font-weight: 500;
   color: rgba(0, 0, 0, 0.25);
+  font-weight: 500;
 }
 
 .media-modal-content input::-ms-input-placeholder,
 .media-modal-content textarea::-ms-input-placeholder,
 .media-modal-content select::-ms-input-placeholder {
-  font-weight: 500;
   color: rgba(0, 0, 0, 0.25);
+  font-weight: 500;
 }
 
 .media-modal-content input::placeholder,
 .media-modal-content textarea::placeholder,
 .media-modal-content select::placeholder {
-  font-weight: 500;
   color: rgba(0, 0, 0, 0.25);
+  font-weight: 500;
 }
 
 .media-modal-top-left {
@@ -101,15 +101,15 @@
 }
 
 .suggestions {
-  display: none;
-  width: 345px;
   position: absolute;
-  color: black;
-  background-color: #e5e5e5;
-  border: 1px solid #999999;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  display: none;
+  color: black;
+  width: 345px;
   max-height: 150px;
+  border: 1px solid #999999;
+  background-color: #e5e5e5;
   overflow: auto;
 }
 
@@ -154,8 +154,8 @@
 }
 
 .media-modal-media-info .media-modal-media-description {
-  font-size: 18px;
   color: #c0c0c0;
+  font-size: 18px;
 }
 
 .media-modal-media-info .faded-seperator {
@@ -166,5 +166,20 @@
   width: 200px;
   height: 300px;
   margin-left: 50px;
+}
+
+.modal-add-media-button {
+  position: absolute;
+  font-size: 16px;
+  bottom: 20px;
+  right: 30px;
+  height: 30px;
+  padding: 0 5px;
+  line-height: 30px;
+  border-radius: 5px;
+  background-color: #526774;
+  -webkit-box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.25);
+          box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
 }
 /*# sourceMappingURL=styles.css.map */

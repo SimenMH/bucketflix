@@ -20,30 +20,47 @@ const AddMediaModal: React.FC<Props> = () => {
       <div className='modal-title'>Add New Movie or Series</div>
       <div className='faded-seperator' />
       {/* Content */}
-      <div>
+      <div className='media-modal-content'>
         {/* Left Side Content */}
-        <div>
+        <div className='media-modal-left'>
           {/* Top Row */}
-          <div>
-            <div>
-              <input />
-              <input />
-              <input />
-              <input />
+          <div className='media-modal-top-left'>
+            <div className='input-container'>
+              <div>
+                <input placeholder='Movie / Series Title' />
+              </div>
+              <div>
+                <input placeholder='Current Timestamp / Episode (Optional)' />
+              </div>
+              <div>
+                <input placeholder='Where to Watch (Optional)' />
+              </div>
+              <div>
+                <input placeholder='List' />
+              </div>
             </div>
             {/* Title and description */}
-            <div>
-              <div>Title</div>
-              <div>Type</div>
+            <div className='media-modal-media-info'>
+              <div className='media-modal-media-title'>
+                Sherlock <span className='media-modal-media-year'>(2010)</span>
+              </div>
+              <div className='media-modal-media-type'>TV-Series</div>
               <div className='faded-seperator' />
-              <div>Description</div>
+              <div className='media-modal-media-description'>
+                A modern update finds the famous sleuth and his doctor partner
+                solving crime in 21st century London.
+              </div>
             </div>
           </div>
           {/* Notes Text Area */}
-          <textarea />
+          <textarea placeholder='Notes (Optional)' />
         </div>
         {/* Right Side Content */}
-        <div>Poster</div>
+        <img
+          className='media-modal-media-poster'
+          src='https://m.media-amazon.com/images/M/MV5BMWY3NTljMjEtYzRiMi00NWM2LTkzNjItZTVmZjE0MTdjMjJhL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNTQ4NTc5OTU@._V1_SX300.jpg'
+          alt='Sherlock Movie Poster'
+        />
       </div>
     </Modal>
   );

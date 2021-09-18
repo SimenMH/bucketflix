@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import { updateActiveList, addList } from '../../redux/lists';
 import Modal from 'react-modal';
 
-import { Media } from '../../redux/TempData';
+import { Media } from '../../types';
 
 interface Props {}
 

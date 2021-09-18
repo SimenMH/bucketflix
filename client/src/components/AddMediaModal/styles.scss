@@ -1,6 +1,6 @@
 .add-media-modal {
-  // width: 1085px;
-  width: 55%;
+  max-width: 1085px;
+  // max-width: 55%;
 
   .faded-seperator {
     margin-bottom: 20px;
@@ -103,6 +103,8 @@
 
 .media-modal-media-info {
   margin-left: 5px;
+  width: 20vw;
+  max-width: 410px;
 
   .media-modal-media-title {
     font-family: sans-serif;

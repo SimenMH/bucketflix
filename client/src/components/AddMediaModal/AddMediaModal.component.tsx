@@ -68,7 +68,8 @@ const AddMediaModal: React.FC<Props> = ({ isOpen, handleCloseModal }) => {
             {/* Title and description */}
             <div className='media-modal-media-info'>
               <div className='media-modal-media-title'>
-                Sherlock <span className='media-modal-media-year'>(2010)</span>
+                Sherlock{' '}
+                <span className='media-modal-media-year'>(2010-2017)</span>
               </div>
               <div className='media-modal-media-type'>TV-Series</div>
               <div className='faded-seperator' />

@@ -38,15 +38,20 @@
 .input-container {
   margin-right: 40px;
 
-  input {
+  input,
+  select {
+    box-sizing: border-box;
     font-family: inherit;
     font-size: 18px;
-    width: 325px;
-    height: 20px;
+    width: 345px;
+    height: 40px;
     margin-bottom: 20px;
     padding: 10px;
     border: none;
     background-color: #e5e5e5;
+  }
+  select {
+    padding: 0 10px;
   }
 }
 

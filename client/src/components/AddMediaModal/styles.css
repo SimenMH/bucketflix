@@ -58,15 +58,22 @@
   margin-right: 40px;
 }
 
-.input-container input {
+.input-container input,
+.input-container select {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   font-family: inherit;
   font-size: 18px;
-  width: 325px;
-  height: 20px;
+  width: 345px;
+  height: 40px;
   margin-bottom: 20px;
   padding: 10px;
   border: none;
   background-color: #e5e5e5;
+}
+
+.input-container select {
+  padding: 0 10px;
 }
 
 .media-modal-media-info {

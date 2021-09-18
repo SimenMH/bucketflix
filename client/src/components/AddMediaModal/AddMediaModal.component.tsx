@@ -36,7 +36,11 @@ const AddMediaModal: React.FC<Props> = () => {
                 <input placeholder='Where to Watch (Optional)' />
               </div>
               <div>
-                <input placeholder='List' />
+                <select placeholder='List'>
+                  <option>Personal</option>
+                  <option>Lille Bolle</option>
+                  <option>Harrison</option>
+                </select>
               </div>
             </div>
             {/* Title and description */}

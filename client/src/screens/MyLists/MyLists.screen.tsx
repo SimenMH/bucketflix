@@ -9,7 +9,8 @@ import { useState } from 'react';
 interface Props {}
 
 const MyLists: React.FC<Props> = () => {
-  const [addMediaModalVisible, setAddMediaModalVisible] = useState(false);
+  const [addMediaModalVisible, setAddMediaModalVisible] =
+    useState<boolean>(false);
   const { activeList, lists } = useAppSelector(state => state.lists);
 
   const renderMedia = (mediaArray: Array<Media>): JSX.Element[] => {

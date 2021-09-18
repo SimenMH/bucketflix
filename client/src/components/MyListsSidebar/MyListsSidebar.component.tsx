@@ -69,7 +69,7 @@ const MyListsSidebar: React.FC<Props> = ({ lists, activeList }) => {
         isOpen={listModalIsOpen}
         onRequestClose={() => setListModalIsOpen(false)}
         shouldCloseOnOverlayClick={true}
-        contentLabel='Example Modal'
+        contentLabel='New List Modal'
       >
         <div
           className='modal-close'

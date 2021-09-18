@@ -1,8 +1,9 @@
 import './styles.css';
 import { useAppSelector } from '../../redux/hooks';
-
 import { Media } from '../../types';
+
 import MyListsSidebar from '../../components/MyListsSidebar/MyListsSidebar.component';
+import AddMediaModal from '../../components/AddMediaModal/AddMediaModal.component';
 
 interface Props {}
 
@@ -22,6 +23,7 @@ const MyLists: React.FC<Props> = () => {
 
   return (
     <div className='mylists-screen'>
+      <AddMediaModal />
       <MyListsSidebar lists={lists} activeList={activeList} />
       <div className='mylists-content'>
         <div className='mylists-option-buttons'>

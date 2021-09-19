@@ -14,3 +14,11 @@ export const searchById = (imdbID: string) => {
     .then(data => data)
     .catch(err => console.error(err));
 };
+
+export const searchByTitle = (title: string) => {
+  title = title.replace(' ', '+');
+  return fetch(`${baseUrl}&t=${title}`)
+    .then(res => res.json())
+    .then(data => data)
+    .catch(err => console.error(err));
+};

@@ -1,15 +1,22 @@
 import './styles.css';
 import { useEffect, useState, useCallback } from 'react';
 import Modal from 'react-modal';
-
+import { List } from '../../types';
 import { searchForTitle, searchByTitle, searchById } from './SearchMediaAPI';
 
 interface Props {
   isOpen: boolean;
   handleCloseModal: Function;
+  lists: Array<List>;
+  activeList: number;
 }
 
-const AddMediaModal: React.FC<Props> = ({ isOpen, handleCloseModal }) => {
+const AddMediaModal: React.FC<Props> = ({
+  isOpen,
+  handleCloseModal,
+  lists,
+  activeList,
+}) => {
   const [mediaInput, setMediaInput] = useState({
     title: '',
     timestamp: '',
@@ -140,10 +147,17 @@ const AddMediaModal: React.FC<Props> = ({ isOpen, handleCloseModal }) => {
                 <input placeholder='Where to Watch (Optional)' />
               </div>
               <div className='input-item'>
-                <select placeholder='List'>
-                  <option>Personal</option>
-                  <option>Lille Bolle</option>
-                  <option>Harrison</option>
+                <select placeholder='List' defaultValue={'DEFAULT'}>
+                  {lists.map((list: List, idx: number) => {
+                    return (
+                      <option
+                        value={idx === activeList ? 'DEFAULT' : ''}
+                        key={idx}
+                      >
+                        {list.name}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
             </div>

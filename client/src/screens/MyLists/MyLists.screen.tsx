@@ -1,10 +1,10 @@
 import './styles.css';
+import { useState } from 'react';
 import { useAppSelector } from '../../redux/hooks';
 import { Media } from '../../types';
 
 import MyListsSidebar from '../../components/MyListsSidebar/MyListsSidebar.component';
 import AddMediaModal from '../../components/AddMediaModal/AddMediaModal.component';
-import { useState } from 'react';
 
 interface Props {}
 
@@ -33,6 +33,8 @@ const MyLists: React.FC<Props> = () => {
       <AddMediaModal
         isOpen={addMediaModalVisible}
         handleCloseModal={handleAddMediaClose}
+        lists={lists}
+        activeList={activeList}
       />
       <MyListsSidebar lists={lists} activeList={activeList} />
       <div className='mylists-content'>

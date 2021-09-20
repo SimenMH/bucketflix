@@ -115,6 +115,7 @@
   border: 1px solid #999999;
   background-color: #e5e5e5;
   overflow: auto;
+  z-index: 5;
 }
 
 .suggestion-item {

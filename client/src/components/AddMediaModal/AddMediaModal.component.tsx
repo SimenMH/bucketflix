@@ -25,7 +25,7 @@ const AddMediaModal: React.FC<Props> = ({
     notes: '',
   });
   const [searchResult, setSearchResult] = useState<any>([]);
-  const [selectedMedia, setSelectedMedia] = useState<any>({});
+  const [selectedMedia, setSelectedMedia] = useState<any>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value: string = e.currentTarget.value;
@@ -40,7 +40,7 @@ const AddMediaModal: React.FC<Props> = ({
       setSearchResult([]);
     }
     if (selectedMedia) {
-      setSelectedMedia({});
+      setSelectedMedia(null);
     }
   };
 
@@ -162,7 +162,7 @@ const AddMediaModal: React.FC<Props> = ({
               </div>
             </div>
             {/* Title and description */}
-            {selectedMedia.Title && (
+            {selectedMedia && (
               <div className='media-modal-media-info'>
                 <div className='media-modal-media-title'>
                   {selectedMedia.Title}{' '}
@@ -187,7 +187,7 @@ const AddMediaModal: React.FC<Props> = ({
         <img
           className='media-modal-media-poster'
           src={
-            selectedMedia.Poster
+            selectedMedia
               ? selectedMedia.Poster
               : 'http://www.theprintworks.com/wp-content/themes/psBella/assets/img/film-poster-placeholder.png'
           }

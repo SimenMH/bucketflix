@@ -82,6 +82,22 @@ const AddMediaModal: React.FC<Props> = ({
     setSelectedMedia(res);
   };
 
+  const checkForDuplicate = (listIdx: number, newMedia: Media) => {
+    let mediaList: Array<Media>;
+    if (mediaInput.type === 'movie') mediaList = lists[listIdx].movies;
+    else mediaList = lists[listIdx].series;
+
+    for (let i = 0; i < mediaList.length; i++) {
+      if (
+        mediaList[i].Title === newMedia.Title &&
+        mediaList[i].imdbID === newMedia.imdbID
+      ) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   const handleAddMedia = () => {
     let newMediaObj;
     if (selectedMedia) {
@@ -112,8 +128,13 @@ const AddMediaModal: React.FC<Props> = ({
     };
 
     const listIdx = lists.findIndex(list => list.name === mediaInput.list);
-    dispatch(addMediaToList({ listIdx, media: newMediaObj }));
-    handleCloseModal();
+    if (checkForDuplicate(listIdx, newMediaObj)) {
+      // TODO: Improve this alert
+      alert('Movie/Series already exists in this list.');
+    } else {
+      dispatch(addMediaToList({ listIdx, media: newMediaObj }));
+      handleCloseModal();
+    }
   };
 
   useEffect(() => {
@@ -178,6 +199,7 @@ const AddMediaModal: React.FC<Props> = ({
                             return {
                               ...prevState,
                               title: media.Title,
+                              type: media.Type,
                             };
                           });
                           setSearchResult([]);
@@ -200,8 +222,7 @@ const AddMediaModal: React.FC<Props> = ({
                   name='type'
                   onChange={handleInputChange}
                   disabled={selectedMedia != null}
-                  defaultValue={mediaInput.type}
-                  value={selectedMedia ? selectedMedia.Type : undefined}
+                  value={mediaInput.type} //selectedMedia ? selectedMedia.Type :
                 >
                   <option value='movie'>Movie</option>
                   <option value='series'>TV-Series</option>

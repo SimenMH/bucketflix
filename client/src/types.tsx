@@ -1,10 +1,10 @@
 export interface Media {
   imdbID: string;
-  title: string;
-  year: string;
-  type: string;
-  plot: string;
-  poster: string;
+  Title: string;
+  Year: string;
+  Type: string;
+  Plot: string;
+  Poster: string;
 }
 
 export interface List {

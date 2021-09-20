@@ -17,8 +17,8 @@ const MyLists: React.FC<Props> = () => {
     return mediaArray.map((media, idx) => {
       return (
         <div className='media-list-item' key={idx}>
-          <img src={media.poster} alt='movie-poster' />
-          <h3>{media.title}</h3>
+          <img src={media.Poster} alt='movie-poster' />
+          <h3>{media.Title}</h3>
         </div>
       );
     });

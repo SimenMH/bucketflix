@@ -1,7 +1,7 @@
 import './styles.css';
 import { useEffect, useState, useCallback } from 'react';
 import Modal from 'react-modal';
-import { List } from '../../types';
+import { Media, List } from '../../types';
 import { searchForTitle, searchByTitle, searchById } from './SearchMediaAPI';
 
 interface Props {
@@ -25,7 +25,7 @@ const AddMediaModal: React.FC<Props> = ({
     notes: '',
   });
   const [searchResult, setSearchResult] = useState<any>([]);
-  const [selectedMedia, setSelectedMedia] = useState<any>(null);
+  const [selectedMedia, setSelectedMedia] = useState<Media | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value: string = e.currentTarget.value;

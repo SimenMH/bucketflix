@@ -176,6 +176,16 @@ const AddMediaModal: React.FC<Props> = ({
                 </div>
               </div>
               <div className='input-item'>
+                <select
+                  placeholder='Type'
+                  disabled={selectedMedia != null}
+                  value={selectedMedia ? selectedMedia.Type : undefined}
+                >
+                  <option value='movie'>Movie</option>
+                  <option value='series'>TV-Series</option>
+                </select>
+              </div>
+              <div className='input-item'>
                 <input placeholder='Current Timestamp / Episode (Optional)' />
               </div>
               <div className='input-item'>

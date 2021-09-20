@@ -9,8 +9,8 @@ export const listsSlice = createSlice({
     lists: [
       {
         name: 'Personal',
-        movies: [...tempMovies, ...tempMovies],
-        series: [...tempSeries, ...tempSeries],
+        movies: [...tempMovies],
+        series: [...tempSeries],
       },
       {
         name: 'Lille Bolle',

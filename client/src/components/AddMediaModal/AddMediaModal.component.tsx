@@ -75,10 +75,35 @@ const AddMediaModal: React.FC<Props> = ({
   };
 
   const handleAddMedia = () => {
+    let newMediaObj;
     if (selectedMedia) {
-      dispatch(addMediaToList({ listIdx: 0, media: selectedMedia }));
-      handleCloseModal();
+      newMediaObj = {
+        imdbID: selectedMedia.imdbID,
+        Title: selectedMedia.Title,
+        Year: selectedMedia.Year,
+        Type: selectedMedia.Type,
+        Plot: selectedMedia.Plot,
+        Poster: selectedMedia.Poster,
+      };
+    } else {
+      newMediaObj = {
+        imdbID: '',
+        Title: mediaInput.title,
+        Year: '',
+        Type: 'movie',
+        Plot: '',
+        Poster:
+          'http://www.theprintworks.com/wp-content/themes/psBella/assets/img/film-poster-placeholder.png',
+      };
     }
+    newMediaObj = {
+      ...newMediaObj,
+      //  Timestamp: mediaInput.timestamp,
+      //  WhereToWatch: mediaInput.whereToWatch,
+      //  Notes: mediaInput.notes,
+    };
+    dispatch(addMediaToList({ listIdx: 0, media: newMediaObj }));
+    handleCloseModal();
   };
 
   useEffect(() => {

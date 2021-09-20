@@ -64,22 +64,30 @@ const MyLists: React.FC<Props> = () => {
         </div>
         <div className='media-list-container'>
           {/* Movies */}
-          <div className='media-category'>
-            <h2>Movies</h2>
-            <div className='faded-seperator' />
-          </div>
-          <div className='media-list-items-container'>
-            {renderMedia(lists[activeList].movies)}
-          </div>
+          {lists[activeList].movies.length > 0 && (
+            <div>
+              <div className='media-category'>
+                <h2>Movies</h2>
+                <div className='faded-seperator' />
+              </div>
+              <div className='media-list-items-container'>
+                {renderMedia(lists[activeList].movies)}
+              </div>
+            </div>
+          )}
           {/*  */}
           {/* TV-Series */}
-          <div className='media-category'>
-            <h2>TV-Series</h2>
-            <div className='faded-seperator' />
-          </div>
-          <div className='media-list-items-container'>
-            {renderMedia(lists[activeList].series)}
-          </div>
+          {lists[activeList].series.length > 0 && (
+            <div>
+              <div className='media-category'>
+                <h2>TV-Series</h2>
+                <div className='faded-seperator' />
+              </div>
+              <div className='media-list-items-container'>
+                {renderMedia(lists[activeList].series)}
+              </div>
+            </div>
+          )}
           {/*  */}
         </div>
       </div>

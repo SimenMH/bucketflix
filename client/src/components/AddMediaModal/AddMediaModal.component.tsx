@@ -78,8 +78,12 @@ const AddMediaModal: React.FC<Props> = ({
   }, [mediaInput.title]);
 
   const handleSelectMedia = async (media: any) => {
-    const res = await searchById(media.imdbID);
-    setSelectedMedia(res);
+    try {
+      const res = await searchById(media.imdbID);
+      setSelectedMedia(res);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const checkForDuplicate = (listIdx: number, newMedia: Media) => {
@@ -222,7 +226,7 @@ const AddMediaModal: React.FC<Props> = ({
                   name='type'
                   onChange={handleInputChange}
                   disabled={selectedMedia != null}
-                  value={mediaInput.type} //selectedMedia ? selectedMedia.Type :
+                  value={mediaInput.type}
                 >
                   <option value='movie'>Movie</option>
                   <option value='series'>TV-Series</option>

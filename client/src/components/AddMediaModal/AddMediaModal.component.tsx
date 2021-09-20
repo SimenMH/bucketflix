@@ -2,7 +2,7 @@ import './styles.css';
 import { useEffect, useState, useCallback } from 'react';
 import Modal from 'react-modal';
 
-import { searchForTitle, searchById } from './SearchMediaAPI';
+import { searchForTitle, searchByTitle, searchById } from './SearchMediaAPI';
 
 interface Props {
   isOpen: boolean;
@@ -38,11 +38,24 @@ const AddMediaModal: React.FC<Props> = ({ isOpen, handleCloseModal }) => {
   };
 
   const handleTitleSearch = useCallback(async () => {
-    const res = await searchForTitle(mediaInput.title);
-    if (res.Search) {
-      setSearchResult(res.Search);
-    } else {
-      setSearchResult([]);
+    try {
+      // Looking for title...
+      let res = await searchForTitle(mediaInput.title);
+      if (res.Response === 'True') {
+        // Found multiple titles
+        setSearchResult(res.Search);
+      } else {
+        res = await searchByTitle(mediaInput.title);
+        if (res.Response === 'True') {
+          // Found one title
+          setSearchResult([res]);
+        } else {
+          // Found no titles
+          setSearchResult([]);
+        }
+      }
+    } catch (err) {
+      console.error(err);
     }
   }, [mediaInput.title]);
 

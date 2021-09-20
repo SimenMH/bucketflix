@@ -24,7 +24,7 @@ const AddMediaModal: React.FC<Props> = ({
     type: 'movie',
     timestamp: '',
     whereToWatch: '',
-    list: '',
+    list: lists[activeList].name,
     notes: '',
   });
   const [searchResult, setSearchResult] = useState<any>([]);
@@ -110,7 +110,9 @@ const AddMediaModal: React.FC<Props> = ({
       WhereToWatch: mediaInput.whereToWatch,
       Notes: mediaInput.notes,
     };
-    dispatch(addMediaToList({ listIdx: 0, media: newMediaObj }));
+
+    const listIdx = lists.findIndex(list => list.name === mediaInput.list);
+    dispatch(addMediaToList({ listIdx, media: newMediaObj }));
     handleCloseModal();
   };
 
@@ -134,6 +136,14 @@ const AddMediaModal: React.FC<Props> = ({
       className='modal add-media-modal'
       overlayClassName='modal-overlay'
       isOpen={isOpen}
+      onAfterOpen={() =>
+        setMediaInput(prevState => {
+          return {
+            ...prevState,
+            list: lists[activeList].name,
+          };
+        })
+      }
       onRequestClose={() => handleCloseModal()}
       shouldCloseOnOverlayClick={true}
       contentLabel='Add Media Modal'
@@ -216,7 +226,7 @@ const AddMediaModal: React.FC<Props> = ({
               <div className='input-item'>
                 <select
                   name='list'
-                  defaultValue={lists[activeList].name}
+                  value={mediaInput.list}
                   onChange={handleInputChange}
                 >
                   {lists.map((list: List, idx: number) => {

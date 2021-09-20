@@ -5,6 +5,9 @@ export interface Media {
   Type: string;
   Plot: string;
   Poster: string;
+  Timestamp: string;
+  WhereToWatch: string;
+  Notes: string;
 }
 
 export interface List {

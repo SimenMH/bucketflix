@@ -21,6 +21,7 @@ const AddMediaModal: React.FC<Props> = ({
 }) => {
   const [mediaInput, setMediaInput] = useState({
     title: '',
+    type: 'movie',
     timestamp: '',
     whereToWatch: '',
     list: '',
@@ -30,20 +31,27 @@ const AddMediaModal: React.FC<Props> = ({
   const [selectedMedia, setSelectedMedia] = useState<Media | null>(null);
   const dispatch = useAppDispatch();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value: string = e.currentTarget.value;
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const inputName = e.currentTarget.name;
+    const value = e.currentTarget.value;
 
     setMediaInput(prevState => {
       return {
         ...prevState,
-        title: value,
+        [inputName]: value,
       };
     });
-    if (!value) {
-      setSearchResult([]);
-    }
-    if (selectedMedia) {
-      setSelectedMedia(null);
+    if (inputName === 'title') {
+      if (!value) {
+        setSearchResult([]);
+      }
+      if (selectedMedia) {
+        setSelectedMedia(null);
+      }
     }
   };
 
@@ -90,7 +98,7 @@ const AddMediaModal: React.FC<Props> = ({
         imdbID: '',
         Title: mediaInput.title,
         Year: '',
-        Type: 'movie',
+        Type: mediaInput.type,
         Plot: '',
         Poster:
           'http://www.theprintworks.com/wp-content/themes/psBella/assets/img/film-poster-placeholder.png',
@@ -98,9 +106,9 @@ const AddMediaModal: React.FC<Props> = ({
     }
     newMediaObj = {
       ...newMediaObj,
-      //  Timestamp: mediaInput.timestamp,
-      //  WhereToWatch: mediaInput.whereToWatch,
-      //  Notes: mediaInput.notes,
+      Timestamp: mediaInput.timestamp,
+      WhereToWatch: mediaInput.whereToWatch,
+      Notes: mediaInput.notes,
     };
     dispatch(addMediaToList({ listIdx: 0, media: newMediaObj }));
     handleCloseModal();
@@ -180,8 +188,9 @@ const AddMediaModal: React.FC<Props> = ({
               <div className='input-item'>
                 <select
                   name='type'
-                  placeholder='Type'
+                  onChange={handleInputChange}
                   disabled={selectedMedia != null}
+                  defaultValue={mediaInput.type}
                   value={selectedMedia ? selectedMedia.Type : undefined}
                 >
                   <option value='movie'>Movie</option>
@@ -192,6 +201,7 @@ const AddMediaModal: React.FC<Props> = ({
                 <input
                   type='text'
                   name='timestamp'
+                  onChange={handleInputChange}
                   placeholder='Current Timestamp / Episode (Optional)'
                 />
               </div>
@@ -199,17 +209,19 @@ const AddMediaModal: React.FC<Props> = ({
                 <input
                   type='text'
                   name='whereToWatch'
+                  onChange={handleInputChange}
                   placeholder='Where to Watch (Optional)'
                 />
               </div>
               <div className='input-item'>
-                <select name='list' placeholder='List' defaultValue={'DEFAULT'}>
+                <select
+                  name='list'
+                  defaultValue={lists[activeList].name}
+                  onChange={handleInputChange}
+                >
                   {lists.map((list: List, idx: number) => {
                     return (
-                      <option
-                        value={idx === activeList ? 'DEFAULT' : ''}
-                        key={idx}
-                      >
+                      <option value={list.name} key={idx}>
                         {list.name}
                       </option>
                     );
@@ -237,7 +249,11 @@ const AddMediaModal: React.FC<Props> = ({
             )}
           </div>
           {/* Notes Text Area */}
-          <textarea name='notes' placeholder='Notes (Optional)' />
+          <textarea
+            name='notes'
+            onChange={handleInputChange}
+            placeholder='Notes (Optional)'
+          />
         </div>
         {/* Right Side Content */}
         <img

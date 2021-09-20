@@ -36,9 +36,17 @@ export const listsSlice = createSlice({
       });
       state.activeList = state.lists.length - 1;
     },
+    addMediaToList: (state, action) => {
+      const { listIdx, media } = action.payload;
+      if (media.Type === 'movie') {
+        state.lists[listIdx].movies.push(media);
+      } else {
+        state.lists[listIdx].series.push(media);
+      }
+    },
   },
 });
 
-export const { updateActiveList, addList } = listsSlice.actions;
+export const { updateActiveList, addList, addMediaToList } = listsSlice.actions;
 
 export default listsSlice.reducer;

@@ -142,6 +142,8 @@ const AddMediaModal: React.FC<Props> = ({
             <div className='input-container'>
               <div className='input-item media-title-input'>
                 <input
+                  type='text'
+                  name='title'
                   placeholder='Movie / Series Title'
                   onChange={handleInputChange}
                   value={mediaInput.title}
@@ -177,6 +179,7 @@ const AddMediaModal: React.FC<Props> = ({
               </div>
               <div className='input-item'>
                 <select
+                  name='type'
                   placeholder='Type'
                   disabled={selectedMedia != null}
                   value={selectedMedia ? selectedMedia.Type : undefined}
@@ -186,13 +189,21 @@ const AddMediaModal: React.FC<Props> = ({
                 </select>
               </div>
               <div className='input-item'>
-                <input placeholder='Current Timestamp / Episode (Optional)' />
+                <input
+                  type='text'
+                  name='timestamp'
+                  placeholder='Current Timestamp / Episode (Optional)'
+                />
               </div>
               <div className='input-item'>
-                <input placeholder='Where to Watch (Optional)' />
+                <input
+                  type='text'
+                  name='whereToWatch'
+                  placeholder='Where to Watch (Optional)'
+                />
               </div>
               <div className='input-item'>
-                <select placeholder='List' defaultValue={'DEFAULT'}>
+                <select name='list' placeholder='List' defaultValue={'DEFAULT'}>
                   {lists.map((list: List, idx: number) => {
                     return (
                       <option
@@ -226,7 +237,7 @@ const AddMediaModal: React.FC<Props> = ({
             )}
           </div>
           {/* Notes Text Area */}
-          <textarea placeholder='Notes (Optional)' />
+          <textarea name='notes' placeholder='Notes (Optional)' />
         </div>
         {/* Right Side Content */}
         <img

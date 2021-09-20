@@ -121,6 +121,7 @@
 .media-list-item {
   margin: 0 10px 15px;
   cursor: pointer;
+  max-width: 175px;
 }
 
 .media-list-item img {

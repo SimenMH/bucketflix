@@ -1,8 +1,10 @@
 import './styles.css';
 import { useEffect, useState, useCallback } from 'react';
+import { useAppDispatch } from '../../redux/hooks';
 import Modal from 'react-modal';
 import { Media, List } from '../../types';
 import { searchForTitle, searchByTitle, searchById } from './SearchMediaAPI';
+import { addMediaToList } from '../../redux/lists';
 
 interface Props {
   isOpen: boolean;
@@ -26,6 +28,7 @@ const AddMediaModal: React.FC<Props> = ({
   });
   const [searchResult, setSearchResult] = useState<any>([]);
   const [selectedMedia, setSelectedMedia] = useState<Media | null>(null);
+  const dispatch = useAppDispatch();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value: string = e.currentTarget.value;
@@ -69,6 +72,13 @@ const AddMediaModal: React.FC<Props> = ({
   const handleSelectMedia = async (media: any) => {
     const res = await searchById(media.imdbID);
     setSelectedMedia(res);
+  };
+
+  const handleAddMedia = () => {
+    if (selectedMedia) {
+      dispatch(addMediaToList({ listIdx: 0, media: selectedMedia }));
+      handleCloseModal();
+    }
   };
 
   useEffect(() => {
@@ -196,7 +206,7 @@ const AddMediaModal: React.FC<Props> = ({
       </div>
       <div
         className='modal-add-media-button'
-        onClick={() => handleCloseModal()} // Temporary onClick function
+        onClick={handleAddMedia} // Temporary onClick function
       >
         Add Movie/Series
       </div>

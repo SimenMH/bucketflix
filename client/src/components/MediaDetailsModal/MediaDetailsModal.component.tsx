@@ -1,37 +1,28 @@
 import './styles.css';
 import Modal from 'react-modal';
-// import { Media } from '../../types';
-
-const mediaToDisplay = {
-  imdbID: 'tt2306299',
-  Title: 'Vikings',
-  Year: '2013-2020',
-  Type: 'series',
-  Plot: 'Vikings transports us to the brutal and mysterious world of Ragnar Lothbrok, a Viking warrior and farmer who Yearns to explore - and raid - the distant shores across the ocean.',
-  Poster:
-    'https://m.media-amazon.com/images/M/MV5BODk4ZjU0NDUtYjdlOS00OTljLTgwZTUtYjkyZjk1NzExZGIzXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_SX300.jpg',
-  Timestamp: 'S2E4',
-  WhereToWatch: 'Netflix',
-  Notes: 'My notes here',
-};
+import { Media } from '../../types';
 
 interface Props {
-  // mediaToDisplay: Media;
+  isOpen: boolean;
+  handleCloseModal: Function;
+  mediaToDisplay: Media;
 }
 
-const MediaDetailsModal: React.FC<Props> = () => {
+const MediaDetailsModal: React.FC<Props> = ({
+  isOpen,
+  handleCloseModal,
+  mediaToDisplay,
+}) => {
   return (
     <Modal
       className='modal media-detail-modal'
       overlayClassName='modal-overlay'
-      isOpen={true}
+      isOpen={isOpen}
       shouldCloseOnOverlayClick={true}
+      onRequestClose={() => handleCloseModal()}
       contentLabel='Media Details Modal'
     >
-      <div
-        className='modal-close'
-        // onClick={() => handleCloseModal()}
-      />
+      <div className='modal-close' onClick={() => handleCloseModal()} />
       <div className='modal-title'>
         {mediaToDisplay.Title} (
         {mediaToDisplay.Type === 'series' ? 'TV-Series ' : ''}

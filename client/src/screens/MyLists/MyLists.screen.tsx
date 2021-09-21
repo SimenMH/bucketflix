@@ -10,14 +10,31 @@ import MediaDetailsModal from '../../components/MediaDetailsModal/MediaDetailsMo
 interface Props {}
 
 const MyLists: React.FC<Props> = () => {
+  const { activeList, lists } = useAppSelector(state => state.lists);
   const [addMediaModalVisible, setAddMediaModalVisible] =
     useState<boolean>(false);
-  const { activeList, lists } = useAppSelector(state => state.lists);
+  const [mediaDetailsModalVisible, setMediaDetailsModalVisible] =
+    useState<boolean>(false);
+  const [mediaToDisplay, setMediaToDisplay] = useState<Media | null>(null);
+
+  const handleShowMediaDetails = (media: Media) => {
+    setMediaToDisplay(media);
+    setMediaDetailsModalVisible(true);
+  };
+
+  const handleCloseMediaDetails = () => {
+    setMediaToDisplay(null);
+    setMediaDetailsModalVisible(false);
+  };
 
   const renderMedia = (mediaArray: Array<Media>): JSX.Element[] => {
     return mediaArray.map((media, idx) => {
       return (
-        <div className='media-list-item' key={idx}>
+        <div
+          className='media-list-item'
+          key={idx}
+          onClick={() => handleShowMediaDetails(media)}
+        >
           <img src={media.Poster} alt='movie-poster' />
           <h3>{media.Title}</h3>
         </div>
@@ -37,7 +54,13 @@ const MyLists: React.FC<Props> = () => {
         lists={lists}
         activeList={activeList}
       />
-      <MediaDetailsModal />
+      {mediaToDisplay && (
+        <MediaDetailsModal
+          isOpen={mediaDetailsModalVisible}
+          handleCloseModal={handleCloseMediaDetails}
+          mediaToDisplay={mediaToDisplay}
+        />
+      )}
       <MyListsSidebar lists={lists} activeList={activeList} />
       <div className='mylists-content'>
         <div className='mylists-option-buttons'>

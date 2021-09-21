@@ -24,9 +24,13 @@ const MediaDetailsModal: React.FC<Props> = ({
     >
       <div className='modal-close' onClick={() => handleCloseModal()} />
       <div className='modal-title'>
-        {mediaToDisplay.Title} (
-        {mediaToDisplay.Type === 'series' ? 'TV-Series ' : ''}
-        {mediaToDisplay.Year.split('-')[0]})
+        {mediaToDisplay.Title}{' '}
+        {mediaToDisplay.Year && (
+          <span>
+            ({mediaToDisplay.Type === 'series' ? 'TV-Series ' : ''}
+            {mediaToDisplay.Year.split('-')[0]})
+          </span>
+        )}
       </div>
       <div className='faded-seperator' />
       <div className='media-details-modal-content'>

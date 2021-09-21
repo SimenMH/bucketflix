@@ -3,7 +3,7 @@
 }
 
 .modal-title {
-  font-size: 36px;
+  font-size: 32px;
   margin-right: 30px;
 }
 
@@ -11,6 +11,9 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   margin-top: 20px;
   margin-bottom: 60px;
 }
@@ -49,5 +52,30 @@
 
 .media-details .media-details-description {
   color: #c0c0c0;
+}
+
+.media-details-button-container {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  bottom: 20px;
+  right: 30px;
+}
+
+.media-details-button {
+  font-size: 16px;
+  height: 30px;
+  padding: 0 10px;
+  line-height: 30px;
+  border-radius: 5px;
+  background-color: #526774;
+  -webkit-box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.25);
+          box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.media-details-button:first-child {
+  margin-right: 15px;
 }
 /*# sourceMappingURL=styles.css.map */

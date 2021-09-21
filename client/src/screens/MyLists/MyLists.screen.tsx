@@ -5,6 +5,7 @@ import { Media } from '../../types';
 
 import MyListsSidebar from '../../components/MyListsSidebar/MyListsSidebar.component';
 import AddMediaModal from '../../components/AddMediaModal/AddMediaModal.component';
+import MediaDetailsModal from '../../components/MediaDetailsModal/MediaDetailsModal.component';
 
 interface Props {}
 
@@ -36,6 +37,7 @@ const MyLists: React.FC<Props> = () => {
         lists={lists}
         activeList={activeList}
       />
+      <MediaDetailsModal />
       <MyListsSidebar lists={lists} activeList={activeList} />
       <div className='mylists-content'>
         <div className='mylists-option-buttons'>

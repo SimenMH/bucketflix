@@ -56,10 +56,11 @@ const MediaDetailsModal: React.FC<Props> = ({
                 <div className='faded-seperator' />
               </div>
             )}
-            {/* Should be "Current timestamp" if type is movie */}
             {mediaToDisplay.Timestamp && (
               <p>
-                Current episode: <span>{mediaToDisplay.Timestamp}</span>
+                Current{' '}
+                {mediaToDisplay.Type === 'movie' ? 'timestamp' : 'episode'}:{' '}
+                <span>{mediaToDisplay.Timestamp}</span>
               </p>
             )}
             {mediaToDisplay.WhereToWatch && (

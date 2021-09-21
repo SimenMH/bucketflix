@@ -1,7 +1,7 @@
 const baseUrl = `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}`;
 
 export const searchForTitle = (title: string) => {
-  title = title.replace(' ', '+');
+  title = title.trim().replace(' ', '+');
   return fetch(`${baseUrl}&s=${title}`)
     .then(res => res.json())
     .then(data => data)
@@ -16,7 +16,7 @@ export const searchById = (imdbID: string) => {
 };
 
 export const searchByTitle = (title: string) => {
-  title = title.replace(' ', '+');
+  title = title.trim().replace(' ', '+');
   return fetch(`${baseUrl}&t=${title}`)
     .then(res => res.json())
     .then(data => data)

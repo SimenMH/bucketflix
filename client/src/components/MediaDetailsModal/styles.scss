@@ -1,6 +1,5 @@
 .media-detail-modal {
-  width: 50%;
-  max-width: 745px;
+  min-width: 425px;
 }
 
 .modal-title {
@@ -22,6 +21,9 @@
 }
 
 .media-details {
+  width: 35vw;
+  max-width: 525px;
+
   .faded-seperator {
     margin-top: 15px;
     margin-bottom: 25px;

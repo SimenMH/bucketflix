@@ -27,7 +27,7 @@ const AddMediaModal: React.FC<Props> = ({
     list: lists[activeList].name,
     notes: '',
   });
-  const [searchResult, setSearchResult] = useState<any>([]);
+  const [searchResult, setSearchResult] = useState<Media[]>([]);
   const [selectedMedia, setSelectedMedia] = useState<Media | null>(null);
   const dispatch = useAppDispatch();
 
@@ -77,7 +77,7 @@ const AddMediaModal: React.FC<Props> = ({
     }
   }, [mediaInput.title]);
 
-  const handleSelectMedia = async (media: any) => {
+  const handleSelectMedia = async (media: Media) => {
     try {
       const res = await searchById(media.imdbID);
       setSelectedMedia(res);
@@ -192,7 +192,7 @@ const AddMediaModal: React.FC<Props> = ({
                   value={mediaInput.title}
                 />
                 <div className='suggestions'>
-                  {searchResult.map((media: any, idx: number) => {
+                  {searchResult.map((media, idx) => {
                     return (
                       <div
                         className='suggestion-item'
@@ -254,7 +254,7 @@ const AddMediaModal: React.FC<Props> = ({
                   value={mediaInput.list}
                   onChange={handleInputChange}
                 >
-                  {lists.map((list: List, idx: number) => {
+                  {lists.map((list, idx) => {
                     return (
                       <option value={list.name} key={idx}>
                         {list.name}

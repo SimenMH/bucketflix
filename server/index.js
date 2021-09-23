@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import router from './router';
+import router from './router.js';
+import connectDB from './config/db.js';
 
 dotenv.config();
 
@@ -11,6 +12,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(router);
 
+connectDB();
 app.listen(
   PORT,
   console.log(

@@ -46,7 +46,7 @@
   text-decoration: underline;
 }
 
-.mylists-filter-button:first-child {
+.mylists-active-filter-button {
   color: inherit;
   text-decoration: underline;
 }

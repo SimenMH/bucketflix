@@ -67,19 +67,25 @@ const MyLists: React.FC<Props> = () => {
         <div className='mylists-option-buttons'>
           <div className='mylists-options-left'>
             <div
-              className='mylists-filter-button'
+              className={`mylists-filter-button ${
+                filter === 'all' ? 'mylists-active-filter-button' : ''
+              }`}
               onClick={() => setFilter('all')}
             >
               All
             </div>
             <div
-              className='mylists-filter-button'
+              className={`mylists-filter-button ${
+                filter === 'movies' ? 'mylists-active-filter-button' : ''
+              }`}
               onClick={() => setFilter('movies')}
             >
               Movies
             </div>
             <div
-              className='mylists-filter-button'
+              className={`mylists-filter-button ${
+                filter === 'series' ? 'mylists-active-filter-button' : ''
+              }`}
               onClick={() => setFilter('series')}
             >
               Series

@@ -33,13 +33,11 @@
   &:hover {
     text-decoration: underline;
   }
+}
 
-  // Temporary - Styling for currently selected filter
-  &:first-child {
-    color: inherit;
-    text-decoration: underline;
-  }
-  //
+.mylists-active-filter-button {
+  color: inherit;
+  text-decoration: underline;
 }
 
 .mylists-options-right {

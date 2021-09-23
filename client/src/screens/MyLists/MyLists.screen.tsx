@@ -11,6 +11,7 @@ interface Props {}
 
 const MyLists: React.FC<Props> = () => {
   const { activeList, lists } = useAppSelector(state => state.lists);
+  const [filter, setFilter] = useState('all');
   const [addMediaModalVisible, setAddMediaModalVisible] =
     useState<boolean>(false);
   const [mediaDetailsModalVisible, setMediaDetailsModalVisible] =
@@ -89,30 +90,32 @@ const MyLists: React.FC<Props> = () => {
         </div>
         <div className='media-list-container'>
           {/* Movies */}
-          {lists[activeList].movies.length > 0 && (
-            <div>
-              <div className='media-category'>
-                <h2>Movies</h2>
-                <div className='faded-seperator' />
+          {lists[activeList].movies.length > 0 &&
+            (filter === 'series' || filter === 'all') && (
+              <div>
+                <div className='media-category'>
+                  <h2>Movies</h2>
+                  <div className='faded-seperator' />
+                </div>
+                <div className='media-list-items-container'>
+                  {renderMedia(lists[activeList].movies)}
+                </div>
               </div>
-              <div className='media-list-items-container'>
-                {renderMedia(lists[activeList].movies)}
-              </div>
-            </div>
-          )}
+            )}
           {/*  */}
           {/* TV-Series */}
-          {lists[activeList].series.length > 0 && (
-            <div>
-              <div className='media-category'>
-                <h2>TV-Series</h2>
-                <div className='faded-seperator' />
+          {lists[activeList].series.length > 0 &&
+            (filter === 'series' || filter === 'all') && (
+              <div>
+                <div className='media-category'>
+                  <h2>TV-Series</h2>
+                  <div className='faded-seperator' />
+                </div>
+                <div className='media-list-items-container'>
+                  {renderMedia(lists[activeList].series)}
+                </div>
               </div>
-              <div className='media-list-items-container'>
-                {renderMedia(lists[activeList].series)}
-              </div>
-            </div>
-          )}
+            )}
           {/*  */}
         </div>
       </div>

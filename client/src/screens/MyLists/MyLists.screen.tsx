@@ -66,9 +66,24 @@ const MyLists: React.FC<Props> = () => {
       <div className='mylists-content'>
         <div className='mylists-option-buttons'>
           <div className='mylists-options-left'>
-            <div className='mylists-filter-button'>All</div>
-            <div className='mylists-filter-button'>Movies</div>
-            <div className='mylists-filter-button'>Series</div>
+            <div
+              className='mylists-filter-button'
+              onClick={() => setFilter('all')}
+            >
+              All
+            </div>
+            <div
+              className='mylists-filter-button'
+              onClick={() => setFilter('movies')}
+            >
+              Movies
+            </div>
+            <div
+              className='mylists-filter-button'
+              onClick={() => setFilter('series')}
+            >
+              Series
+            </div>
           </div>
           <div className='mylists-options-right'>
             <div
@@ -91,7 +106,7 @@ const MyLists: React.FC<Props> = () => {
         <div className='media-list-container'>
           {/* Movies */}
           {lists[activeList].movies.length > 0 &&
-            (filter === 'series' || filter === 'all') && (
+            (filter === 'movies' || filter === 'all') && (
               <div>
                 <div className='media-category'>
                   <h2>Movies</h2>

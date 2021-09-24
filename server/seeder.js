@@ -26,8 +26,6 @@ const importData = async () => {
       });
     });
 
-    console.log(sampleLists);
-
     await List.insertMany(sampleLists);
 
     console.log('Data Imported!');

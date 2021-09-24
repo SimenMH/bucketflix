@@ -23,10 +23,10 @@ const userSchema = mongoose.Schema(
 userSchema.pre('save', async next => {
   if (!this.isModified('password')) {
     next();
-  } else {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
   }
+
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
 });
 
 userSchema.methods.matchPassword = async enteredPassword => {

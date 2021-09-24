@@ -3,7 +3,7 @@ import User from '../models/userModel.js';
 
 const createUser = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
-  const userExists = User.findOne({
+  const userExists = await User.findOne({
     $or: [{ username }, { email }],
   });
 

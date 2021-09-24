@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const mediaSchema = mongoose.Schema({
-  imdb: {
+  imdbID: {
     type: String,
     required: true,
   },

@@ -16,6 +16,11 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    lists: {
+      type: [mongoose.Schema.Types.ObjectId],
+      required: true,
+      default: [],
+    },
   },
   { timestamps: true }
 );
@@ -29,7 +34,7 @@ userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-userSchema.methods.matchPassword = async enteredPassword => {
+userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 

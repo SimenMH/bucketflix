@@ -18,15 +18,18 @@ const importData = async () => {
 
     const createdUsers = await User.insertMany(users);
 
-    const sampleLists = [];
+    for (let i = 0; i < createdUsers.length; i++) {
+      const user = createdUsers[i];
 
-    createdUsers.forEach(user => {
-      lists.forEach(list => {
-        sampleLists.push({ ...list, user_id: user._id });
-      });
-    });
+      for (let j = 0; j < lists.length; j++) {
+        const list = lists[j];
 
-    await List.insertMany(sampleLists);
+        const createdList = await List.create({ ...list, user_id: user._id });
+
+        user.lists.push(createdList._id);
+        await user.save();
+      }
+    }
 
     console.log('Data Imported!');
     process.exit();

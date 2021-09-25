@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const mediaSchema = mongoose.Schema({
   imdbID: {
     type: String,
-    required: true,
+    default: '',
   },
   Title: {
     type: String,
@@ -11,7 +11,7 @@ const mediaSchema = mongoose.Schema({
   },
   Year: {
     type: String,
-    required: true,
+    default: '',
   },
   Type: {
     type: String,
@@ -19,23 +19,20 @@ const mediaSchema = mongoose.Schema({
   },
   Plot: {
     type: String,
-    required: true,
+    default: '',
   },
-  Poster: {
-    type: String,
-    required: true,
-  },
+  Poster: String,
   Timestamp: {
     type: String,
-    required: true,
+    default: '',
   },
   WhereToWatch: {
     type: String,
-    required: true,
+    default: '',
   },
   Notes: {
     type: String,
-    required: true,
+    default: '',
   },
 });
 

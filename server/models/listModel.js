@@ -13,7 +13,7 @@ const listSchema = mongoose.Schema({
   },
   movies: [mediaSchema],
   series: [mediaSchema],
-  /*shared_users: [
+  shared_users: [
     {
       user_id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -22,11 +22,10 @@ const listSchema = mongoose.Schema({
       },
       can_edit: {
         type: Boolean,
-        required: true,
         default: false,
       },
     },
-  ], */
+  ],
 });
 
 const List = mongoose.model('List', listSchema);

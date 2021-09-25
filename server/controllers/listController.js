@@ -2,6 +2,17 @@ import asyncHandler from 'express-async-handler';
 import List from '../models/listModel.js';
 import User from '../models/userModel.js';
 
+const getLists = asyncHandler(async (req, res) => {
+  const user_id = req.user._id;
+
+  const lists = await List.find({ user_id }).select('-user_id');
+  const shared_lists = await List.find({
+    'shared_users.user_id': user_id,
+  }).select('-shared_users');
+
+  res.status(200).json({ lists, shared_lists });
+});
+
 const createList = asyncHandler(async (req, res) => {
   const { name } = req.body;
   const user = await User.findById(req.user._id);
@@ -26,4 +37,4 @@ const createList = asyncHandler(async (req, res) => {
   }
 });
 
-export { createList };
+export { createList, getLists };

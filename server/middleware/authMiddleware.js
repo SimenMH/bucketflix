@@ -1,8 +1,7 @@
 import jwt from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
-import User from '../models/userModel.js';
 
-const protect = asyncHandler(async (req, res, next) => {
+const authenticate = asyncHandler(async (req, res, next) => {
   let token;
   if (
     req.headers.authorization &&
@@ -12,16 +11,15 @@ const protect = asyncHandler(async (req, res, next) => {
       token = req.headers.authorization.split(' ')[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      req.user = await User.findById(decoded.id).select('-password');
+      req.user = decoded;
 
-      if (!req.user) {
+      if (!req.user._id) {
         res.status(401);
         throw new Error('Unauthorized, could not find user');
       }
 
       next();
     } catch (error) {
-      console.error(error);
       res.status(401);
       throw new Error('Unauthorized, token invalid');
     }
@@ -33,4 +31,4 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
-export { protect };
+export { authenticate };

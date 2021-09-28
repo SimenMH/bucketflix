@@ -1,6 +1,9 @@
 import asyncHandler from 'express-async-handler';
-import generateToken from '../utils/generateToken.js';
+import jwt from 'jsonwebtoken';
+import generateAccessToken from '../utils/generateAccessToken.js';
+
 import User from '../models/userModel.js';
+import RefreshToken from '../models/refreshTokenModel.js';
 
 const registerUser = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
@@ -33,12 +36,31 @@ const loginUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user && (await user.matchPassword(password))) {
-    res.json({
+    const refreshToken = jwt.sign(
+      { user_id: user._id },
+      process.env.REFRESH_TOKEN_SECRET
+    );
+
+    await RefreshToken.create({
+      user_id: user._id,
+      token: refreshToken,
+      last_used: new Date(),
+    });
+
+    const accessToken = generateAccessToken({
       _id: user._id,
       username: user.username,
       email: user.email,
-      token: generateToken(user._id),
     });
+
+    res
+      .status(201)
+      .cookie('refresh-token', refreshToken, {
+        path: '/',
+        httpOnly: true,
+        // secure: true,
+      })
+      .json({ accessToken });
   } else {
     res.status(401);
     throw new Error('Invalid email or password');

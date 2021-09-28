@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 
 import User from './models/userModel.js';
 import List from './models/listModel.js';
+import RefreshToken from './models/refreshTokenModel.js';
 
 import users from './data/users.js';
 import lists from './data/lists.js';
@@ -15,6 +16,7 @@ const importData = async () => {
   try {
     await User.deleteMany();
     await List.deleteMany();
+    await RefreshToken.deleteMany();
 
     for (let i = 0; i < users.length; i++) {
       const createdUser = await User.create(users[i]);
@@ -42,6 +44,7 @@ const destroyData = async () => {
   try {
     await User.deleteMany();
     await List.deleteMany();
+    await RefreshToken.deleteMany();
 
     console.log('Data Destroyed!');
     process.exit();

@@ -22,7 +22,7 @@ const createAccessToken = asyncHandler(async (req, res) => {
     async (err, { user_id }) => {
       if (err) return res.sendStatus(403);
 
-      const user = await User.findOne({ _id: user_id });
+      const user = await User.findById(user_id);
       const accessToken = generateAccessToken({
         _id: user._id,
         username: user.username,

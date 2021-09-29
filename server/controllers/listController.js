@@ -37,4 +37,38 @@ const createList = asyncHandler(async (req, res) => {
   }
 });
 
-export { createList, getLists };
+const addMedia = asyncHandler(async (req, res) => {
+  const { list_id, media } = req.body;
+  if (!media.imdbID || !media.Title || !media.Type) {
+    res.status(400);
+    throw new Error('Invalid media data');
+  }
+
+  const category = media.Type === 'movie' ? 'movies' : 'series';
+  const list = await List.findById(list_id);
+
+  if (!list) {
+    res.status(404);
+    throw new Error('Could not find any lists with this ID');
+  }
+
+  if (list.user_id != req.user._id) {
+    res.status(403);
+    throw new Error('Unauthorized to edit this list');
+  }
+
+  const mediaExists = list[category].filter(
+    mediaItem =>
+      mediaItem.imdbID === media.imdbID && mediaItem.Title === media.Title
+  );
+  if (mediaExists.length) {
+    res.status(400);
+    throw new Error('Media already exists in this list');
+  }
+
+  list[category].push(media);
+  await list.save();
+  res.status(201).json(list);
+});
+
+export { getLists, createList, addMedia };

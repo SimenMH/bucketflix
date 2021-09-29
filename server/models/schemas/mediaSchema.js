@@ -21,7 +21,10 @@ const mediaSchema = mongoose.Schema({
     type: String,
     default: '',
   },
-  Poster: String,
+  Poster: {
+    type: String,
+    default: '',
+  },
   Timestamp: {
     type: String,
     default: '',

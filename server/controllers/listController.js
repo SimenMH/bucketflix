@@ -3,11 +3,11 @@ import List from '../models/listModel.js';
 import User from '../models/userModel.js';
 
 const getLists = asyncHandler(async (req, res) => {
-  const user_id = req.user._id;
+  const userID = req.user._id;
 
-  const lists = await List.find({ user_id }).select('-user_id');
+  const lists = await List.find({ userID }).select('-user_id');
   const shared_lists = await List.find({
-    'shared_users.user_id': user_id,
+    'shared_users.user_id': userID,
   }).select('-shared_users');
 
   res.status(200).json({ lists, shared_lists });
@@ -38,14 +38,14 @@ const createList = asyncHandler(async (req, res) => {
 });
 
 const addMedia = asyncHandler(async (req, res) => {
-  const { list_id, media } = req.body;
+  const { listID, media } = req.body;
   if (!media.imdbID || !media.Title || !media.Type) {
     res.status(400);
     throw new Error('Invalid media data');
   }
 
   const category = media.Type === 'movie' ? 'movies' : 'series';
-  const list = await List.findById(list_id);
+  const list = await List.findById(listID);
 
   if (!list) {
     res.status(404);
@@ -71,4 +71,36 @@ const addMedia = asyncHandler(async (req, res) => {
   res.status(201).json(list);
 });
 
-export { getLists, createList, addMedia };
+const editMedia = asyncHandler(async (req, res) => {
+  const { listID, mediaIdx, updatedMedia } = req.body;
+
+  const list = await List.findById(listID);
+
+  if (!list) {
+    res.status(404);
+    throw new Error('Could not find any lists with this ID');
+  }
+
+  if (list.user_id != req.user._id) {
+    res.status(403);
+    throw new Error('Unauthorized to edit this list');
+  }
+
+  const category = updatedMedia.Type === 'movie' ? 'movies' : 'series';
+  const media = list[category][mediaIdx];
+
+  if (!media) {
+    res.status(404);
+    throw new Error('Media index out of range');
+  }
+
+  media.Timestamp = updatedMedia.Timestamp;
+  media.WhereToWatch = updatedMedia.WhereToWatch;
+  media.Notes = updatedMedia.Notes;
+
+  list[category][mediaIdx] = media;
+  await list.save();
+  res.status(201).json(list);
+});
+
+export { getLists, createList, addMedia, editMedia };

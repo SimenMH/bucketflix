@@ -5,6 +5,7 @@ import {
   createList,
   getLists,
   addMedia,
+  editMedia,
 } from './controllers/listController.js';
 import { createAccessToken } from './controllers/tokenController.js';
 
@@ -19,6 +20,7 @@ router.post('/users/login', loginUser);
 
 router.route('/lists').all(authenticate).get(getLists).post(createList);
 router.post('/lists/media', authenticate, addMedia);
+router.route('/lists/media').all(authenticate).post(addMedia).put(editMedia); // .delete()
 
 router.post('/token', createAccessToken);
 

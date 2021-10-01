@@ -94,6 +94,14 @@ const editMedia = asyncHandler(async (req, res) => {
     throw new Error('Media index out of range');
   }
 
+  if (
+    media.Title != updatedMedia.Title ||
+    media.imdbID != updatedMedia.imdbID
+  ) {
+    res.status(404);
+    throw new Error('Updated media does not match media index');
+  }
+
   media.Timestamp = updatedMedia.Timestamp;
   media.WhereToWatch = updatedMedia.WhereToWatch;
   media.Notes = updatedMedia.Notes;

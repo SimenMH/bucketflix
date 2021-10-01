@@ -100,7 +100,33 @@ const editMedia = asyncHandler(async (req, res) => {
 
   list[category][mediaIdx] = media;
   await list.save();
-  res.status(201).json(list);
+  res.status(200).json(list);
 });
 
-export { getLists, createList, addMedia, editMedia };
+const deleteMedia = asyncHandler(async (req, res) => {
+  const { listID, media } = req.body;
+
+  const list = await List.findById(listID);
+
+  if (!list) {
+    res.status(404);
+    throw new Error('Could not find any lists with this ID');
+  }
+
+  if (list.user_id != req.user._id) {
+    res.status(403);
+    throw new Error('Unauthorized to edit this list');
+  }
+
+  const category = media.Type === 'movie' ? 'movies' : 'series';
+
+  list[category] = list[category].filter(
+    mediaItem =>
+      mediaItem.imdbID != media.imdbID && mediaItem.Title != media.Title
+  );
+
+  await list.save();
+  res.status(200).json(list);
+});
+
+export { getLists, createList, addMedia, editMedia, deleteMedia };

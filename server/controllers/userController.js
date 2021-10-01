@@ -54,7 +54,7 @@ const loginUser = asyncHandler(async (req, res) => {
     });
 
     res
-      .status(201)
+      .status(200)
       .cookie('refresh-token', refreshToken, {
         path: '/',
         httpOnly: true,

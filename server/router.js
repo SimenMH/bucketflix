@@ -19,8 +19,12 @@ router.post('/users', registerUser);
 router.post('/users/login', loginUser);
 
 router.route('/lists').all(authenticate).get(getLists).post(createList);
-router.post('/lists/media', authenticate, addMedia);
-router.route('/lists/media').all(authenticate).post(addMedia).put(editMedia); // .delete()
+router
+  .route('/lists/media')
+  .all(authenticate)
+  .post(addMedia)
+  .put(editMedia)
+  .delete(deleteMedia);
 
 router.post('/token', createAccessToken);
 

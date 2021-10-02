@@ -5,6 +5,7 @@ import {
   getLists,
   createList,
   editList,
+  deleteList,
   addMedia,
   editMedia,
 } from './controllers/listController.js';
@@ -24,7 +25,8 @@ router
   .all(authenticate)
   .get(getLists)
   .post(createList)
-  .put(editList);
+  .put(editList)
+  .delete(deleteList);
 router
   .route('/lists/media')
   .all(authenticate)

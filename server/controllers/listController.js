@@ -59,6 +59,25 @@ const editList = asyncHandler(async (req, res) => {
   res.status(200).json(list);
 });
 
+const deleteList = asyncHandler(async (req, res) => {
+  const { listID } = req.body;
+
+  const list = await List.findById(listID);
+
+  if (!list) {
+    res.status(404);
+    throw new Error('Could not find any lists with this ID');
+  }
+
+  if (list.user_id != req.user._id) {
+    res.status(403);
+    throw new Error('Unauthorized to edit this list');
+  }
+
+  await List.deleteOne({ _id: listID });
+  res.sendStatus(204);
+});
+
 const addMedia = asyncHandler(async (req, res) => {
   const { listID, media } = req.body;
   if (!media.imdbID || !media.Title || !media.Type) {
@@ -159,4 +178,12 @@ const deleteMedia = asyncHandler(async (req, res) => {
   res.status(200).json(list);
 });
 
-export { getLists, createList, editList, addMedia, editMedia, deleteMedia };
+export {
+  getLists,
+  createList,
+  editList,
+  deleteList,
+  addMedia,
+  editMedia,
+  deleteMedia,
+};

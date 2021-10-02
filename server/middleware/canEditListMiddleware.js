@@ -2,7 +2,6 @@ import asyncHandler from 'express-async-handler';
 import List from '../models/listModel.js';
 
 const canEditList = asyncHandler(async (req, res, next) => {
-  console.log('checking if can edit');
   const { listID } = req.body;
   const list = await List.findById(listID);
   if (!list) {

@@ -5,7 +5,7 @@ import User from '../models/userModel.js';
 const getLists = asyncHandler(async (req, res) => {
   const userID = req.user._id;
 
-  const lists = await List.find({ userID }).select('-user_id');
+  const lists = await List.find({ user_id: userID }).select('-user_id');
   const shared_lists = await List.find({
     'shared_users.user_id': userID,
   }).select('-shared_users');
@@ -35,19 +35,9 @@ const createList = asyncHandler(async (req, res) => {
 });
 
 const editList = asyncHandler(async (req, res) => {
-  const { listID, updatedValues } = req.body;
+  const { updatedValues } = req.body;
 
-  const list = await List.findById(listID);
-
-  if (!list) {
-    res.status(404);
-    throw new Error('Could not find any lists with this ID');
-  }
-
-  if (list.user_id != req.user._id) {
-    res.status(403);
-    throw new Error('Unauthorized to edit this list');
-  }
+  const list = req.list;
 
   if (updatedValues.name) list.name = updatedValues.name;
   if (updatedValues.sharedUsers) list.shared_users = updatedValues.shared_users;
@@ -58,18 +48,6 @@ const editList = asyncHandler(async (req, res) => {
 
 const deleteList = asyncHandler(async (req, res) => {
   const { listID } = req.body;
-
-  const list = await List.findById(listID);
-
-  if (!list) {
-    res.status(404);
-    throw new Error('Could not find any lists with this ID');
-  }
-
-  if (list.user_id != req.user._id) {
-    res.status(403);
-    throw new Error('Unauthorized to edit this list');
-  }
 
   await List.deleteOne({ _id: listID });
   res.sendStatus(204);

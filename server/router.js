@@ -1,5 +1,6 @@
 import express from 'express';
-import { authenticate } from './middleware/authMiddleware.js';
+import authenticate from './middleware/authMiddleware.js';
+import canEditList from './middleware/canEditListMiddleware.js';
 import { registerUser, loginUser } from './controllers/userController.js';
 import {
   getLists,
@@ -28,11 +29,12 @@ router
   .all(authenticate)
   .get(getLists)
   .post(createList)
+  .all(canEditList)
   .put(editList)
   .delete(deleteList);
 router
   .route('/lists/media')
-  .all(authenticate)
+  .all(authenticate, canEditList)
   .post(addMedia)
   .put(editMedia)
   .delete(deleteMedia);

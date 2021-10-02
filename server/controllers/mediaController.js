@@ -1,25 +1,14 @@
 import asyncHandler from 'express-async-handler';
-import List from '../models/listModel.js';
 
 const addMedia = asyncHandler(async (req, res) => {
-  const { listID, media } = req.body;
+  const { media } = req.body;
+  const list = req.list;
   if (!media.imdbID || !media.Title || !media.Type) {
     res.status(400);
     throw new Error('Invalid media data');
   }
 
   const category = media.Type === 'movie' ? 'movies' : 'series';
-  const list = await List.findById(listID);
-
-  if (!list) {
-    res.status(404);
-    throw new Error('Could not find any lists with this ID');
-  }
-
-  if (list.user_id != req.user._id) {
-    res.status(403);
-    throw new Error('Unauthorized to edit this list');
-  }
 
   const mediaExists = list[category].filter(
     mediaItem =>
@@ -36,19 +25,8 @@ const addMedia = asyncHandler(async (req, res) => {
 });
 
 const editMedia = asyncHandler(async (req, res) => {
-  const { listID, mediaIdx, updatedMedia } = req.body;
-
-  const list = await List.findById(listID);
-
-  if (!list) {
-    res.status(404);
-    throw new Error('Could not find any lists with this ID');
-  }
-
-  if (list.user_id != req.user._id) {
-    res.status(403);
-    throw new Error('Unauthorized to edit this list');
-  }
+  const { mediaIdx, updatedMedia } = req.body;
+  const list = req.list;
 
   const category = updatedMedia.Type === 'movie' ? 'movies' : 'series';
   const media = list[category][mediaIdx];
@@ -76,25 +54,14 @@ const editMedia = asyncHandler(async (req, res) => {
 });
 
 const deleteMedia = asyncHandler(async (req, res) => {
-  const { listID, media } = req.body;
-
-  const list = await List.findById(listID);
-
-  if (!list) {
-    res.status(404);
-    throw new Error('Could not find any lists with this ID');
-  }
-
-  if (list.user_id != req.user._id) {
-    res.status(403);
-    throw new Error('Unauthorized to edit this list');
-  }
+  const { media } = req.body;
+  const list = req.list;
 
   const category = media.Type === 'movie' ? 'movies' : 'series';
 
   list[category] = list[category].filter(
     mediaItem =>
-      mediaItem.imdbID != media.imdbID && mediaItem.Title != media.Title
+      mediaItem.imdbID != media.imdbID || mediaItem.Title != media.Title
   );
 
   await list.save();

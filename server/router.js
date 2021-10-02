@@ -2,8 +2,9 @@ import express from 'express';
 import { authenticate } from './middleware/authMiddleware.js';
 import { registerUser, loginUser } from './controllers/userController.js';
 import {
-  createList,
   getLists,
+  createList,
+  editList,
   addMedia,
   editMedia,
 } from './controllers/listController.js';
@@ -18,7 +19,12 @@ router.get('/', (req, res) => {
 router.post('/users', registerUser);
 router.post('/users/login', loginUser);
 
-router.route('/lists').all(authenticate).get(getLists).post(createList);
+router
+  .route('/lists')
+  .all(authenticate)
+  .get(getLists)
+  .post(createList)
+  .put(editList);
 router
   .route('/lists/media')
   .all(authenticate)

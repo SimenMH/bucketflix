@@ -6,9 +6,12 @@ import {
   createList,
   editList,
   deleteList,
+} from './controllers/listController.js';
+import {
   addMedia,
   editMedia,
-} from './controllers/listController.js';
+  deleteMedia,
+} from './controllers/mediaController.js';
 import { createAccessToken } from './controllers/tokenController.js';
 
 const router = express.Router();

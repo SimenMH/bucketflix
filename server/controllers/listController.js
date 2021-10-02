@@ -27,9 +27,6 @@ const createList = asyncHandler(async (req, res) => {
   const createdList = await List.create({ user_id: user._id, name });
 
   if (createdList) {
-    user.lists.push(createdList._id);
-    await user.save();
-
     res.status(201).json(createdList);
   } else {
     res.status(400);

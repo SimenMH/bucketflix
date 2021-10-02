@@ -16,11 +16,6 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    lists: {
-      type: [mongoose.Schema.Types.ObjectId],
-      required: true,
-      default: [],
-    },
   },
   { timestamps: true }
 );

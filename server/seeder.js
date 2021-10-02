@@ -22,13 +22,10 @@ const importData = async () => {
       const createdUser = await User.create(users[i]);
 
       for (let j = 0; j < lists.length; j++) {
-        const createdList = await List.create({
+        await List.create({
           ...lists[j],
           user_id: createdUser._id,
         });
-
-        createdUser.lists.push(createdList._id);
-        await createdUser.save();
       }
     }
 

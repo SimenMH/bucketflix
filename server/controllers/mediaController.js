@@ -1,4 +1,5 @@
 import asyncHandler from 'express-async-handler';
+import List from '../models/listModel.js';
 
 const addMedia = asyncHandler(async (req, res) => {
   const { media } = req.body;
@@ -25,47 +26,39 @@ const addMedia = asyncHandler(async (req, res) => {
 });
 
 const editMedia = asyncHandler(async (req, res) => {
-  const { mediaIdx, updatedMedia } = req.body;
-  const list = req.list;
+  const { listID, mediaID, type, updatedValues } = req.body;
 
-  const category = updatedMedia.Type === 'movie' ? 'movies' : 'series';
-  const media = list[category][mediaIdx];
-
-  if (!media) {
-    res.status(404);
-    throw new Error('Media index out of range');
+  if (!type) {
+    res.status(400);
+    throw new Error('Missing media type in request body');
   }
 
-  if (
-    media.Title != updatedMedia.Title ||
-    media.imdbID != updatedMedia.imdbID
-  ) {
-    res.status(404);
-    throw new Error('Updated media does not match media index');
-  }
+  const category = type === 'movie' ? 'movies' : 'series';
 
-  media.Timestamp = updatedMedia.Timestamp;
-  media.WhereToWatch = updatedMedia.WhereToWatch;
-  media.Notes = updatedMedia.Notes;
+  const updatedList = await List.findOneAndUpdate(
+    { _id: listID, [category]: { $elemMatch: { _id: mediaID } } },
+    {
+      $set: {
+        [`${category}.$.Timestamp`]: updatedValues.Timestamp,
+        [`${category}.$.WhereToWatch`]: updatedValues.WhereToWatch,
+        [`${category}.$.Notes`]: updatedValues.Notes,
+      },
+    },
+    { new: true }
+  );
 
-  list[category][mediaIdx] = media;
-  await list.save();
-  res.status(200).json(list);
+  res.status(200).json(updatedList);
 });
 
 const deleteMedia = asyncHandler(async (req, res) => {
-  const { media } = req.body;
+  const { mediaID } = req.body;
   const list = req.list;
 
-  const category = media.Type === 'movie' ? 'movies' : 'series';
-
-  list[category] = list[category].filter(
-    mediaItem =>
-      mediaItem.imdbID != media.imdbID || mediaItem.Title != media.Title
-  );
+  await list.movies.pull(mediaID);
+  await list.series.pull(mediaID);
 
   await list.save();
   res.status(200).json(list);
 });
 
-export { addMedia, editMedia, deleteMedia };
+export { addMedia, editMedia, deleteMedia, testMedia };

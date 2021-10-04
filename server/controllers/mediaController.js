@@ -9,7 +9,13 @@ const addMedia = asyncHandler(async (req, res) => {
     throw new Error('Invalid media data');
   }
 
-  const category = media.Type === 'movie' ? 'movies' : 'series';
+  const category = getCategory(media.Type);
+  if (!category) {
+    res.status(400);
+    throw new Error(
+      "Invalid or missing media type. Media type should be either 'movie' or 'series'"
+    );
+  }
 
   const mediaExists = list[category].filter(
     mediaItem =>
@@ -28,12 +34,22 @@ const addMedia = asyncHandler(async (req, res) => {
 const editMedia = asyncHandler(async (req, res) => {
   const { listID, mediaID, type, updatedValues } = req.body;
 
-  if (!type) {
+  if (!listID) {
     res.status(400);
-    throw new Error('Missing media type in request body');
+    throw new Error('Missing list ID in request body');
+  }
+  if (!mediaID) {
+    res.status(400);
+    throw new Error('Missing media ID in request body');
   }
 
-  const category = type === 'movie' ? 'movies' : 'series';
+  const category = getCategory(type);
+  if (!category) {
+    res.status(400);
+    throw new Error(
+      "Invalid or missing media type. Media type should be either 'movie' or 'series'"
+    );
+  }
 
   const updatedList = await List.findOneAndUpdate(
     { _id: listID, [category]: { $elemMatch: { _id: mediaID } } },
@@ -60,5 +76,13 @@ const deleteMedia = asyncHandler(async (req, res) => {
   await list.save();
   res.status(200).json(list);
 });
+
+const getCategory = type => {
+  if (type === 'movie') {
+    return 'movies';
+  } else if (type === 'series') {
+    return 'series';
+  }
+};
 
 export { addMedia, editMedia, deleteMedia, testMedia };

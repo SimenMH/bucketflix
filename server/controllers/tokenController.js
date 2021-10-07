@@ -14,7 +14,9 @@ const createAccessToken = asyncHandler(async (req, res) => {
 
   const dateNow = new Date();
   const elapsedTimeSinceUse = (dateNow - tokenExists.last_used) / 1000;
-  if (elapsedTimeSinceUse > 2.628e6) return res.sendStatus(403);
+  // If time since use is greater than 1 year
+  if (elapsedTimeSinceUse > 365 * 24 * 60 * 60 * 1000)
+    return res.sendStatus(403);
 
   jwt.verify(
     refreshToken,
@@ -29,7 +31,15 @@ const createAccessToken = asyncHandler(async (req, res) => {
         email: user.email,
       });
 
-      res.status(201).json({ accessToken });
+      res
+        .status(201)
+        .cookie('refresh-token', refreshToken, {
+          path: '/',
+          httpOnly: true,
+          maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year
+          // secure: true,
+        })
+        .json({ accessToken });
 
       tokenExists.last_used = new Date();
       await tokenExists.save();

@@ -85,4 +85,4 @@ const getCategory = type => {
   }
 };
 
-export { addMedia, editMedia, deleteMedia, testMedia };
+export { addMedia, editMedia, deleteMedia };

@@ -1,6 +1,7 @@
 import './styles.css';
-import { useState } from 'react';
-import { useAppSelector } from '../../redux/hooks';
+import { useState, useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+import { getLists } from '../../redux/lists';
 import { Media } from '../../types';
 
 import MyListsSidebar from '../../components/MyListsSidebar/MyListsSidebar.component';
@@ -17,6 +18,7 @@ const MyLists: React.FC<Props> = () => {
   const [mediaDetailsModalVisible, setMediaDetailsModalVisible] =
     useState<boolean>(false);
   const [mediaToDisplay, setMediaToDisplay] = useState<Media | null>(null);
+  const dispatch = useAppDispatch();
 
   const handleShowMediaDetails = (media: Media) => {
     setMediaToDisplay(media);
@@ -46,6 +48,10 @@ const MyLists: React.FC<Props> = () => {
   const handleAddMediaClose = () => {
     setAddMediaModalVisible(false);
   };
+
+  useEffect(() => {
+    dispatch(getLists());
+  }, [dispatch]);
 
   return (
     <div className='mylists-screen'>

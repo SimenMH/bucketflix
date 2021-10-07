@@ -1,10 +1,10 @@
 import './styles.css';
 import { useEffect, useState, useCallback } from 'react';
-import { useAppDispatch } from '../../redux/hooks';
+// import { useAppDispatch } from '../../redux/hooks';
 import Modal from 'react-modal';
 import { Media, List } from '../../types';
 import { searchForTitle, searchByTitle, searchById } from './SearchMediaAPI';
-import { addMediaToList } from '../../redux/lists';
+// import { addMediaToList } from '../../redux/lists';
 
 interface Props {
   isOpen: boolean;
@@ -29,7 +29,7 @@ const AddMediaModal: React.FC<Props> = ({
   });
   const [searchResult, setSearchResult] = useState<Media[]>([]);
   const [selectedMedia, setSelectedMedia] = useState<Media | null>(null);
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -136,7 +136,7 @@ const AddMediaModal: React.FC<Props> = ({
       // TODO: Improve this alert
       alert('Movie/Series already exists in this list.');
     } else {
-      dispatch(addMediaToList({ listIdx, media: newMediaObj }));
+      // dispatch(addMediaToList({ listIdx, media: newMediaObj }));
       handleCloseModal();
     }
   };

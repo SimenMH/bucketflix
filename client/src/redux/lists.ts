@@ -22,13 +22,7 @@ interface ListState {
 
 const initialState: ListState = {
   activeList: 0,
-  lists: [
-    {
-      name: 'Personal',
-      movies: [...tempMovies],
-      series: [...tempSeries],
-    },
-  ],
+  lists: [],
   status: null,
 };
 

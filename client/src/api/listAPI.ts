@@ -14,8 +14,6 @@ export const getListsAPI = async (thunkAPI: any) => {
       },
     });
 
-    console.log(res);
-
     return res.data;
   } catch (err: any) {
     const data = err.response.data;

@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { addListAPI, getListsAPI } from '../api/listAPI';
 import { List } from '../types';
 
-import { tempMovies, tempSeries } from './TempData';
+// import { tempMovies, tempSeries } from './TempData';
 
 export const getLists = createAsyncThunk(
   'lists/getLists',

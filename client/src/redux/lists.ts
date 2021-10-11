@@ -33,6 +33,9 @@ export const listsSlice = createSlice({
     updateActiveList: (state, action) => {
       state.activeList = action.payload;
     },
+    resetListState: state => {
+      state = { activeList: 0, lists: [], status: null };
+    },
     // addMediaToList: (state, action) => {
     //   const { listIdx, media } = action.payload;
     //   if (media.Type === 'movie') {
@@ -70,6 +73,6 @@ export const listsSlice = createSlice({
   },
 });
 
-export const { updateActiveList } = listsSlice.actions;
+export const { updateActiveList, resetListState } = listsSlice.actions;
 
 export default listsSlice.reducer;

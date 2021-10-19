@@ -1,5 +1,6 @@
 import { axiosAuthInstance } from './axiosInstances';
 import Cookies from 'universal-cookie';
+import { resetUserState } from '../redux/user';
 import { resetListState } from '../redux/lists';
 
 const cookies = new Cookies();
@@ -8,7 +9,7 @@ const errorHandler = (err: any, dispatch: any) => {
   const data = err.response.data;
 
   if (err.response.status === 403) {
-    // Logout user in client
+    dispatch(resetUserState());
     dispatch(resetListState());
     cookies.remove('access_token');
   }

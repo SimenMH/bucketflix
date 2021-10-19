@@ -12,6 +12,7 @@ interface Props {}
 
 const MyLists: React.FC<Props> = () => {
   const { activeList, lists } = useAppSelector(state => state.lists);
+  const { loggedIn } = useAppSelector(state => state.user);
   const [filter, setFilter] = useState('all');
   const [addMediaModalVisible, setAddMediaModalVisible] =
     useState<boolean>(false);
@@ -50,8 +51,10 @@ const MyLists: React.FC<Props> = () => {
   };
 
   useEffect(() => {
-    dispatch(getLists());
-  }, [dispatch]);
+    if (loggedIn) {
+      dispatch(getLists());
+    }
+  }, [loggedIn, dispatch]);
 
   return (
     <div className='mylists-screen'>

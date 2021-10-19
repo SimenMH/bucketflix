@@ -34,7 +34,9 @@ export const listsSlice = createSlice({
       state.activeList = action.payload;
     },
     resetListState: state => {
-      state = { activeList: 0, lists: [], status: null };
+      state.activeList = 0;
+      state.lists = [];
+      state.status = null;
     },
     // addMediaToList: (state, action) => {
     //   const { listIdx, media } = action.payload;

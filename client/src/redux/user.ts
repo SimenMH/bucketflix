@@ -1,10 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { loginUserAPI } from '../api/userAPI';
+import Cookies from 'universal-cookie';
+import jwt_decode from 'jwt-decode';
+import { loginUserAPI, logoutUserAPI } from '../api/userAPI';
 import { LoginCredentials } from '../types';
+
+const cookies = new Cookies();
 
 export const userLogin = createAsyncThunk(
   'user/userLogin',
   async (loginCredentials: LoginCredentials) => loginUserAPI(loginCredentials)
+);
+
+export const userLogout = createAsyncThunk(
+  'user/userLogout',
+  async (_, thunkAPI) => logoutUserAPI(thunkAPI)
 );
 
 interface UserState {
@@ -23,13 +32,29 @@ const initialState: UserState = {
 
 export const userSlice = createSlice({
   name: 'user',
-  initialState: { ...initialState },
+  initialState,
   reducers: {
+    sessionLogin: state => {
+      const accessToken = cookies.get('access-token');
+
+      if (accessToken) {
+        const decoded: { username: string; email: string } =
+          jwt_decode(accessToken);
+
+        state.username = decoded.username;
+        state.email = decoded.email;
+        state.loggedIn = true;
+      }
+    },
     resetUserState: state => {
-      state = { ...initialState };
+      state.username = '';
+      state.email = '';
+      state.loggedIn = false;
+      state.status = null;
     },
   },
   extraReducers: builder => {
+    // User Login
     builder.addCase(userLogin.pending, state => {
       state.status = 'loading';
     });
@@ -42,9 +67,23 @@ export const userSlice = createSlice({
     builder.addCase(userLogin.rejected, state => {
       state.status = 'failed';
     });
+
+    // User Logout
+    builder.addCase(userLogout.pending, state => {
+      state.status = 'loading';
+    });
+    builder.addCase(userLogout.fulfilled, state => {
+      state.username = '';
+      state.email = '';
+      state.loggedIn = false;
+      state.status = 'success';
+    });
+    builder.addCase(userLogout.rejected, state => {
+      state.status = 'failed';
+    });
   },
 });
 
-export const { resetUserState } = userSlice.actions;
+export const { sessionLogin, resetUserState } = userSlice.actions;
 
 export default userSlice.reducer;

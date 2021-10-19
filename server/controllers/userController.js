@@ -68,4 +68,17 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
-export { registerUser, loginUser };
+const logoutUser = asyncHandler(async (req, res) => {
+  const refreshToken = req.cookies['refresh-token'];
+
+  if (refreshToken) {
+    await RefreshToken.deleteOne({ token: refreshToken });
+  }
+  res
+    .cookie('refresh-token', '', {
+      maxAge: 0,
+    })
+    .sendStatus(204);
+});
+
+export { registerUser, loginUser, logoutUser };

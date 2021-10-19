@@ -1,7 +1,11 @@
 import express from 'express';
 import authenticate from './middleware/authMiddleware.js';
 import canEditList from './middleware/canEditListMiddleware.js';
-import { registerUser, loginUser } from './controllers/userController.js';
+import {
+  registerUser,
+  loginUser,
+  logoutUser,
+} from './controllers/userController.js';
 import {
   getLists,
   createList,
@@ -23,6 +27,7 @@ router.get('/', (req, res) => {
 
 router.post('/users', registerUser);
 router.post('/users/login', loginUser);
+router.post('/users/logout', logoutUser);
 
 router
   .route('/lists')

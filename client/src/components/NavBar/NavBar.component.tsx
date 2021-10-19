@@ -1,7 +1,6 @@
 import './styles.css';
-import { tempUserLogin } from '../../api/userAPI';
 import { useAppDispatch } from '../../redux/hooks';
-import { getLists } from '../../redux/lists';
+import { userLogin } from '../../redux/user';
 
 interface Props {}
 
@@ -11,10 +10,7 @@ const NavBar: React.FC<Props> = () => {
   const handleLogin = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault();
 
-    const res = await tempUserLogin();
-    if (res.statusText === 'OK') {
-      dispatch(getLists());
-    }
+    dispatch(userLogin({ email: 'john@example.com', password: '123456' }));
   };
 
   return (

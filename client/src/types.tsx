@@ -15,3 +15,8 @@ export interface List {
   movies: Array<Media>;
   series: Array<Media>;
 }
+
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}

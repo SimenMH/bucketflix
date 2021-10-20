@@ -3,6 +3,7 @@ import Cookies from 'universal-cookie';
 import jwt_decode from 'jwt-decode';
 import { loginUserAPI, logoutUserAPI } from '../api/userAPI';
 import { LoginCredentials } from '../types';
+import { generateAccessToken } from '../api/generateAccessToken';
 
 const cookies = new Cookies();
 
@@ -14,6 +15,26 @@ export const userLogin = createAsyncThunk(
 export const userLogout = createAsyncThunk(
   'user/userLogout',
   async (_, thunkAPI) => logoutUserAPI(thunkAPI)
+);
+
+export const sessionLogin = createAsyncThunk(
+  'user/sessionLogin',
+  async (_, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    try {
+      let accessToken = cookies.get('access-token');
+
+      if (!accessToken) {
+        accessToken = await generateAccessToken();
+      }
+      const decoded: { username: string; email: string } =
+        jwt_decode(accessToken);
+
+      return decoded;
+    } catch (err) {
+      return rejectWithValue(null);
+    }
+  }
 );
 
 interface UserState {
@@ -34,18 +55,6 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    sessionLogin: state => {
-      const accessToken = cookies.get('access-token');
-
-      if (accessToken) {
-        const decoded: { username: string; email: string } =
-          jwt_decode(accessToken);
-
-        state.username = decoded.username;
-        state.email = decoded.email;
-        state.loggedIn = true;
-      }
-    },
     resetUserState: state => {
       state.username = '';
       state.email = '';
@@ -54,6 +63,20 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: builder => {
+    // Session Login
+    builder.addCase(sessionLogin.pending, state => {
+      state.status = 'loading';
+    });
+    builder.addCase(sessionLogin.fulfilled, (state, action) => {
+      state.username = action.payload.username;
+      state.email = action.payload.email;
+      state.loggedIn = true;
+      state.status = 'success';
+    });
+    builder.addCase(sessionLogin.rejected, state => {
+      state.status = 'failed';
+    });
+
     // User Login
     builder.addCase(userLogin.pending, state => {
       state.status = 'loading';
@@ -84,6 +107,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { sessionLogin, resetUserState } = userSlice.actions;
+export const { resetUserState } = userSlice.actions;
 
 export default userSlice.reducer;

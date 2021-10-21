@@ -39,6 +39,7 @@ const LoginRegister: React.FC<Props> = () => {
                 type='email'
                 name='email'
                 id='email'
+                autoComplete='username'
                 placeholder='Email'
                 required={true}
               />
@@ -47,6 +48,7 @@ const LoginRegister: React.FC<Props> = () => {
                 type='password'
                 name='password'
                 id='password'
+                autoComplete='current-password'
                 placeholder='Password'
                 required={true}
               />

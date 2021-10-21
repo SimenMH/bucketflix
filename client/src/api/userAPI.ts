@@ -6,7 +6,11 @@ import { LoginCredentials } from '../types';
 
 const cookies = new Cookies();
 
-export const loginUserAPI = async ({ email, password }: LoginCredentials) => {
+export const loginUserAPI = async (
+  { email, password }: LoginCredentials,
+  thunkAPI: any
+) => {
+  const { rejectWithValue } = thunkAPI;
   try {
     const res: AxiosResponse<{ accessToken: string }> = await axios.post(
       '/users/login',
@@ -27,15 +31,15 @@ export const loginUserAPI = async ({ email, password }: LoginCredentials) => {
     return decoded;
   } catch (err: any) {
     if (err.response) {
-      return err.response;
+      rejectWithValue(err.response);
     }
-    return err;
+    return rejectWithValue(null);
   }
 };
 
 export const logoutUserAPI = async (thunkAPI: any) => {
+  const { dispatch, rejectWithValue } = thunkAPI;
   try {
-    const { dispatch } = thunkAPI;
     await axios.post('/users/logout', {
       withCredentials: true,
     });
@@ -48,8 +52,8 @@ export const logoutUserAPI = async (thunkAPI: any) => {
     return;
   } catch (err: any) {
     if (err.response) {
-      return err.response;
+      rejectWithValue(err.response);
     }
-    return err;
+    return rejectWithValue(null);
   }
 };

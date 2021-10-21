@@ -9,7 +9,8 @@ const cookies = new Cookies();
 
 export const userLogin = createAsyncThunk(
   'user/userLogin',
-  async (loginCredentials: LoginCredentials) => loginUserAPI(loginCredentials)
+  async (loginCredentials: LoginCredentials, thunkAPI) =>
+    loginUserAPI(loginCredentials, thunkAPI)
 );
 
 export const userLogout = createAsyncThunk(

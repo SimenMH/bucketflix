@@ -11,9 +11,9 @@ interface Props {
 }
 
 const MyListsSidebar: React.FC<Props> = ({ lists, activeList }) => {
+  const dispatch = useAppDispatch();
   const [listModalIsOpen, setListModalIsOpen] = useState<boolean>(false);
   const [newListName, setNewListName] = useState<string>('');
-  const dispatch = useAppDispatch();
 
   const renderLists = (): JSX.Element[] => {
     return lists.map((list, idx) => {

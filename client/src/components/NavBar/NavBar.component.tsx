@@ -5,8 +5,8 @@ import { userLogin, userLogout } from '../../redux/user';
 interface Props {}
 
 const NavBar: React.FC<Props> = () => {
-  const { loggedIn } = useAppSelector(state => state.user);
   const dispatch = useAppDispatch();
+  const { loggedIn } = useAppSelector(state => state.user);
 
   const handleLogin = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault();

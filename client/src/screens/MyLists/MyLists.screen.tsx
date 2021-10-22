@@ -11,6 +11,7 @@ import MediaDetailsModal from '../../components/MediaDetailsModal/MediaDetailsMo
 interface Props {}
 
 const MyLists: React.FC<Props> = () => {
+  const dispatch = useAppDispatch();
   const { activeList, lists } = useAppSelector(state => state.lists);
   const { loggedIn } = useAppSelector(state => state.user);
   const [filter, setFilter] = useState('all');
@@ -19,7 +20,6 @@ const MyLists: React.FC<Props> = () => {
   const [mediaDetailsModalVisible, setMediaDetailsModalVisible] =
     useState<boolean>(false);
   const [mediaToDisplay, setMediaToDisplay] = useState<Media | null>(null);
-  const dispatch = useAppDispatch();
 
   const handleShowMediaDetails = (media: Media) => {
     setMediaToDisplay(media);

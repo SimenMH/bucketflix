@@ -1,25 +1,41 @@
 import './styles.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { History } from 'history';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { userLogin } from '../../redux/user';
 
-interface Props {}
+interface Props {
+  history: History;
+}
 
-const LoginRegister: React.FC<Props> = () => {
-  const [register, setRegister] = useState<boolean>(false);
+const LoginRegister: React.FC<Props> = ({ history }) => {
   const dispatch = useAppDispatch();
-  const { status } = useAppSelector(state => state.user);
+  const { status, loggedIn } = useAppSelector(state => state.user);
+  const [register, setRegister] = useState<boolean>(false);
+  const [incorrect, setIncorrect] = useState<boolean>(false);
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIncorrect(false);
     const target = e.target as typeof e.target & {
       email: { value: string };
       password: { value: string };
     };
-    dispatch(
+    const res = await dispatch(
       userLogin({ email: target.email.value, password: target.password.value })
     );
+    if (res.type === 'user/userLogin/rejected') {
+      setIncorrect(true);
+    } else {
+      history.push('/');
+    }
   };
+
+  useEffect(() => {
+    if (loggedIn) {
+      history.push('/');
+    }
+  }, [loggedIn, history]);
 
   return (
     <div className='login-screen'>
@@ -52,7 +68,7 @@ const LoginRegister: React.FC<Props> = () => {
                 placeholder='Password'
                 required={true}
               />
-              {status === 'failed' && <div>Incorrect password or email</div>}
+              {incorrect && <div>Incorrect password or email</div>}
               <button type='submit'>Login</button>
             </form>
           </fieldset>

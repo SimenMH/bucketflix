@@ -4,7 +4,7 @@ import List from '../models/listModel.js';
 const addMedia = asyncHandler(async (req, res) => {
   const { media } = req.body;
   const list = req.list;
-  if (!media.imdbID || !media.Title || !media.Type) {
+  if (!media.Title || !media.Type) {
     res.status(400);
     throw new Error('Invalid media data');
   }

@@ -11,6 +11,7 @@ export interface Media {
 }
 
 export interface List {
+  _id: string;
   name: string;
   movies: Array<Media>;
   series: Array<Media>;

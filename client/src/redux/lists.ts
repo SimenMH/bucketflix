@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { addListAPI, getListsAPI } from '../api/listAPI';
-import { List } from '../types';
-
-// import { tempMovies, tempSeries } from './TempData';
+import { addListAPI, getListsAPI, addMediaToListAPI } from '../api/listAPI';
+import { List, Media } from '../types';
 
 export const getLists = createAsyncThunk(
   'lists/getLists',
@@ -12,6 +10,12 @@ export const getLists = createAsyncThunk(
 export const addList = createAsyncThunk(
   'lists/addList',
   async (listName: string, thunkAPI) => addListAPI(listName, thunkAPI)
+);
+
+export const addMediaToList = createAsyncThunk(
+  'lists/addMediaToList',
+  async (data: { listID: string; media: Media }, thunkAPI) =>
+    addMediaToListAPI(data, thunkAPI)
 );
 
 interface ListState {
@@ -38,14 +42,6 @@ export const listsSlice = createSlice({
       state.lists = [];
       state.status = null;
     },
-    // addMediaToList: (state, action) => {
-    //   const { listIdx, media } = action.payload;
-    //   if (media.Type === 'movie') {
-    //     state.lists[listIdx].movies.push(media);
-    //   } else {
-    //     state.lists[listIdx].series.push(media);
-    //   }
-    // },
   },
   extraReducers: builder => {
     builder.addCase(getLists.pending, (state, _action) => {
@@ -70,6 +66,23 @@ export const listsSlice = createSlice({
       state.status = 'success';
     });
     builder.addCase(addList.rejected, (state, _action) => {
+      state.status = 'failed';
+    });
+
+    builder.addCase(addMediaToList.pending, (state, _action) => {
+      state.status = 'loading';
+    });
+    builder.addCase(
+      addMediaToList.fulfilled,
+      (state, action: PayloadAction<List>) => {
+        const listIdx = state.lists.findIndex(
+          list => list._id === action.payload._id
+        );
+        state.lists[listIdx] = action.payload;
+        state.status = 'success';
+      }
+    );
+    builder.addCase(addMediaToList.rejected, (state, _action) => {
       state.status = 'failed';
     });
   },

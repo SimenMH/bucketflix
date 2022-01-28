@@ -1,6 +1,8 @@
 import './styles.css';
 import Modal from 'react-modal';
 import { Media } from '../../types';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+import { deleteMediaFromList } from '../../redux/lists';
 
 interface Props {
   isOpen: boolean;
@@ -13,6 +15,18 @@ const MediaDetailsModal: React.FC<Props> = ({
   handleCloseModal,
   mediaToDisplay,
 }) => {
+  const { activeList, lists } = useAppSelector(state => state.lists);
+  const dispatch = useAppDispatch();
+
+  const handleRemoveMedia = () => {
+    const listID = lists[activeList]._id;
+    const mediaID = mediaToDisplay._id;
+    if (!mediaID) return;
+
+    dispatch(deleteMediaFromList({ listID, mediaID }));
+    handleCloseModal();
+  };
+
   return (
     <Modal
       className='modal media-detail-modal'
@@ -77,7 +91,9 @@ const MediaDetailsModal: React.FC<Props> = ({
         )}
       </div>
       <div className='media-details-button-container'>
-        <div className='media-details-button'>Remove</div>
+        <div className='media-details-button' onClick={handleRemoveMedia}>
+          Remove
+        </div>
         <div className='media-details-button'>Edit</div>
       </div>
     </Modal>

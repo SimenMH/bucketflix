@@ -74,3 +74,24 @@ export const addMediaToListAPI = async (
     return rejectWithValue(errorHandler(err, dispatch));
   }
 };
+
+export const deleteMediaFromListAPI = async (
+  data: { listID: string; mediaID: string },
+  thunkAPI: any
+) => {
+  const { rejectWithValue, dispatch } = thunkAPI;
+  const accessToken = cookies.get('access-token');
+
+  try {
+    const res = await axiosAuthInstance.delete('/lists/media', {
+      data,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    return res.data;
+  } catch (err: any) {
+    return rejectWithValue(errorHandler(err, dispatch));
+  }
+};

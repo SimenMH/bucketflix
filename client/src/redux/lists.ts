@@ -1,5 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { addListAPI, getListsAPI, addMediaToListAPI } from '../api/listAPI';
+import {
+  addListAPI,
+  getListsAPI,
+  addMediaToListAPI,
+  deleteMediaFromListAPI,
+} from '../api/listAPI';
 import { List, Media } from '../types';
 
 export const getLists = createAsyncThunk(
@@ -16,6 +21,12 @@ export const addMediaToList = createAsyncThunk(
   'lists/addMediaToList',
   async (data: { listID: string; media: Media }, thunkAPI) =>
     addMediaToListAPI(data, thunkAPI)
+);
+
+export const deleteMediaFromList = createAsyncThunk(
+  'lists/deleteMediaFromList',
+  async (data: { listID: string; mediaID: string }, thunkAPI) =>
+    deleteMediaFromListAPI(data, thunkAPI)
 );
 
 interface ListState {
@@ -83,6 +94,23 @@ export const listsSlice = createSlice({
       }
     );
     builder.addCase(addMediaToList.rejected, (state, _action) => {
+      state.status = 'failed';
+    });
+
+    builder.addCase(deleteMediaFromList.pending, (state, _action) => {
+      state.status = 'loading';
+    });
+    builder.addCase(
+      deleteMediaFromList.fulfilled,
+      (state, action: PayloadAction<List>) => {
+        const listIdx = state.lists.findIndex(
+          list => list._id === action.payload._id
+        );
+        state.lists[listIdx] = action.payload;
+        state.status = 'success';
+      }
+    );
+    builder.addCase(deleteMediaFromList.rejected, (state, _action) => {
       state.status = 'failed';
     });
   },

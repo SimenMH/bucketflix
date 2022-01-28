@@ -1,4 +1,5 @@
 export interface Media {
+  _id?: string;
   imdbID: string;
   Title: string;
   Year: string;

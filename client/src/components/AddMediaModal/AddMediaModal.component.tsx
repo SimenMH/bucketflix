@@ -178,12 +178,12 @@ const AddMediaModal: React.FC<Props> = ({
       <div className='modal-title'>Add New Movie or Series</div>
       <div className='faded-seperator' />
       {/* Content */}
-      <div className='media-modal-content'>
+      <div className='media-modal-content media-input-container'>
         {/* Left Side Content */}
         <div className='media-modal-left'>
           {/* Top Row */}
           <div className='media-modal-top-left'>
-            <div className='input-container'>
+            <div className='upper-input-container'>
               <div className='input-item media-title-input'>
                 <input
                   type='text'

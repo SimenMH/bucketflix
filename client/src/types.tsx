@@ -22,3 +22,14 @@ export interface LoginCredentials {
   email: string;
   password: string;
 }
+
+export interface EditMediaData {
+  listID: string;
+  mediaID: string;
+  type: string;
+  updatedValues: {
+    timestamp: string;
+    whereToWatch: string;
+    notes: string;
+  };
+}

@@ -54,6 +54,10 @@
   color: #c0c0c0;
 }
 
+.media-details textarea {
+  width: 85%;
+}
+
 .media-details-button-container {
   position: absolute;
   display: -webkit-box;

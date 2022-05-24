@@ -3,9 +3,10 @@ import {
   addListAPI,
   getListsAPI,
   addMediaToListAPI,
+  editMediaInListAPI,
   deleteMediaFromListAPI,
 } from '../api/listAPI';
-import { List, Media } from '../types';
+import { List, Media, EditMediaData } from '../types';
 
 export const getLists = createAsyncThunk(
   'lists/getLists',
@@ -21,6 +22,11 @@ export const addMediaToList = createAsyncThunk(
   'lists/addMediaToList',
   async (data: { listID: string; media: Media }, thunkAPI) =>
     addMediaToListAPI(data, thunkAPI)
+);
+
+export const editMediaInList = createAsyncThunk(
+  'lists/editMediaInList',
+  async (data: EditMediaData, thunkAPI) => editMediaInListAPI(data, thunkAPI)
 );
 
 export const deleteMediaFromList = createAsyncThunk(
@@ -55,6 +61,7 @@ export const listsSlice = createSlice({
     },
   },
   extraReducers: builder => {
+    // Get Lists
     builder.addCase(getLists.pending, (state, _action) => {
       state.status = 'loading';
     });
@@ -69,6 +76,7 @@ export const listsSlice = createSlice({
       state.status = 'failed';
     });
 
+    // Add List
     builder.addCase(addList.pending, (state, _action) => {
       state.status = 'loading';
     });
@@ -80,6 +88,7 @@ export const listsSlice = createSlice({
       state.status = 'failed';
     });
 
+    // Add Media to List
     builder.addCase(addMediaToList.pending, (state, _action) => {
       state.status = 'loading';
     });
@@ -97,6 +106,25 @@ export const listsSlice = createSlice({
       state.status = 'failed';
     });
 
+    // Edit Media in List
+    builder.addCase(editMediaInList.pending, (state, _action) => {
+      state.status = 'loading';
+    });
+    builder.addCase(
+      editMediaInList.fulfilled,
+      (state, action: PayloadAction<List>) => {
+        const listIdx = state.lists.findIndex(
+          list => list._id === action.payload._id
+        );
+        state.lists[listIdx] = action.payload;
+        state.status = 'success';
+      }
+    );
+    builder.addCase(editMediaInList.rejected, (state, _action) => {
+      state.status = 'failed';
+    });
+
+    // Remove Media from List
     builder.addCase(deleteMediaFromList.pending, (state, _action) => {
       state.status = 'loading';
     });

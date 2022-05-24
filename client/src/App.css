@@ -77,4 +77,77 @@
   -webkit-filter: blur(1px);
           filter: blur(1px);
 }
+
+.media-input-container .input-item {
+  margin-bottom: 20px;
+}
+
+.media-input-container input,
+.media-input-container select {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: inherit;
+  font-size: 18px;
+  width: 345px;
+  height: 40px;
+  padding: 10px;
+  border: none;
+  background-color: #e5e5e5;
+}
+
+.media-input-container select {
+  padding: 0 10px;
+}
+
+.media-input-container textarea {
+  font-family: inherit;
+  font-size: 18px;
+  width: 60%;
+  min-width: 325px;
+  height: 170px;
+  padding: 10px;
+  margin-bottom: 20px;
+  resize: none;
+}
+
+.media-input-container input,
+.media-input-container textarea,
+.media-input-container select {
+  outline: none;
+}
+
+.media-input-container input:focus,
+.media-input-container textarea:focus,
+.media-input-container select:focus {
+  -webkit-box-shadow: 0 0 2px 2px #81abb8;
+          box-shadow: 0 0 2px 2px #81abb8;
+}
+
+.media-input-container input::-webkit-input-placeholder,
+.media-input-container textarea::-webkit-input-placeholder,
+.media-input-container select::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.25);
+  font-weight: 500;
+}
+
+.media-input-container input:-ms-input-placeholder,
+.media-input-container textarea:-ms-input-placeholder,
+.media-input-container select:-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.25);
+  font-weight: 500;
+}
+
+.media-input-container input::-ms-input-placeholder,
+.media-input-container textarea::-ms-input-placeholder,
+.media-input-container select::-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.25);
+  font-weight: 500;
+}
+
+.media-input-container input::placeholder,
+.media-input-container textarea::placeholder,
+.media-input-container select::placeholder {
+  color: rgba(0, 0, 0, 0.25);
+  font-weight: 500;
+}
 /*# sourceMappingURL=App.css.map */

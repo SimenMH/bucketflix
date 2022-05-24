@@ -2,7 +2,7 @@ import { axiosAuthInstance } from './axiosInstances';
 import Cookies from 'universal-cookie';
 import { resetUserState } from '../redux/user';
 import { resetListState } from '../redux/lists';
-import { Media } from '../types';
+import { Media, EditMediaData } from '../types';
 
 const cookies = new Cookies();
 
@@ -64,6 +64,26 @@ export const addMediaToListAPI = async (
 
   try {
     const res = await axiosAuthInstance.post('/lists/media', data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    return res.data;
+  } catch (err: any) {
+    return rejectWithValue(errorHandler(err, dispatch));
+  }
+};
+
+export const editMediaInListAPI = async (
+  data: EditMediaData,
+  thunkAPI: any
+) => {
+  const { rejectWithValue, dispatch } = thunkAPI;
+  const accessToken = cookies.get('access-token');
+
+  try {
+    const res = await axiosAuthInstance.put('/lists/media', data, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

@@ -10,58 +10,14 @@
 .media-modal-content {
   display: flex;
   margin: 0 15px;
-
-  textarea {
-    font-family: inherit;
-    font-size: 18px;
-    width: 60%;
-    min-width: 325px;
-    height: 170px;
-    padding: 10px;
-    margin-bottom: 20px;
-    resize: none;
-  }
-
-  input,
-  textarea,
-  select {
-    outline: none;
-    &:focus {
-      box-shadow: 0 0 2px 2px #81abb8;
-    }
-    &::placeholder {
-      color: rgba(0, 0, 0, 0.25);
-      font-weight: 500;
-    }
-  }
 }
 
 .media-modal-top-left {
   display: flex;
 }
 
-.input-container {
+.upper-input-container {
   margin-right: 40px;
-
-  .input-item {
-    margin-bottom: 20px;
-  }
-
-  input,
-  select {
-    box-sizing: border-box;
-    font-family: inherit;
-    font-size: 18px;
-    width: 345px;
-    height: 40px;
-    padding: 10px;
-    border: none;
-    background-color: #e5e5e5;
-  }
-
-  select {
-    padding: 0 10px;
-  }
 }
 
 .media-title-input {

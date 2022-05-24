@@ -286,6 +286,7 @@ const AddMediaModal: React.FC<Props> = ({
           </div>
           {/* Notes Text Area */}
           <textarea
+            maxLength={350}
             name='notes'
             onChange={handleInputChange}
             placeholder='Notes (Optional)'

@@ -1,10 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
-import Cookies from 'universal-cookie';
 import jwt_decode from 'jwt-decode';
 import { resetListState } from '../redux/lists';
 import { LoginCredentials } from '../types';
-
-const cookies = new Cookies();
 
 export const loginUserAPI = async (
   { email, password }: LoginCredentials,
@@ -23,10 +20,6 @@ export const loginUserAPI = async (
       }
     );
 
-    cookies.set('access-token', res.data.accessToken, {
-      maxAge: 5 * 60, // 5m
-    });
-
     const decoded = jwt_decode(res.data.accessToken);
     return decoded;
   } catch (err: any) {
@@ -44,12 +37,7 @@ export const logoutUserAPI = async (thunkAPI: any) => {
       withCredentials: true,
     });
 
-    cookies.set('access-token', '', {
-      maxAge: 0,
-    });
-
     dispatch(resetListState());
-    return;
   } catch (err: any) {
     if (err.response) {
       rejectWithValue(err.response);

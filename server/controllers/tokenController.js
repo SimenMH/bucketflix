@@ -56,6 +56,10 @@ const createAccessToken = asyncHandler(async (req, res) => {
           maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year
           // secure: true,
         })
+        .cookie('access-token', accessToken, {
+          path: '/',
+          maxAge: 5 * 60 * 1000, // 5 min
+        })
         .json({ accessToken });
 
       tokenExists.last_used = new Date();

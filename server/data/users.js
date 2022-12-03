@@ -9,6 +9,11 @@ const users = [
     email: 'jane@example.com',
     password: '123456',
   },
+  {
+    username: 'Test User',
+    email: 'test',
+    password: 'test',
+  },
 ];
 
 export default users;

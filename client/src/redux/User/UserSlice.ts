@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Cookies from 'universal-cookie';
 import jwt_decode from 'jwt-decode';
-import { loginUserAPI, logoutUserAPI } from '../api/userAPI';
-import { LoginCredentials } from '../types';
-import { generateAccessToken } from '../api/generateAccessToken';
+import { loginUserAPI, logoutUserAPI } from './UserApi';
+import { LoginCredentials } from '../../types';
+import { generateAccessToken } from '../../api/generateAccessToken';
 
 const cookies = new Cookies();
 

@@ -1,17 +1,12 @@
-import './styles.css';
+import './css/styles.css';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { userLogin, userLogout } from '../../redux/user';
+import { userLogin, userLogout } from '../../redux/User/UserSlice';
 
 interface Props {}
 
 const NavBar: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
   const { loggedIn } = useAppSelector(state => state.user);
-
-  const handleLogin = async (e: React.SyntheticEvent<EventTarget>) => {
-    e.preventDefault();
-    dispatch(userLogin({ email: 'john@example.com', password: '123456' }));
-  };
 
   const handleLogout = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault();
@@ -30,9 +25,7 @@ const NavBar: React.FC<Props> = () => {
             Logout
           </a>
         ) : (
-          <a href='/login' onClick={handleLogin}>
-            Login / Register
-          </a>
+          <a href='/login'>Login / Register</a>
         )}
         <a href='/about'>About</a>
       </div>

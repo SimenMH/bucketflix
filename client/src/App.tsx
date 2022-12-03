@@ -1,4 +1,4 @@
-import './App.css';
+import './css/App.css';
 import {
   BrowserRouter as Router,
   Route,
@@ -11,7 +11,7 @@ import NavBar from './components/NavBar/NavBar.component';
 import MyLists from './screens/MyLists/MyLists.screen';
 import Modal from 'react-modal';
 import { useEffect, useState } from 'react';
-import { sessionLogin } from './redux/user';
+import { sessionLogin } from './redux/User/UserSlice';
 import LoginRegister from './screens/LoginRegister/LoginRegister.screen';
 
 Modal.setAppElement('#root');

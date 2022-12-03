@@ -5,8 +5,8 @@ import {
   addMediaToListAPI,
   editMediaInListAPI,
   deleteMediaFromListAPI,
-} from '../api/listAPI';
-import { List, Media, EditMediaData } from '../types';
+} from './ListApi';
+import { List, Media, EditMediaData } from '../../types';
 
 export const getLists = createAsyncThunk(
   'lists/getLists',

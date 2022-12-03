@@ -1,8 +1,8 @@
-import { axiosAuthInstance } from './axiosInstances';
+import { axiosAuthInstance } from '../../api/axiosInstances';
 import Cookies from 'universal-cookie';
-import { resetUserState } from '../redux/user';
-import { resetListState } from '../redux/lists';
-import { Media, EditMediaData } from '../types';
+import { resetUserState } from '../User/UserSlice';
+import { resetListState } from './ListSlice';
+import { Media, EditMediaData } from '../../types';
 
 const cookies = new Cookies();
 

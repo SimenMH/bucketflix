@@ -1,10 +1,10 @@
-import './styles.css';
+import './css/styles.css';
 import { useEffect, useState, useCallback } from 'react';
 import { useAppDispatch } from '../../redux/hooks';
 import Modal from 'react-modal';
 import { Media, List } from '../../types';
 import { searchForTitle, searchByTitle, searchById } from './SearchMediaAPI';
-import { addMediaToList } from '../../redux/lists';
+import { addMediaToList } from '../../redux/List/ListSlice';
 
 interface Props {
   isOpen: boolean;

@@ -1,9 +1,12 @@
-import './styles.css';
+import './css/styles.css';
 import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { Media } from '../../types';
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
-import { editMediaInList, deleteMediaFromList } from '../../redux/lists';
+import {
+  editMediaInList,
+  deleteMediaFromList,
+} from '../../redux/List/ListSlice';
 
 interface Props {
   isOpen: boolean;

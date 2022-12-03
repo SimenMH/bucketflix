@@ -1,8 +1,8 @@
-import './styles.css';
+import './css/styles.css';
 import { useState, useEffect } from 'react';
 import { History } from 'history';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { userLogin } from '../../redux/user';
+import { userLogin } from '../../redux/User/UserSlice';
 
 interface Props {
   history: History;

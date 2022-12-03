@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import jwt_decode from 'jwt-decode';
-import { resetListState } from '../redux/lists';
-import { LoginCredentials } from '../types';
+import { resetListState } from '../List/ListSlice';
+import { LoginCredentials } from '../../types';
 
 export const loginUserAPI = async (
   { email, password }: LoginCredentials,

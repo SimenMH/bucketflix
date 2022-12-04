@@ -2,7 +2,7 @@ import { axiosAuthInstance } from '../../api/AxiosInstances';
 import Cookies from 'universal-cookie';
 import { resetUserState } from '../User/UserSlice';
 import { resetListState } from './ListSlice';
-import { Media, EditMediaData } from '../../types';
+import { Media, EditMediaData, SharedUser } from '../../types';
 
 const cookies = new Cookies();
 
@@ -48,6 +48,26 @@ export const addListAPI = async (listName: string, thunkAPI: any) => {
         },
       }
     );
+
+    return res.data;
+  } catch (err: any) {
+    return rejectWithValue(errorHandler(err, dispatch));
+  }
+};
+
+export const editListAPI = async (
+  listData: { name: string; sharedUsers: Array<SharedUser> },
+  thunkAPI: any
+) => {
+  const { rejectWithValue, dispatch } = thunkAPI;
+  const accessToken = cookies.get('access-token');
+
+  try {
+    const res = await axiosAuthInstance.put('/lists', listData, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
     return res.data;
   } catch (err: any) {

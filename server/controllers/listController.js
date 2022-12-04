@@ -40,7 +40,7 @@ const editList = asyncHandler(async (req, res) => {
   const list = req.list;
 
   if (updatedValues.name) list.name = updatedValues.name;
-  if (updatedValues.sharedUsers) list.shared_users = updatedValues.shared_users;
+  if (updatedValues.sharedUsers) list.shared_users = updatedValues.sharedUsers;
 
   await list.save();
   res.status(200).json(list);

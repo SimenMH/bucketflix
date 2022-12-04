@@ -11,11 +11,18 @@ export interface Media {
   Notes: string;
 }
 
+export interface SharedUser {
+  user_id: string;
+  username: string;
+  canEdit: boolean;
+}
+
 export interface List {
   _id: string;
   name: string;
   movies: Array<Media>;
   series: Array<Media>;
+  sharedUsers: Array<SharedUser>;
 }
 
 export interface LoginCredentials {

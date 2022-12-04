@@ -61,3 +61,18 @@ export const sessionLoginApi = async (thunkAPI: any) => {
     return rejectWithValue(null);
   }
 };
+
+export const findUser = async (name: string) => {
+  try {
+    const res: AxiosResponse<{ user_id: string; username: string }> =
+      await axios.get(`/users/${name}`);
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      return null;
+    }
+  } catch (err: any) {
+    console.log('errored');
+    return null;
+  }
+};

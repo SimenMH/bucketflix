@@ -5,6 +5,7 @@ import {
   registerUser,
   loginUser,
   logoutUser,
+  getUser,
 } from './controllers/userController.js';
 import {
   getLists,
@@ -25,6 +26,7 @@ router.get('/', (req, res) => {
   res.send('hello world');
 });
 
+router.get('/users/:username', getUser);
 router.post('/users', registerUser);
 router.post('/users/login', loginUser);
 router.post('/users/logout', logoutUser);

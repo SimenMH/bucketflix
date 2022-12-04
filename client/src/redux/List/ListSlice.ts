@@ -5,8 +5,9 @@ import {
   addMediaToListAPI,
   editMediaInListAPI,
   deleteMediaFromListAPI,
+  editListAPI,
 } from './ListApi';
-import { List, Media, EditMediaData } from '../../types';
+import { List, Media, EditMediaData, SharedUser } from '../../types';
 
 export const getLists = createAsyncThunk(
   'lists/getLists',
@@ -16,6 +17,14 @@ export const getLists = createAsyncThunk(
 export const addList = createAsyncThunk(
   'lists/addList',
   async (listName: string, thunkAPI) => addListAPI(listName, thunkAPI)
+);
+
+export const editList = createAsyncThunk(
+  'lists/editList',
+  async (
+    listData: { name: string; sharedUsers: Array<SharedUser> },
+    thunkAPI
+  ) => editListAPI(listData, thunkAPI)
 );
 
 export const addMediaToList = createAsyncThunk(
@@ -85,6 +94,21 @@ export const listsSlice = createSlice({
       state.status = 'success';
     });
     builder.addCase(addList.rejected, (state, _action) => {
+      state.status = 'failed';
+    });
+
+    // Edit List
+    builder.addCase(editList.pending, (state, _action) => {
+      state.status = 'loading';
+    });
+    builder.addCase(
+      editList.fulfilled,
+      (state, action: PayloadAction<List>) => {
+        state.lists.push(action.payload);
+        state.status = 'success';
+      }
+    );
+    builder.addCase(editList.rejected, (state, _action) => {
       state.status = 'failed';
     });
 

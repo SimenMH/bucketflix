@@ -88,4 +88,14 @@ const logoutUser = asyncHandler(async (req, res) => {
     .sendStatus(204);
 });
 
-export { registerUser, loginUser, logoutUser };
+const getUser = asyncHandler(async (req, res) => {
+  const { username } = req.params;
+  const user = await User.findOne({ username });
+  if (!user) {
+    res.status(404);
+    throw new Error(`Could not find user ${username}`);
+  }
+  res.status(200).json({ user_id: user._id, username: user.username });
+});
+
+export { registerUser, loginUser, logoutUser, getUser };

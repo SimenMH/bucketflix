@@ -7,6 +7,7 @@ import { Media } from '../../types';
 import MyListsSidebar from '../../components/MyListsSidebar/MyListsSidebar.component';
 import AddMediaModal from '../../components/AddMediaModal/AddMediaModal.component';
 import MediaDetailsModal from '../../components/MediaDetailsModal/MediaDetailsModal.component';
+import ListSettingsModal from '../../components/ListSettingsModal/ListSettingsModal';
 
 interface Props {}
 
@@ -16,6 +17,8 @@ const MyLists: React.FC<Props> = () => {
   const { loggedIn } = useAppSelector(state => state.user);
   const [filter, setFilter] = useState('all');
   const [addMediaModalVisible, setAddMediaModalVisible] =
+    useState<boolean>(false);
+  const [listSettingsModalVisible, seListSettinsModalVisible] =
     useState<boolean>(false);
   const [mediaDetailsModalVisible, setMediaDetailsModalVisible] =
     useState<boolean>(false);
@@ -50,6 +53,10 @@ const MyLists: React.FC<Props> = () => {
     setAddMediaModalVisible(false);
   };
 
+  const handleListSettingsClose = () => {
+    seListSettinsModalVisible(false);
+  };
+
   useEffect(() => {
     if (loggedIn) {
       dispatch(getLists());
@@ -64,6 +71,12 @@ const MyLists: React.FC<Props> = () => {
           <AddMediaModal
             isOpen={addMediaModalVisible}
             handleCloseModal={handleAddMediaClose}
+            lists={lists}
+            activeList={activeList}
+          />
+          <ListSettingsModal
+            isOpen={listSettingsModalVisible}
+            handleCloseModal={handleListSettingsClose}
             lists={lists}
             activeList={activeList}
           />
@@ -104,6 +117,9 @@ const MyLists: React.FC<Props> = () => {
             <div className='mylists-options-right'>
               <button onClick={() => setAddMediaModalVisible(true)}>
                 + Add Media
+              </button>
+              <button onClick={() => seListSettinsModalVisible(true)}>
+                Settings
               </button>
             </div>
           </div>

@@ -13,14 +13,18 @@ const listSchema = mongoose.Schema({
   },
   movies: [mediaSchema],
   series: [mediaSchema],
-  shared_users: [
+  sharedUsers: [
     {
       user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true,
       },
-      can_edit: {
+      username: {
+        type: String,
+        required: true,
+      },
+      canEdit: {
         type: Boolean,
         default: false,
       },

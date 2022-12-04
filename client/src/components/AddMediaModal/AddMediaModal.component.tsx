@@ -7,7 +7,7 @@ import {
   searchForTitle,
   searchByTitle,
   searchById,
-} from '../../api/SearchMediaAPI';
+} from '../../api/SearchMedia';
 import { addMediaToList } from '../../redux/List/ListSlice';
 
 interface Props {

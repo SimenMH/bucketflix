@@ -129,11 +129,24 @@ code {
   select {
     outline: none;
     &:focus {
-      box-shadow: 0 0 2px 2px #81abb8;
+      box-shadow: 0 0 2px 2px #60659b;
     }
     &::placeholder {
       color: rgba(0, 0, 0, 0.25);
       font-weight: 500;
     }
   }
+}
+
+button {
+  background-color: #60659b;
+  color: #ececec;
+  padding: 5px 10px;
+  font-size: 18px;
+  border-radius: 3px;
+  font-weight: 400;
+  text-shadow: 1px 1px 1px black;
+  border: none;
+  box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
 }

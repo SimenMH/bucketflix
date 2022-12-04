@@ -181,27 +181,13 @@ const MediaDetailsModal: React.FC<Props> = ({
       <div className='media-details-button-container'>
         {isEditing ? (
           <>
-            <div className='media-details-button' onClick={handleUpdateMedia}>
-              Save
-            </div>
-            <div
-              className='media-details-button'
-              onClick={() => setIsEditing(false)}
-            >
-              Cancel
-            </div>
+            <button onClick={handleUpdateMedia}>Save</button>
+            <button onClick={() => setIsEditing(false)}>Cancel</button>
           </>
         ) : (
           <>
-            <div className='media-details-button' onClick={handleRemoveMedia}>
-              Remove
-            </div>
-            <div
-              className='media-details-button'
-              onClick={() => setIsEditing(true)}
-            >
-              Edit
-            </div>
+            <button onClick={() => setIsEditing(true)}>Edit</button>
+            <button onClick={handleRemoveMedia}>Remove</button>
           </>
         )}
       </div>

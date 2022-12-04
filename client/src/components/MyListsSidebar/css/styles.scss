@@ -1,8 +1,8 @@
 .mylists-sidebar {
   position: relative;
   min-width: 240px;
-  height: 100%;
-  background-color: #5f6769;
+  height: calc(100vh - 75px);
+  background-color: #393939;
   box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -11,11 +11,12 @@
   align-items: center;
   width: 100%;
   height: 55px;
-  background-color: #545b5e;
+  background-color: #343434;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+  margin-bottom: 15px;
 
   h2 {
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 500;
     margin: 0;
     margin-left: 25px;
@@ -24,24 +25,16 @@
 }
 
 .add-list-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  margin-top: 5px;
-
-  background: #7b8091;
-  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25),
-    inset 0px 0px 8px rgba(0, 0, 0, 0.25);
+  background-color: #60659b;
+  color: #ececec;
+  padding: 5px 10px;
+  font-size: 18px;
+  border-radius: 5px;
+  font-weight: 400;
+  text-shadow: 1px 1px 1px black;
+  border: none;
+  box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.25);
   cursor: pointer;
-}
-
-.add-list-plus {
-  width: 60%;
-  height: 60%;
-  fill: #c6cfd3;
 }
 
 .mylists-item {
@@ -67,7 +60,7 @@
   margin-left: 10px;
 
   h3 {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 400;
     max-width: 180px;
     margin: 0;

@@ -307,9 +307,9 @@ const AddMediaModal: React.FC<Props> = ({
           alt='Movie Poster'
         />
       </div>
-      <div className='modal-add-media-button' onClick={handleAddMedia}>
+      <button className='modal-add-media-button' onClick={handleAddMedia}>
         Add Movie/Series
-      </div>
+      </button>
     </Modal>
   );
 };

@@ -8,20 +8,15 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 export const loginUserApi = async (
-  { email, password }: LoginCredentials,
+  loginCredentials: LoginCredentials,
   thunkAPI: any
 ) => {
   const { rejectWithValue } = thunkAPI;
   try {
     const res: AxiosResponse<{ accessToken: string }> = await axios.post(
       '/users/login',
-      {
-        email,
-        password,
-      },
-      {
-        withCredentials: true,
-      }
+      loginCredentials,
+      { withCredentials: true }
     );
 
     const decoded = jwt_decode(res.data.accessToken);

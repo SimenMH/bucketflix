@@ -1,7 +1,7 @@
 import './css/styles.css';
 import { useState, useEffect } from 'react';
 import { History } from 'history';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/Hooks';
 import { userLogin } from '../../redux/User/UserSlice';
 
 interface Props {

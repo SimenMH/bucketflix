@@ -1,9 +1,13 @@
 import './css/styles.css';
 import { useEffect, useState, useCallback } from 'react';
-import { useAppDispatch } from '../../redux/hooks';
+import { useAppDispatch } from '../../redux/Hooks';
 import Modal from 'react-modal';
 import { Media, List } from '../../types';
-import { searchForTitle, searchByTitle, searchById } from './SearchMediaAPI';
+import {
+  searchForTitle,
+  searchByTitle,
+  searchById,
+} from '../../api/SearchMediaAPI';
 import { addMediaToList } from '../../redux/List/ListSlice';
 
 interface Props {

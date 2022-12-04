@@ -1,6 +1,6 @@
 import './css/styles.css';
 import { useState, useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+import { useAppSelector, useAppDispatch } from '../../redux/Hooks';
 import { getLists } from '../../redux/List/ListSlice';
 import { Media } from '../../types';
 

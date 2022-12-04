@@ -5,7 +5,7 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from './redux/hooks';
+import { useAppDispatch, useAppSelector } from './redux/Hooks';
 
 import NavBar from './components/NavBar/NavBar.component';
 import MyLists from './screens/MyLists/MyLists.screen';

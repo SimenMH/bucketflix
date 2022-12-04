@@ -1,4 +1,4 @@
-import { axiosAuthInstance } from '../../api/axiosInstances';
+import { axiosAuthInstance } from '../../api/AxiosInstances';
 import Cookies from 'universal-cookie';
 import { resetUserState } from '../User/UserSlice';
 import { resetListState } from './ListSlice';

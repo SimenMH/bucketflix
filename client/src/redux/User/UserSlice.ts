@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie';
 import jwt_decode from 'jwt-decode';
 import { loginUserAPI, logoutUserAPI } from './UserApi';
 import { LoginCredentials } from '../../types';
-import { generateAccessToken } from '../../api/generateAccessToken';
+import { generateAccessToken } from '../../api/GenerateAccessToken';
 
 const cookies = new Cookies();
 

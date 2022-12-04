@@ -1,4 +1,4 @@
-import { generateAccessToken } from './generateAccessToken';
+import { generateAccessToken } from './GenerateAccessToken';
 import axios from 'axios';
 
 axios.defaults.baseURL = 'http://localhost:5000';

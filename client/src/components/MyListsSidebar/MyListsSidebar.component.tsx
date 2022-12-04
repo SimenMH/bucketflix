@@ -1,6 +1,6 @@
 import './css/styles.css';
 import { useState } from 'react';
-import { useAppDispatch } from '../../redux/hooks';
+import { useAppDispatch } from '../../redux/Hooks';
 import { updateActiveList, addList } from '../../redux/List/ListSlice';
 import Modal from 'react-modal';
 import { List } from '../../types';

@@ -2,7 +2,7 @@ import './css/styles.css';
 import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { Media } from '../../types';
-import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+import { useAppSelector, useAppDispatch } from '../../redux/Hooks';
 import {
   editMediaInList,
   deleteMediaFromList,

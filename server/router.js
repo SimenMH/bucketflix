@@ -18,6 +18,10 @@ import {
   editMedia,
   deleteMedia,
 } from './controllers/mediaController.js';
+import {
+  createInvite,
+  useInvite,
+} from './controllers/inviteToListController.js';
 import { createAccessToken } from './controllers/tokenController.js';
 
 const router = express.Router();
@@ -45,6 +49,12 @@ router
   .post(addMedia)
   .put(editMedia)
   .delete(deleteMedia);
+router
+  .route('/lists/invite')
+  .all(authenticate)
+  .put(useInvite)
+  .all(canEditList)
+  .post(createInvite);
 
 router.post('/token', createAccessToken);
 

@@ -7,8 +7,8 @@ const getLists = asyncHandler(async (req, res) => {
 
   const lists = await List.find({ user_id: userID }).select('-user_id');
   const shared_lists = await List.find({
-    'shared_users.user_id': userID,
-  }).select('-shared_users');
+    'sharedUsers.user_id': userID,
+  }).select('-sharedUsers');
 
   res.status(200).json({ lists, shared_lists });
 });
@@ -45,7 +45,7 @@ const editList = asyncHandler(async (req, res) => {
   const list = req.list;
 
   if (updatedValues.name) list.name = updatedValues.name;
-  if (updatedValues.sharedUsers) list.shared_users = updatedValues.sharedUsers;
+  if (updatedValues.sharedUsers) list.sharedUsers = updatedValues.sharedUsers;
 
   try {
     await list.save();

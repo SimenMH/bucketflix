@@ -10,6 +10,7 @@ const listSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
+    maxLength: 15,
   },
   movies: [mediaSchema],
   series: [mediaSchema],

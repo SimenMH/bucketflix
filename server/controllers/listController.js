@@ -24,13 +24,18 @@ const createList = asyncHandler(async (req, res) => {
     throw new Error('A list with that name already exists');
   }
 
-  const createdList = await List.create({ user_id: user._id, name });
+  try {
+    const createdList = await List.create({ user_id: user._id, name });
 
-  if (createdList) {
-    res.status(201).json(createdList);
-  } else {
+    if (createdList) {
+      res.status(201).json(createdList);
+    } else {
+      res.status(400);
+      throw new Error('Invalid list data');
+    }
+  } catch (err) {
     res.status(400);
-    throw new Error('Invalid list data');
+    throw new Error(err);
   }
 });
 
@@ -42,8 +47,13 @@ const editList = asyncHandler(async (req, res) => {
   if (updatedValues.name) list.name = updatedValues.name;
   if (updatedValues.sharedUsers) list.shared_users = updatedValues.sharedUsers;
 
-  await list.save();
-  res.status(200).json(list);
+  try {
+    await list.save();
+    res.status(200).json(list);
+  } catch (err) {
+    res.status(400);
+    throw new Error(err);
+  }
 });
 
 const deleteList = asyncHandler(async (req, res) => {

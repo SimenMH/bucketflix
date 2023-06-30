@@ -22,7 +22,10 @@ export const addList = createAsyncThunk(
 export const editList = createAsyncThunk(
   'lists/editList',
   async (
-    listData: { name: string; sharedUsers: Array<SharedUser> },
+    listData: {
+      listID: string;
+      updatedValues: { name: string; sharedUsers: Array<SharedUser> };
+    },
     thunkAPI
   ) => editListAPI(listData, thunkAPI)
 );
@@ -104,7 +107,8 @@ export const listsSlice = createSlice({
     builder.addCase(
       editList.fulfilled,
       (state, action: PayloadAction<List>) => {
-        state.lists.push(action.payload);
+        const idx = state.lists.findIndex(el => el._id === action.payload._id);
+        state.lists[idx] = action.payload;
         state.status = 'success';
       }
     );

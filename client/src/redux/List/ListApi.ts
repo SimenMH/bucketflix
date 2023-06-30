@@ -56,7 +56,10 @@ export const addListAPI = async (listName: string, thunkAPI: any) => {
 };
 
 export const editListAPI = async (
-  listData: { name: string; sharedUsers: Array<SharedUser> },
+  listData: {
+    listID: string;
+    updatedValues: { name: string; sharedUsers: Array<SharedUser> };
+  },
   thunkAPI: any
 ) => {
   const { rejectWithValue, dispatch } = thunkAPI;

@@ -43,13 +43,20 @@ const ListSettingsModal: React.FC<Props> = ({
     }
   };
 
-  const handleUpdateList = () => {
-    dispatch(
+  const handleUpdateList = async () => {
+    const res = await dispatch(
       editList({
-        name: newListName,
-        sharedUsers: [...lists[activeList].sharedUsers, ...newSharedUsers],
+        listID: lists[activeList]._id,
+        updatedValues: {
+          name: newListName,
+          sharedUsers: [...lists[activeList].sharedUsers, ...newSharedUsers],
+        },
       })
     );
+
+    if (res.meta.requestStatus === 'fulfilled') {
+      handleCloseModal();
+    }
   };
 
   return (

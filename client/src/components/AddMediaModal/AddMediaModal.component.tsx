@@ -302,7 +302,7 @@ const AddMediaModal: React.FC<Props> = ({
           src={
             selectedMedia
               ? selectedMedia.Poster
-              : 'http://www.theprintworks.com/wp-content/themes/psBella/assets/img/film-poster-placeholder.png'
+              : 'https://printworks-manchester.com/cinema-poster/images/film-poster-placeholder.png'
           }
           alt='Movie Poster'
         />

@@ -1,6 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { loginUserApi, logoutUserApi, sessionLoginApi } from './UserApi';
-import { LoginCredentials } from '../../types';
+import {
+  loginUserApi,
+  logoutUserApi,
+  registerUserApi,
+  sessionLoginApi,
+} from './UserApi';
+import { NewUser, LoginCredentials } from '../../types';
+
+export const userRegister = createAsyncThunk(
+  'user/userRegister',
+  async (newUser: NewUser, thunkAPI) => registerUserApi(newUser, thunkAPI)
+);
 
 export const userLogin = createAsyncThunk(
   'user/userLogin',
@@ -44,6 +54,20 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: builder => {
+    // User Register
+    builder.addCase(userRegister.pending, state => {
+      state.status = 'loading';
+    });
+    builder.addCase(userRegister.fulfilled, (state, action) => {
+      state.username = action.payload.username;
+      state.email = action.payload.email;
+      state.loggedIn = true;
+      state.status = 'success';
+    });
+    builder.addCase(userRegister.rejected, state => {
+      state.status = 'failed';
+    });
+
     // User Login
     builder.addCase(userLogin.pending, state => {
       state.status = 'loading';

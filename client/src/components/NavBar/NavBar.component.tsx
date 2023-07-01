@@ -1,6 +1,6 @@
 import './css/styles.css';
 import { useAppDispatch, useAppSelector } from '../../redux/Hooks';
-import { userLogin, userLogout } from '../../redux/User/UserSlice';
+import { userLogout } from '../../redux/User/UserSlice';
 
 interface Props {}
 

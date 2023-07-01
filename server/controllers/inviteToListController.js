@@ -25,7 +25,7 @@ const createInvite = asyncHandler(async (req, res) => {
     invite_code: inviteCode,
   });
 
-  res.status(201).json({ listInvite });
+  res.status(201).json({ inviteCode: listInvite.invite_code });
 });
 
 const useInvite = asyncHandler(async (req, res) => {

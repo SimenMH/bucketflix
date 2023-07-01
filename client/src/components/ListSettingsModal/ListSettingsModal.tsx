@@ -4,7 +4,7 @@ import { List, SharedUser } from '../../types';
 import { useState } from 'react';
 import { useAppDispatch } from '../../redux/Hooks';
 import { editList } from '../../redux/List/ListSlice';
-import { findUser } from '../../redux/User/UserApi';
+import { generateListInvite } from '../../api/GenerateListInvite';
 
 interface Props {
   isOpen: boolean;
@@ -24,26 +24,15 @@ const ListSettingsModal: React.FC<Props> = ({
     lists[activeList].name
   );
   const [newSharedUsers, setNewSharedUsers] = useState<Array<SharedUser>>([]);
-  const [newSharedUserName, setNewSharedUserName] = useState<string>('');
+  const [listInviteCode, setListInviteCode] = useState<string | null>(null);
 
-  const handleAddNewSharedUser = async () => {
-    if (
-      [...lists[activeList].sharedUsers, ...newSharedUsers].filter(
-        user => user.username === newSharedUserName
-      ).length === 0
-    ) {
-      const user = await findUser(newSharedUserName);
-      if (user != null) {
-        setNewSharedUsers(prev => {
-          return [...prev, { ...user, canEdit: false }];
-        });
-      } else {
-        alert('User not found');
-      }
-    }
+  const handleGenerateInvite = async () => {
+    const newInviteCode = await generateListInvite(lists[activeList]._id);
+    setListInviteCode(newInviteCode);
   };
 
   const handleUpdateList = async () => {
+    // Only allow updating one thing at the time. Either update the name, or remove a single user from the shared users list. Split the endpoints
     const res = await dispatch(
       editList({
         listID: lists[activeList]._id,
@@ -55,8 +44,13 @@ const ListSettingsModal: React.FC<Props> = ({
     );
 
     if (res.meta.requestStatus === 'fulfilled') {
-      handleCloseModal();
+      // closeModal();
     }
+  };
+
+  const closeModal = () => {
+    setListInviteCode(null);
+    handleCloseModal();
   };
 
   return (
@@ -64,16 +58,15 @@ const ListSettingsModal: React.FC<Props> = ({
       className='modal add-list-modal'
       overlayClassName='modal-overlay'
       isOpen={isOpen}
-      onRequestClose={() => handleCloseModal()}
+      onRequestClose={() => closeModal()}
       shouldCloseOnOverlayClick={true}
       contentLabel='New List Modal'
     >
-      <div className='modal-close' onClick={() => handleCloseModal()} />
+      <div className='modal-close' onClick={() => closeModal()} />
       <div className='modal-title'>List Settings</div>
       <div className='faded-seperator' />
       <div className='list-details'>
         <div className='list-name'>
-          <span>Name: </span>
           <input
             type='text'
             placeholder='List Name'
@@ -83,7 +76,9 @@ const ListSettingsModal: React.FC<Props> = ({
               setNewListName(e.currentTarget.value)
             }
           />
+          <button onClick={handleUpdateList}>Save</button>
         </div>
+        {/* Shared Users */}
         <div className='shared-users'>
           <h3>Shared Users</h3>
           {lists[activeList].sharedUsers.map(user => (
@@ -93,16 +88,20 @@ const ListSettingsModal: React.FC<Props> = ({
             <p key={user.user_id}>{user.username}</p>
           ))}
           <input
+            className='list-invite-link'
             type='text'
-            placeholder='Username'
-            value={newSharedUserName}
-            onChange={(e: React.FormEvent<HTMLInputElement>) => {
-              setNewSharedUserName(e.currentTarget.value);
-            }}
+            placeholder=''
+            value={
+              listInviteCode
+                ? `https://localhost:3000/invite?i=${listInviteCode}`
+                : ''
+            }
+            disabled
+            readOnly
           />
-          <button onClick={handleAddNewSharedUser}>Add user</button>
+          <button onClick={handleGenerateInvite}>Generate link</button>
         </div>
-        <button onClick={handleUpdateList}>Save</button>
+        {/*  */}
       </div>
     </Modal>
   );

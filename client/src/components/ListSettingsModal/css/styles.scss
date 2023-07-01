@@ -4,7 +4,12 @@
     height: 25px;
     font-size: 18px;
     margin-right: 10px;
+
+    &.list-invite-link {
+      width: 325px;
+    }
   }
+
   .shared-users {
     h3 {
       font-weight: 500;

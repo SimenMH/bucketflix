@@ -12,19 +12,45 @@ const registerUser = asyncHandler(async (req, res) => {
   });
 
   if (userExists) {
-    res.status(400);
-    throw new Error('Username or email already exists');
+    res.status(409);
+    const emailUsername = userExists.email === email ? 'email' : 'username';
+    throw new Error(`An account with this ${emailUsername} already exists.`);
   }
 
   try {
     const user = await User.create({ username, email, password });
 
     if (user) {
-      res.status(201).json({
+      const refreshToken = jwt.sign(
+        { user_id: user._id },
+        process.env.REFRESH_TOKEN_SECRET
+      );
+
+      await RefreshToken.create({
+        user_id: user._id,
+        token: refreshToken,
+        last_used: new Date(),
+      });
+
+      const accessToken = generateAccessToken({
         _id: user._id,
         username: user.username,
         email: user.email,
       });
+
+      res
+        .status(201)
+        .cookie('refresh-token', refreshToken, {
+          path: '/',
+          httpOnly: true,
+          maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year
+          // secure: true,
+        })
+        .cookie('access-token', accessToken, {
+          path: '/',
+          maxAge: 5 * 60 * 1000, // 5 min
+        })
+        .json({ accessToken });
     } else {
       throw new Error('Invalid user data');
     }

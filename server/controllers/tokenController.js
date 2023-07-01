@@ -42,6 +42,15 @@ const createAccessToken = asyncHandler(async (req, res) => {
       }
 
       const user = await User.findById(user_id);
+
+      if (!user) {
+        return res
+          .cookie('refresh-token', '', {
+            maxAge: 0,
+          })
+          .sendStatus(403);
+      }
+
       const accessToken = generateAccessToken({
         _id: user._id,
         username: user.username,

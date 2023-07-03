@@ -148,7 +148,6 @@ const ListSettingsModal: React.FC<Props> = ({
               <label className='switch'>
                 <input
                   type='checkbox'
-                  // defaultChecked={user.canEdit}
                   checked={user.canEdit}
                   onChange={e => handleUpdateSharedUser(e, user)}
                 />
@@ -156,22 +155,6 @@ const ListSettingsModal: React.FC<Props> = ({
               </label>
             </div>
           ))}
-          <div className='shared-user'>
-            <div className='modal-close' />
-            <p>JaneDoe</p>
-            <label className='switch'>
-              <input type='checkbox' />
-              <span className='slider'></span>
-            </label>
-          </div>
-          <div className='shared-user'>
-            <div className='modal-close' />
-            <p>Boopitibap</p>
-            <label className='switch'>
-              <input type='checkbox' />
-              <span className='slider'></span>
-            </label>
-          </div>
           <input
             className='list-invite-link'
             type='text'

@@ -161,7 +161,7 @@ const ListSettingsModal: React.FC<Props> = ({
             placeholder='Generate a link to invite other users to this list'
             value={
               listInviteCode
-                ? `https://localhost:3000/invite?i=${listInviteCode}`
+                ? `https://${window.location.host}/invite?i=${listInviteCode}`
                 : ''
             }
             disabled

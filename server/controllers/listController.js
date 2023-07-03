@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import List from '../models/listModel.js';
 import User from '../models/userModel.js';
+import ListInvite from '../models/listInviteModel.js';
 
 const getLists = asyncHandler(async (req, res) => {
   const userID = req.user._id;
@@ -42,10 +43,14 @@ const createList = asyncHandler(async (req, res) => {
 const editList = asyncHandler(async (req, res) => {
   const { updatedValues } = req.body;
 
+  if (!updatedValues) {
+    res.status(400);
+    throw new Error('Value is required: updatedValues');
+  }
+
   const list = req.list;
 
   if (updatedValues.name) list.name = updatedValues.name;
-  if (updatedValues.sharedUsers) list.sharedUsers = updatedValues.sharedUsers;
 
   try {
     await list.save();
@@ -63,4 +68,108 @@ const deleteList = asyncHandler(async (req, res) => {
   res.sendStatus(204);
 });
 
-export { getLists, createList, editList, deleteList };
+// Shared Users
+
+const addSharedUser = asyncHandler(async (req, res) => {
+  const inviteCode = req.query.i;
+  const user = req.user;
+
+  if (!inviteCode) {
+    res.status(404);
+    throw new Error('Missing invite code in query parameters');
+  }
+
+  const listInvite = await ListInvite.findOne({ invite_code: inviteCode });
+
+  if (!listInvite) {
+    res.status(404);
+    throw new Error(`Could not find invite with code ${inviteCode}`);
+  }
+
+  const dateNow = new Date();
+  const elapsedTime = dateNow - listInvite.createdAt;
+  if (elapsedTime > 60 * 60 || listInvite.used_by_id) {
+    res.status(410); // 401 Gone
+    throw new Error('Invite has expired or already been used');
+  }
+
+  const list = await List.findById(listInvite.list_id);
+
+  if (!list) {
+    res.status(404);
+    throw new Error('List can no longer be found');
+  }
+
+  if (list.user_id === user._id) {
+    res.status(400);
+    throw new Error('Cannot invite yourself to your own list');
+  }
+
+  if (list.sharedUsers.find(el => el.user_id.toString() === user._id)) {
+    res.status(400);
+    throw new Error('User already has access to this list');
+  }
+
+  listInvite.used_by_id = user._id;
+
+  list.sharedUsers.push({
+    user_id: user._id,
+    username: user.username,
+  });
+
+  await listInvite.save();
+  await list.save();
+
+  res.status(201).json(list);
+});
+
+const editSharedUser = asyncHandler(async (req, res) => {
+  const { sharedUserID, updatedValues } = req.body;
+
+  if (!updatedValues) {
+    res.status(400);
+    throw new Error('Value is required: updatedValues');
+  }
+
+  if (updatedValues.canEdit) {
+    const idx = req.list.sharedUsers.findIndex(
+      el => el.user_id.toString() === sharedUserID
+    );
+
+    if (idx > -1) {
+      req.list.sharedUsers[idx].canEdit = updatedValues.canEdit;
+    } else {
+      throw new Error('Could not find shared user ID on specified list');
+    }
+  }
+
+  await req.list.save();
+  res.status(200).json(req.list);
+});
+
+const removeSharedUser = asyncHandler(async (req, res) => {
+  const { sharedUserID } = req.body;
+
+  const idx = req.list.sharedUsers.findIndex(
+    el => el.user_id.toString() === sharedUserID
+  );
+
+  if (idx > -1) {
+    req.list.sharedUsers.splice(index, 1);
+  } else {
+    throw new Error('Could not find shared user ID on specified list');
+  }
+
+  await req.list.save();
+  res.status(200).json(req.list);
+});
+
+export {
+  getLists,
+  createList,
+  editList,
+  deleteList,
+  addSharedUser,
+  editSharedUser,
+  removeSharedUser,
+};

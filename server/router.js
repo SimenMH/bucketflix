@@ -1,5 +1,6 @@
 import express from 'express';
 import authenticate from './middleware/authMiddleware.js';
+import isListOwner from './middleware/isListOwnerMiddleware.js';
 import canEditList from './middleware/canEditListMiddleware.js';
 import {
   registerUser,
@@ -12,16 +13,16 @@ import {
   createList,
   editList,
   deleteList,
+  addSharedUser,
+  editSharedUser,
+  removeSharedUser,
 } from './controllers/listController.js';
 import {
   addMedia,
   editMedia,
   deleteMedia,
 } from './controllers/mediaController.js';
-import {
-  createInvite,
-  useInvite,
-} from './controllers/inviteToListController.js';
+import { createInvite } from './controllers/listInviteController.js';
 import { createAccessToken } from './controllers/tokenController.js';
 
 const router = express.Router();
@@ -40,21 +41,25 @@ router
   .all(authenticate)
   .get(getLists)
   .post(createList)
-  .all(canEditList)
+  .all(isListOwner)
   .put(editList)
   .delete(deleteList);
+
 router
   .route('/lists/media')
   .all(authenticate, canEditList)
   .post(addMedia)
   .put(editMedia)
   .delete(deleteMedia);
+
 router
-  .route('/lists/invite')
+  .route('/lists/users')
   .all(authenticate)
-  .put(useInvite)
-  .all(canEditList)
-  .post(createInvite);
+  .post(addSharedUser)
+  .all(isListOwner)
+  .put(editSharedUser)
+  .delete(removeSharedUser);
+router.route('/lists/invite').all(authenticate, isListOwner).post(createInvite);
 
 router.post('/token', createAccessToken);
 

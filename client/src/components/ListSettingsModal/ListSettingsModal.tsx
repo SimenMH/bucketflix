@@ -3,7 +3,11 @@ import Modal from 'react-modal';
 import { List, SharedUser } from '../../types';
 import { useState } from 'react';
 import { useAppDispatch } from '../../redux/Hooks';
-import { editList } from '../../redux/List/ListSlice';
+import {
+  editList,
+  editSharedUser,
+  removeSharedUser,
+} from '../../redux/List/ListSlice';
 import { generateListInvite } from '../../api/GenerateListInvite';
 
 interface Props {
@@ -20,10 +24,10 @@ const ListSettingsModal: React.FC<Props> = ({
   activeList,
 }) => {
   const dispatch = useAppDispatch();
+  const [errorText, setErrorText] = useState<string | null>(null);
   const [newListName, setNewListName] = useState<string>(
     lists[activeList].name
   );
-  const [newSharedUsers, setNewSharedUsers] = useState<Array<SharedUser>>([]);
   const [listInviteCode, setListInviteCode] = useState<string | null>(null);
 
   const handleGenerateInvite = async () => {
@@ -31,25 +35,70 @@ const ListSettingsModal: React.FC<Props> = ({
     setListInviteCode(newInviteCode);
   };
 
-  const handleUpdateList = async () => {
-    // Only allow updating one thing at the time. Either update the name, or remove a single user from the shared users list. Split the endpoints
+  const handleUpdateListName = async () => {
+    setErrorText(null);
+
     const res = await dispatch(
       editList({
         listID: lists[activeList]._id,
         updatedValues: {
           name: newListName,
-          sharedUsers: [...lists[activeList].sharedUsers, ...newSharedUsers],
         },
       })
     );
 
-    if (res.meta.requestStatus === 'fulfilled') {
-      // closeModal();
+    if (res.meta.requestStatus === 'rejected') {
+      if (res.payload) {
+        setErrorText(res.payload);
+      } else {
+        setErrorText('Unknown error occured, please try again later.');
+      }
+    }
+  };
+
+  const handleUpdateSharedUser = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    user: SharedUser
+  ) => {
+    const res = await dispatch(
+      editSharedUser({
+        listID: lists[activeList]._id,
+        sharedUserID: user.user_id,
+        updatedValues: {
+          canEdit: e.target.checked,
+        },
+      })
+    );
+
+    if (res.meta.requestStatus === 'rejected') {
+      if (res.payload) {
+        setErrorText(res.payload);
+      } else {
+        setErrorText('Unknown error occured, please try again later.');
+      }
+    }
+  };
+
+  const handleRemoveSharedUser = async (user: SharedUser) => {
+    const res = await dispatch(
+      removeSharedUser({
+        listID: lists[activeList]._id,
+        sharedUserID: user.user_id,
+      })
+    );
+
+    if (res.meta.requestStatus === 'rejected') {
+      if (res.payload) {
+        setErrorText(res.payload);
+      } else {
+        setErrorText('Unknown error occured, please try again later.');
+      }
     }
   };
 
   const closeModal = () => {
     setListInviteCode(null);
+    setNewListName(lists[activeList].name);
     handleCloseModal();
   };
 
@@ -66,6 +115,7 @@ const ListSettingsModal: React.FC<Props> = ({
       <div className='modal-title'>List Settings</div>
       <div className='faded-seperator' />
       <div className='list-details'>
+        <div className='error-text'>{errorText}</div>
         <div className='list-name'>
           <input
             type='text'
@@ -76,21 +126,56 @@ const ListSettingsModal: React.FC<Props> = ({
               setNewListName(e.currentTarget.value)
             }
           />
-          <button onClick={handleUpdateList}>Save</button>
+          <button
+            onClick={handleUpdateListName}
+            disabled={lists[activeList].name === newListName || !newListName}
+          >
+            Save
+          </button>
         </div>
         {/* Shared Users */}
         <div className='shared-users'>
-          <h3>Shared Users</h3>
+          <h3>
+            Shared Users <span>Editor</span>
+          </h3>
           {lists[activeList].sharedUsers.map(user => (
-            <p key={user.user_id}>{user.username}</p>
+            <div className='shared-user' key={user.user_id}>
+              <div
+                className='modal-close'
+                onClick={() => handleRemoveSharedUser(user)}
+              />
+              <p>{user.username}</p>
+              <label className='switch'>
+                <input
+                  type='checkbox'
+                  // defaultChecked={user.canEdit}
+                  checked={user.canEdit}
+                  onChange={e => handleUpdateSharedUser(e, user)}
+                />
+                <span className='slider'></span>
+              </label>
+            </div>
           ))}
-          {newSharedUsers.map(user => (
-            <p key={user.user_id}>{user.username}</p>
-          ))}
+          <div className='shared-user'>
+            <div className='modal-close' />
+            <p>JaneDoe</p>
+            <label className='switch'>
+              <input type='checkbox' />
+              <span className='slider'></span>
+            </label>
+          </div>
+          <div className='shared-user'>
+            <div className='modal-close' />
+            <p>Boopitibap</p>
+            <label className='switch'>
+              <input type='checkbox' />
+              <span className='slider'></span>
+            </label>
+          </div>
           <input
             className='list-invite-link'
             type='text'
-            placeholder=''
+            placeholder='Generate a link to invite other users to this list'
             value={
               listInviteCode
                 ? `https://localhost:3000/invite?i=${listInviteCode}`

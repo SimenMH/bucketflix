@@ -6,8 +6,10 @@ import {
   editMediaInListAPI,
   deleteMediaFromListAPI,
   editListAPI,
+  editSharedUserAPI,
+  removeSharedUserAPI,
 } from './ListApi';
-import { List, Media, EditMediaData, SharedUser } from '../../types';
+import { List, Media, EditMediaData } from '../../types';
 
 export const getLists = createAsyncThunk(
   'lists/getLists',
@@ -24,7 +26,7 @@ export const editList = createAsyncThunk(
   async (
     listData: {
       listID: string;
-      updatedValues: { name: string; sharedUsers: Array<SharedUser> };
+      updatedValues: { name?: string };
     },
     thunkAPI
   ) => editListAPI(listData, thunkAPI)
@@ -45,6 +47,24 @@ export const deleteMediaFromList = createAsyncThunk(
   'lists/deleteMediaFromList',
   async (data: { listID: string; mediaID: string }, thunkAPI) =>
     deleteMediaFromListAPI(data, thunkAPI)
+);
+
+export const editSharedUser = createAsyncThunk(
+  'lists/editSharedUsers',
+  async (
+    data: {
+      listID: string;
+      sharedUserID: string;
+      updatedValues: { canEdit?: boolean };
+    },
+    thunkAPI
+  ) => editSharedUserAPI(data, thunkAPI)
+);
+
+export const removeSharedUser = createAsyncThunk(
+  'lists/removeSharedUser',
+  async (data: { listID: string; sharedUserID: string }, thunkAPI) =>
+    removeSharedUserAPI(data, thunkAPI)
 );
 
 interface ListState {
@@ -167,6 +187,42 @@ export const listsSlice = createSlice({
       }
     );
     builder.addCase(deleteMediaFromList.rejected, (state, _action) => {
+      state.status = 'failed';
+    });
+
+    // Edit Shared User in List
+    builder.addCase(editSharedUser.pending, (state, _action) => {
+      state.status = 'loading';
+    });
+    builder.addCase(
+      editSharedUser.fulfilled,
+      (state, action: PayloadAction<List>) => {
+        const listIdx = state.lists.findIndex(
+          list => list._id === action.payload._id
+        );
+        state.lists[listIdx] = action.payload;
+        state.status = 'success';
+      }
+    );
+    builder.addCase(editSharedUser.rejected, (state, _action) => {
+      state.status = 'failed';
+    });
+
+    // Remove Shared User from List
+    builder.addCase(removeSharedUser.pending, (state, _action) => {
+      state.status = 'loading';
+    });
+    builder.addCase(
+      removeSharedUser.fulfilled,
+      (state, action: PayloadAction<List>) => {
+        const listIdx = state.lists.findIndex(
+          list => list._id === action.payload._id
+        );
+        state.lists[listIdx] = action.payload;
+        state.status = 'success';
+      }
+    );
+    builder.addCase(removeSharedUser.rejected, (state, _action) => {
       state.status = 'failed';
     });
   },

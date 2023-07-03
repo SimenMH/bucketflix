@@ -24,7 +24,7 @@ const LoginForm: React.FC<Props> = ({ history }) => {
       userLogin({ email: target.email.value, password: target.password.value })
     );
 
-    if (res.type === 'user/userLogin/rejected') {
+    if (res.meta.requestStatus === 'rejected') {
       setErrorText('Incorrect password or email');
     } else {
       history.push('/');

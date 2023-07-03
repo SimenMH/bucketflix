@@ -2,7 +2,7 @@ import { axiosAuthInstance } from '../../api/AxiosInstances';
 import Cookies from 'universal-cookie';
 import { resetUserState } from '../User/UserSlice';
 import { resetListState } from './ListSlice';
-import { Media, EditMediaData, SharedUser } from '../../types';
+import { Media, EditMediaData } from '../../types';
 
 const cookies = new Cookies();
 
@@ -58,7 +58,7 @@ export const addListAPI = async (listName: string, thunkAPI: any) => {
 export const editListAPI = async (
   listData: {
     listID: string;
-    updatedValues: { name: string; sharedUsers: Array<SharedUser> };
+    updatedValues: { name?: string };
   },
   thunkAPI: any
 ) => {
@@ -127,6 +127,51 @@ export const deleteMediaFromListAPI = async (
 
   try {
     const res = await axiosAuthInstance.delete('/lists/media', {
+      data,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    return res.data;
+  } catch (err: any) {
+    return rejectWithValue(errorHandler(err, dispatch));
+  }
+};
+
+export const editSharedUserAPI = async (
+  data: {
+    listID: string;
+    sharedUserID: string;
+    updatedValues: { canEdit?: boolean };
+  },
+  thunkAPI: any
+) => {
+  const { rejectWithValue, dispatch } = thunkAPI;
+  const accessToken = cookies.get('access-token');
+
+  try {
+    const res = await axiosAuthInstance.put('/lists/users', data, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    return res.data;
+  } catch (err: any) {
+    return rejectWithValue(errorHandler(err, dispatch));
+  }
+};
+
+export const removeSharedUserAPI = async (
+  data: { listID: string; sharedUserID: string },
+  thunkAPI: any
+) => {
+  const { rejectWithValue, dispatch } = thunkAPI;
+  const accessToken = cookies.get('access-token');
+
+  try {
+    const res = await axiosAuthInstance.delete('/lists/users', {
       data,
       headers: {
         Authorization: `Bearer ${accessToken}`,

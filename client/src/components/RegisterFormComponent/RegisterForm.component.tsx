@@ -34,7 +34,7 @@ const RegisterForm: React.FC<Props> = ({ history }) => {
       })
     );
 
-    if (res.type === 'user/userRegister/rejected') {
+    if (res.meta.requestStatus === 'rejected') {
       if (res.payload && res.payload.message) {
         setErrorText(res.payload.message);
       } else {

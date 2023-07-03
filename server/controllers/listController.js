@@ -36,7 +36,11 @@ const createList = asyncHandler(async (req, res) => {
     }
   } catch (err) {
     res.status(400);
-    throw new Error(err);
+    if (err.errors.name.kind === 'maxlength') {
+      throw new Error(`${name} is longer than the maximum allowed length (15)`);
+    } else {
+      throw new Error(err);
+    }
   }
 });
 
@@ -50,14 +54,20 @@ const editList = asyncHandler(async (req, res) => {
 
   const list = req.list;
 
-  if (updatedValues.name) list.name = updatedValues.name;
+  if (updatedValues.hasOwnProperty('name')) list.name = updatedValues.name;
 
   try {
     await list.save();
     res.status(200).json(list);
   } catch (err) {
     res.status(400);
-    throw new Error(err);
+    if (err.errors.name.kind === 'maxlength') {
+      throw new Error(
+        `${updatedValues.name} is longer than the maximum allowed length (15)`
+      );
+    } else {
+      throw new Error(err);
+    }
   }
 });
 
@@ -131,7 +141,7 @@ const editSharedUser = asyncHandler(async (req, res) => {
     throw new Error('Value is required: updatedValues');
   }
 
-  if (updatedValues.canEdit) {
+  if (updatedValues.hasOwnProperty('canEdit')) {
     const idx = req.list.sharedUsers.findIndex(
       el => el.user_id.toString() === sharedUserID
     );
@@ -155,7 +165,7 @@ const removeSharedUser = asyncHandler(async (req, res) => {
   );
 
   if (idx > -1) {
-    req.list.sharedUsers.splice(index, 1);
+    req.list.sharedUsers.splice(idx, 1);
   } else {
     throw new Error('Could not find shared user ID on specified list');
   }

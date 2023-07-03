@@ -3,7 +3,6 @@ import List from '../models/listModel.js';
 
 const isListOwner = asyncHandler(async (req, res, next) => {
   const { listID } = req.body;
-
   const list = await List.findById(listID);
 
   if (!list) {

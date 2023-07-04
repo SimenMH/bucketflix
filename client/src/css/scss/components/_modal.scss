@@ -1,0 +1,61 @@
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  padding: 10px 30px;
+  transform: translate(-50%, -50%);
+  background: #616161;
+  border-radius: 4px;
+  overflow: auto;
+  outline: none;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: auto;
+  z-index: 20;
+}
+
+.modal-close {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  width: 32px;
+  height: 32px;
+  opacity: 0.5;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:before,
+  &:after {
+    position: absolute;
+    left: 15px;
+    height: 33px;
+    width: 3px;
+    background-color: rgb(200, 200, 200);
+    content: ' ';
+  }
+
+  &:before {
+    transform: rotate(45deg);
+  }
+
+  &:after {
+    transform: rotate(-45deg);
+  }
+}
+
+.modal-title {
+  font-size: 42px;
+  margin-bottom: 5px;
+}

@@ -1,0 +1,65 @@
+.list-details {
+  margin-top: 15px;
+  input {
+    // height: 25px;
+    font-size: 18px;
+    margin-right: 10px;
+
+    &.list-invite-link {
+      width: 325px;
+      font-size: 14px;
+    }
+  }
+
+  .shared-users {
+    h3 {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 500;
+      margin-bottom: 5px;
+      border-bottom: 1px solid;
+
+      span {
+        font-size: 18px;
+        margin-top: auto;
+      }
+    }
+
+    .shared-user {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding-bottom: 5px;
+
+      margin-bottom: 5px;
+
+      p {
+        margin: 0;
+      }
+    }
+
+    .modal-close {
+      position: relative;
+      top: 0;
+      right: 0;
+      width: 16px;
+      height: 18px;
+
+      &:before,
+      &:after {
+        height: 16px;
+        width: 3px;
+        left: 2.5px;
+      }
+    }
+
+    .switch {
+      margin-left: auto;
+      // margin-right: 10px;
+    }
+  }
+
+  .error-text {
+    margin-bottom: 5px;
+  }
+}

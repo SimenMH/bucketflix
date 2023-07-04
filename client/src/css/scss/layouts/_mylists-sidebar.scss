@@ -1,0 +1,128 @@
+.mylists-sidebar {
+  position: relative;
+  min-width: 240px;
+  height: calc(100vh - 75px);
+  background-color: #393939;
+  box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.3);
+}
+
+.mylists-title-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 55px;
+  background-color: #343434;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+  margin-bottom: 15px;
+
+  h2 {
+    font-size: 28px;
+    font-weight: 500;
+    margin: 0;
+    margin-left: 25px;
+    margin-right: 20px;
+  }
+}
+
+.add-list-button {
+  background-color: #60659b;
+  color: #ececec;
+  padding: 5px 10px;
+  font-size: 18px;
+  border-radius: 5px;
+  font-weight: 400;
+  text-shadow: 1px 1px 1px black;
+  border: none;
+  box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.mylists-item {
+  min-height: 45px;
+  margin-top: 7px;
+  cursor: pointer;
+
+  &:hover {
+    .mylists-selector {
+      fill-opacity: 0.25;
+    }
+  }
+
+  .FadedSeperator {
+    width: 80%;
+    margin-top: 7px;
+  }
+}
+
+.mylists-list-name {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+
+  h3 {
+    font-size: 22px;
+    font-weight: 400;
+    max-width: 180px;
+    margin: 0;
+    margin-left: 5px;
+    word-wrap: break-word;
+  }
+}
+
+.mylists-selector {
+  width: 15px;
+  height: 15px;
+  margin-top: 5px;
+  fill: #000;
+  fill-opacity: 0;
+}
+
+.mylists-active-selector {
+  fill-opacity: 0.5;
+}
+
+.add-list-modal {
+  width: 475px;
+}
+
+.add-list-modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+  margin-bottom: 10px;
+
+  p {
+    font-size: 18px;
+    font-weight: 400;
+    margin: 20px 0;
+  }
+
+  input {
+    font-size: 18px;
+    width: 60%;
+    height: 35px;
+    padding: 0 10px;
+    margin: 15px 0;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+
+    &:focus {
+      box-shadow: 0 0 2px 2px #81abb8;
+    }
+  }
+}
+
+.confirm-add-list {
+  font-size: 18px;
+  text-align: center;
+  line-height: 32px;
+  width: 110px;
+  height: 35px;
+  margin: 20px 0;
+  background-color: #526774;
+  border-radius: 5px;
+  box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}

@@ -32,7 +32,7 @@ const LoginForm: React.FC<Props> = ({ history }) => {
   };
 
   return (
-    <form className='login-form' onSubmit={handleLogin}>
+    <form className='LoginRegister__Form' onSubmit={handleLogin}>
       <label htmlFor='email'>Email:</label>
       <input
         type='email'
@@ -51,7 +51,7 @@ const LoginForm: React.FC<Props> = ({ history }) => {
         placeholder='Password'
         required={true}
       />
-      {errorText && <div className='error-text'>{errorText}</div>}
+      {errorText && <div className='ErrorText'>{errorText}</div>}
       <button type='submit'>Login</button>
     </form>
   );

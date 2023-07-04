@@ -20,13 +20,13 @@ code {
   max-height: 100vh;
 }
 
-.text-link {
+.LinkText {
   color: #8c93dd;
   text-decoration: underline;
   cursor: pointer;
 }
 
-.error-text {
+.ErrorText {
   color: hsl(0, 100%, 79%);
 }
 
@@ -48,6 +48,7 @@ select {
   height: 40px;
   padding: 10px;
   border: none;
+  border-radius: 3px;
   background-color: #e5e5e5;
 }
 

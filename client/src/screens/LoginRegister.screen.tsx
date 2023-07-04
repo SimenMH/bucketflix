@@ -20,8 +20,10 @@ const LoginRegister: React.FC<Props> = ({ history }) => {
   }, [loggedIn, history]);
 
   return (
-    <div className='login-screen'>
-      <h2 className='form-label'>{register ? 'Register' : 'Login'}</h2>
+    <div className='LoginRegister'>
+      <div className='LoginRegister__Label'>
+        {register ? 'Register' : 'Login'}
+      </div>
 
       <fieldset style={{ border: 'none' }} disabled={status === 'Loading'}>
         {register ? (
@@ -33,14 +35,14 @@ const LoginRegister: React.FC<Props> = ({ history }) => {
       {register ? (
         <>
           <div>Already have an account?</div>
-          <div className='text-link' onClick={() => setRegister(false)}>
+          <div className='LinkText' onClick={() => setRegister(false)}>
             Click here to login!
           </div>
         </>
       ) : (
         <>
           <div>Don't have an account?</div>
-          <div className='text-link' onClick={() => setRegister(true)}>
+          <div className='LinkText' onClick={() => setRegister(true)}>
             Click here to signup!
           </div>
         </>

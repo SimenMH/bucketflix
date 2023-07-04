@@ -47,7 +47,7 @@ const RegisterForm: React.FC<Props> = ({ history }) => {
 
   return (
     <>
-      <form className='register-form' onSubmit={handleRegister}>
+      <form className='LoginRegister__Form' onSubmit={handleRegister}>
         <label htmlFor='newEmail'>Email:</label>
         <input
           type='email'
@@ -84,7 +84,7 @@ const RegisterForm: React.FC<Props> = ({ history }) => {
           placeholder='Confirm Password'
           required={true}
         />
-        {errorText && <div className='error-text'>{errorText}</div>}
+        {errorText && <div className='ErrorText'>{errorText}</div>}
         <button type='submit'>Signup</button>
       </form>
     </>

@@ -114,7 +114,7 @@ const ListSettingsModal: React.FC<Props> = ({
       <div className='modal-title'>List Settings</div>
       <div className='FadedSeperator' />
       <div className='list-details'>
-        <div className='error-text'>{errorText}</div>
+        <div className='ErrorText'>{errorText}</div>
         <div className='list-name'>
           <input
             type='text'

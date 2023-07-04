@@ -191,35 +191,37 @@ const AddMediaModal: React.FC<Props> = ({
                   onChange={handleInputChange}
                   value={mediaInput.title}
                 />
-                <div className='suggestions'>
-                  {searchResult.map((media, idx) => {
-                    return (
-                      <div
-                        className='suggestion-item'
-                        key={idx}
-                        onClick={() => {
-                          handleSelectMedia(media);
-                          setMediaInput(prevState => {
-                            return {
-                              ...prevState,
-                              title: media.Title,
-                              type: media.Type,
-                            };
-                          });
-                          setSearchResult([]);
-                        }}
-                      >
-                        <div className='suggestion-item-name'>
-                          {media.Title}{' '}
-                          <span>
-                            ({media.Type === 'series' && 'TV-Series '}
-                            {media.Year})
-                          </span>
+                {searchResult.length > 0 && (
+                  <div className='suggestions'>
+                    {searchResult.map((media, idx) => {
+                      return (
+                        <div
+                          className='suggestion-item'
+                          key={idx}
+                          onClick={() => {
+                            handleSelectMedia(media);
+                            setMediaInput(prevState => {
+                              return {
+                                ...prevState,
+                                title: media.Title,
+                                type: media.Type,
+                              };
+                            });
+                            setSearchResult([]);
+                          }}
+                        >
+                          <div className='suggestion-item-name'>
+                            {media.Title}{' '}
+                            <span>
+                              ({media.Type === 'series' && 'TV-Series '}
+                              {media.Year})
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
-                </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
               <div className='input-item'>
                 <select

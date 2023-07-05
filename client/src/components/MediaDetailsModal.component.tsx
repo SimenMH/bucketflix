@@ -91,7 +91,7 @@ const MediaDetailsModal: React.FC<Props> = ({
           </span>
         )}
       </div>
-      <div className='FadedSeperator' />
+      <div className='Seperator' />
       <div className='MediaDetails__Content'>
         <img
           className='MediaDetails__Poster'
@@ -113,7 +113,7 @@ const MediaDetailsModal: React.FC<Props> = ({
                 <p className='MediaDetails__Description'>
                   {mediaToDisplay.Plot}
                 </p>
-                <div className='FadedSeperator' />
+                <div className='Seperator' />
               </div>
             )}
             {isEditing ? (

@@ -46,7 +46,7 @@
   &__Media {
     min-height: calc(100% - 50px);
     padding: 0 55px;
-    background-color: #616161;
+    background-color: $bg-color-dark-5;
 
     .Media {
       &__Category {

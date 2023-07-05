@@ -5,7 +5,7 @@
   align-items: center;
   height: 75px;
   padding: 0 50px;
-  background-color: rgb(37, 37, 39);
+  background-color: $bg-color-dark-1;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
   z-index: 10;
 }
@@ -22,7 +22,7 @@
   height: 40px;
   margin-right: 10px;
   border-radius: 50%;
-  background-color: rgb(94, 76, 137);
+  background-color: $primay-color-light-1;
 }
 
 .NavBar__Title {

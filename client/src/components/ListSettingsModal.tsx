@@ -112,7 +112,7 @@ const ListSettingsModal: React.FC<Props> = ({
     >
       <div className='Modal__Close' onClick={() => closeModal()} />
       <div className='Modal__Title'>List Settings</div>
-      <div className='FadedSeperator' />
+      <div className='Seperator' />
       <div className='ListSettings'>
         <div className='ErrorText'>{errorText}</div>
         <div>
@@ -139,6 +139,7 @@ const ListSettingsModal: React.FC<Props> = ({
             Shared Users{' '}
             {lists[activeList].sharedUsers.length > 0 && <span>Editor</span>}
           </h3>
+          <div className='Seperator' />
           {lists[activeList].sharedUsers.map(user => (
             <div className='SharedUser' key={user.user_id}>
               <div

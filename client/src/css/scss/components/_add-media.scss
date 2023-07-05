@@ -3,7 +3,7 @@
     @include media-modal-input;
     max-width: 1085px;
 
-    .FadedSeperator {
+    .Seperator {
       margin-bottom: 20px;
     }
   }
@@ -31,8 +31,8 @@
     color: black;
     width: 345px;
     max-height: 150px;
-    border: 1px solid #999999;
-    background-color: #e5e5e5;
+    border: 1px solid $primay-color-light-3;
+    background-color: $bg-color-light-1;
     overflow: auto;
     z-index: 5;
 
@@ -44,18 +44,18 @@
       min-height: 30px;
       padding: 0 10px;
       line-height: 27px;
-      border-bottom: 1px solid rgba($color: #999999, $alpha: 0.1);
+      border-bottom: 1px solid rgba($color: $primay-color-light-3, $alpha: 0.1);
       cursor: pointer;
 
       &:hover {
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: $bg-color-light-2;
       }
     }
 
     &__ItemName {
       font-size: 14px;
       span {
-        color: #a1a1a1;
+        color: $font-color-dark-2;
       }
     }
   }
@@ -72,7 +72,7 @@
     }
 
     &__Year {
-      color: #ffffff6e;
+      color: $font-color-light-2;
       font-size: 22px;
       margin-top: -10px;
     }
@@ -82,12 +82,12 @@
     }
 
     &__Description {
-      color: #c0c0c0;
+      color: $font-color-light-2;
       font-size: 18px;
       margin-bottom: 3px;
     }
 
-    .FadedSeperator {
+    .Seperator {
       margin: 8px 0;
     }
   }

@@ -175,7 +175,7 @@ const AddMediaModal: React.FC<Props> = ({
     >
       <div className='Modal__Close' onClick={() => handleCloseModal()} />
       <div className='Modal__Title'>Add New Movie or Series</div>
-      <div className='FadedSeperator' />
+      <div className='Seperator' />
       {/* Content */}
       <div className='AddMedia__Content'>
         {/* Left Side Content */}
@@ -278,7 +278,7 @@ const AddMediaModal: React.FC<Props> = ({
                 <div className='MediaInfo__Type'>
                   {selectedMedia.Type === 'series' ? 'TV-Series' : 'Movie'}
                 </div>
-                <div className='FadedSeperator' />
+                <div className='Seperator' />
                 <div className='MediaInfo__Description'>
                   {selectedMedia.Plot}
                 </div>

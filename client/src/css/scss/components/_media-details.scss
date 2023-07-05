@@ -27,7 +27,7 @@
     width: 35vw;
     max-width: 525px;
 
-    .FadedSeperator {
+    .Seperator {
       margin-top: 15px;
       margin-bottom: 25px;
       width: 90%;
@@ -45,7 +45,7 @@
       font-size: 16px;
       margin-left: 3px;
       font-weight: 400;
-      color: #d0d0d0;
+      color: $font-color-light-2;
     }
 
     // Description Input
@@ -55,7 +55,7 @@
   }
 
   &__Description {
-    color: #d0d0d0;
+    color: $font-color-light-2;
   }
 
   &__Buttons {

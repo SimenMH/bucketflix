@@ -129,7 +129,7 @@ const MyLists: React.FC<Props> = () => {
                 <div>
                   <div className='Media__Category'>
                     <h2 className='Media__Header'>Movies</h2>
-                    <div className='FadedSeperator' />
+                    <div className='Seperator' />
                   </div>
                   <div className='Media__Container'>
                     {renderMedia(lists[activeList].movies)}
@@ -143,7 +143,7 @@ const MyLists: React.FC<Props> = () => {
                 <div>
                   <div className='Media__Category'>
                     <h2 className='Media__Header'>TV-Series</h2>
-                    <div className='FadedSeperator' />
+                    <div className='Seperator' />
                   </div>
                   <div className='Media__Container'>
                     {renderMedia(lists[activeList].series)}

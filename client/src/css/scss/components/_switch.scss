@@ -10,11 +10,11 @@
     height: 0;
 
     &:checked + .Switch__Slider {
-      background-color: #60659b;
+      background-color: $primay-color-light-1;
     }
 
     &:focus + .Switch__Slider {
-      box-shadow: 0 0 1px #60659b;
+      box-shadow: 0 0 1px $primay-color-light-1;
     }
 
     &:checked + .Switch__Slider:before {
@@ -29,7 +29,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: $bg-color-light-1;
     border-radius: 17px;
     transition: 0.4s;
 
@@ -40,7 +40,7 @@
       width: 13px;
       left: 2px;
       bottom: 2px;
-      background-color: white;
+      background-color: $bg-color-dark-4;
       border-radius: 50%;
       transition: 0.4s;
     }

@@ -1,0 +1,96 @@
+.MyLists__Sidebar {
+  position: relative;
+  min-width: 240px;
+  height: calc(100vh - 75px);
+  background-color: $bg-color-dark-3;
+  box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.3);
+}
+
+.Sidebar {
+  &__Top {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 55px;
+    background-color: $bg-color-dark-2;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+    // margin-bottom: 10px;
+
+    h2 {
+      font-size: 28px;
+      font-weight: 500;
+      margin: 0;
+      margin-left: 25px;
+      margin-right: 20px;
+    }
+  }
+
+  &__Item {
+    display: flex;
+    align-items: center;
+    min-height: 45px;
+    border-bottom: 1px solid $primay-color-light-4;
+    cursor: pointer;
+
+    &:hover,
+    &--active {
+      background-color: $primay-color-light-4;
+      .Sidebar__Selector {
+        fill-opacity: 0.25;
+      }
+    }
+
+    .Seperator {
+      width: 80%;
+      margin-top: 7px;
+    }
+  }
+
+  &__ListName {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+
+    h3 {
+      font-size: 22px;
+      font-weight: 400;
+      max-width: 180px;
+      margin: 0;
+      margin-left: 5px;
+      word-wrap: break-word;
+    }
+  }
+
+  &__Selector {
+    width: 15px;
+    height: 15px;
+    margin-top: 5px;
+    fill: #000;
+    fill-opacity: 0;
+
+    &--active {
+      fill-opacity: 0.5 !important;
+    }
+  }
+}
+
+.NewList {
+  &__Modal {
+    width: 350px;
+  }
+
+  &__Content {
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+
+  &__Heading {
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  &__Input {
+    margin-top: 7px;
+    margin-right: 7px;
+  }
+}

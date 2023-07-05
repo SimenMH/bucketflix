@@ -1,0 +1,25 @@
+.LoginRegister {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100% - 100px);
+
+  &__Label {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  &__Form {
+    display: flex;
+    flex-direction: column;
+
+    input {
+      margin: 5px 0;
+    }
+
+    button {
+      margin-top: 15px;
+    }
+  }
+}

@@ -1,4 +1,3 @@
-import './css/App.css';
 import {
   BrowserRouter as Router,
   Route,
@@ -7,12 +6,12 @@ import {
 } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './redux/Hooks';
 
-import NavBar from './components/NavBar/NavBar.component';
-import MyLists from './screens/MyLists/MyLists.screen';
+import NavBar from './components/NavBar.component';
+import MyLists from './screens/MyLists.screen';
 import Modal from 'react-modal';
 import { useEffect, useState } from 'react';
 import { sessionLogin } from './redux/User/UserSlice';
-import LoginRegister from './screens/LoginRegister/LoginRegister.screen';
+import LoginRegister from './screens/LoginRegister.screen';
 
 Modal.setAppElement('#root');
 
@@ -31,7 +30,7 @@ const App: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <div className='app-container'>
+    <div className='AppContainer'>
       <NavBar />
       {!loading && (
         <Router>

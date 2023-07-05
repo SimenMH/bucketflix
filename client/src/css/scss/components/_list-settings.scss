@@ -1,0 +1,59 @@
+.ListSettings {
+  margin-top: 15px;
+
+  input {
+    margin-right: 10px;
+  }
+
+  &__NameInput {
+    font-size: 18px;
+    margin-right: 10px;
+  }
+
+  &__InviteLink {
+    width: 325px;
+    font-size: 14px;
+  }
+
+  .ErrorText {
+    margin-bottom: 5px;
+  }
+
+  &__SharedUsers {
+    h3 {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 500;
+      margin-bottom: 5px;
+
+      span {
+        font-size: 18px;
+        margin-top: auto;
+      }
+    }
+  }
+
+  .SharedUser {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $primay-color-light-4;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    margin-bottom: 5px;
+
+    &__Username {
+      margin: 0;
+    }
+
+    &__Remove {
+      @include cross-button(1rem, 3px);
+      margin-right: 2.5px;
+      margin-bottom: 1px;
+    }
+
+    .Switch {
+      margin-left: auto;
+    }
+  }
+}

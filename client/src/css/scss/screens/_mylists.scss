@@ -1,0 +1,88 @@
+.MyLists {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 75px);
+  min-height: 250px;
+
+  &__Content {
+    width: 100%;
+    padding: 15px 40px;
+    overflow: auto;
+  }
+
+  &__Options {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10px 10px;
+
+    &--left {
+      display: flex;
+      justify-content: space-between;
+      min-width: 150px;
+    }
+    &--right {
+      display: flex;
+      gap: 15px;
+    }
+  }
+
+  &__FilterButton {
+    color: #9c9c9c;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    align-self: flex-end;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &--active {
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+
+  &__Media {
+    min-height: calc(100% - 50px);
+    padding: 0 55px;
+    background-color: $bg-color-dark-5;
+
+    .Media {
+      &__Category {
+        padding: 20px 0;
+      }
+
+      &__Header {
+        font-size: 36px;
+        font-weight: 400;
+        margin: 0 0 15px 5px;
+      }
+
+      &__Container {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      &__Item {
+        max-width: 175px;
+        margin: 0 10px 15px;
+        cursor: pointer;
+
+        .Item {
+          &__Poster {
+            width: 175px;
+            height: 260px;
+            box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.25);
+          }
+          &__Title {
+            font-size: 18px;
+            font-weight: 400;
+            margin: -3px 0 0 3px;
+            text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
+          }
+        }
+      }
+    }
+  }
+}

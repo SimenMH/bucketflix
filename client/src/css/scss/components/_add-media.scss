@@ -1,0 +1,107 @@
+.AddMedia {
+  &__Modal {
+    @include media-modal-input;
+    max-width: 1085px;
+
+    .Seperator {
+      margin-bottom: 20px;
+    }
+  }
+
+  &__Content {
+    display: flex;
+    margin: 0 15px;
+
+    &--TopLeft {
+      display: flex;
+      gap: 40px;
+    }
+  }
+
+  &__TitleInput {
+    input:focus + .Suggestions {
+      display: block;
+    }
+  }
+
+  .Suggestions {
+    position: absolute;
+    box-sizing: border-box;
+    display: none;
+    color: black;
+    width: 345px;
+    max-height: 150px;
+    border: 1px solid $primay-color-light-3;
+    background-color: $bg-color-light-1;
+    overflow: auto;
+    z-index: 5;
+
+    &:hover {
+      display: block;
+    }
+
+    &__Item {
+      min-height: 30px;
+      padding: 0 10px;
+      line-height: 27px;
+      border-bottom: 1px solid rgba($color: $primay-color-light-3, $alpha: 0.1);
+      cursor: pointer;
+
+      &:hover {
+        background-color: $bg-color-light-2;
+      }
+    }
+
+    &__ItemName {
+      font-size: 14px;
+      span {
+        color: $font-color-dark-2;
+      }
+    }
+  }
+
+  .MediaInfo {
+    margin-left: 5px;
+    width: 20vw;
+    max-width: 410px;
+
+    &__Title {
+      font-family: sans-serif;
+      font-size: 28px;
+      margin-left: -5px;
+    }
+
+    &__Year {
+      color: $font-color-light-2;
+      font-size: 22px;
+      margin-top: -10px;
+    }
+
+    &__Type {
+      font-size: 18px;
+    }
+
+    &__Description {
+      color: $font-color-light-2;
+      font-size: 18px;
+      margin-bottom: 3px;
+    }
+
+    .Seperator {
+      margin: 8px 0;
+    }
+  }
+
+  &__Poster {
+    width: 200px;
+    height: 300px;
+    margin-left: 50px;
+  }
+
+  &__Button {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    height: 30px;
+  }
+}

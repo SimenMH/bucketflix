@@ -158,8 +158,8 @@ const AddMediaModal: React.FC<Props> = ({
 
   return (
     <Modal
-      className='modal add-media-modal'
-      overlayClassName='modal-overlay'
+      className='Modal AddMedia AddMedia__Modal'
+      overlayClassName='Modal__Overlay'
       isOpen={isOpen}
       onAfterOpen={() =>
         setMediaInput(prevState => {
@@ -173,17 +173,17 @@ const AddMediaModal: React.FC<Props> = ({
       shouldCloseOnOverlayClick={true}
       contentLabel='Add Media Modal'
     >
-      <div className='modal-close' onClick={() => handleCloseModal()} />
-      <div className='modal-title'>Add New Movie or Series</div>
+      <div className='Modal__Close' onClick={() => handleCloseModal()} />
+      <div className='Modal__Title'>Add New Movie or Series</div>
       <div className='FadedSeperator' />
       {/* Content */}
-      <div className='media-modal-content media-input-container'>
+      <div className='AddMedia__Content'>
         {/* Left Side Content */}
-        <div className='media-modal-left'>
+        <div>
           {/* Top Row */}
-          <div className='media-modal-top-left'>
-            <div className='upper-input-container'>
-              <div className='input-item media-title-input'>
+          <div className='AddMedia__Content--TopLeft'>
+            <div>
+              <div className='MediaInput__Item AddMedia__TitleInput'>
                 <input
                   type='text'
                   name='title'
@@ -192,11 +192,11 @@ const AddMediaModal: React.FC<Props> = ({
                   value={mediaInput.title}
                 />
                 {searchResult.length > 0 && (
-                  <div className='suggestions'>
+                  <div className='Suggestions'>
                     {searchResult.map((media, idx) => {
                       return (
                         <div
-                          className='suggestion-item'
+                          className='Suggestions__Item'
                           key={idx}
                           onClick={() => {
                             handleSelectMedia(media);
@@ -210,7 +210,7 @@ const AddMediaModal: React.FC<Props> = ({
                             setSearchResult([]);
                           }}
                         >
-                          <div className='suggestion-item-name'>
+                          <div className='Suggestions__ItemName'>
                             {media.Title}{' '}
                             <span>
                               ({media.Type === 'series' && 'TV-Series '}
@@ -223,7 +223,7 @@ const AddMediaModal: React.FC<Props> = ({
                   </div>
                 )}
               </div>
-              <div className='input-item'>
+              <div className='MediaInput__Item'>
                 <select
                   name='type'
                   onChange={handleInputChange}
@@ -234,7 +234,7 @@ const AddMediaModal: React.FC<Props> = ({
                   <option value='series'>TV-Series</option>
                 </select>
               </div>
-              <div className='input-item'>
+              <div className='MediaInput__Item'>
                 <input
                   type='text'
                   name='timestamp'
@@ -242,7 +242,7 @@ const AddMediaModal: React.FC<Props> = ({
                   placeholder='Current Timestamp / Episode (Optional)'
                 />
               </div>
-              <div className='input-item'>
+              <div className='MediaInput__Item'>
                 <input
                   type='text'
                   name='whereToWatch'
@@ -250,7 +250,7 @@ const AddMediaModal: React.FC<Props> = ({
                   placeholder='Where to Watch (Optional)'
                 />
               </div>
-              <div className='input-item'>
+              <div className='MediaInput__Item'>
                 <select
                   name='list'
                   value={mediaInput.list}
@@ -268,18 +268,18 @@ const AddMediaModal: React.FC<Props> = ({
             </div>
             {/* Title and description */}
             {selectedMedia && (
-              <div className='media-modal-media-info'>
-                <div className='media-modal-media-title'>
+              <div className='MediaInfo'>
+                <div className='MediaInfo__Title'>
                   {selectedMedia.Title}{' '}
-                  <span className='media-modal-media-year'>
+                  <span className='MediaInfo__Year'>
                     ({selectedMedia.Year})
                   </span>
                 </div>
-                <div className='media-modal-media-type'>
+                <div className='MediaInfo__Type'>
                   {selectedMedia.Type === 'series' ? 'TV-Series' : 'Movie'}
                 </div>
                 <div className='FadedSeperator' />
-                <div className='media-modal-media-description'>
+                <div className='MediaInfo__Description'>
                   {selectedMedia.Plot}
                 </div>
               </div>
@@ -295,7 +295,7 @@ const AddMediaModal: React.FC<Props> = ({
         </div>
         {/* Right Side Content */}
         <img
-          className='media-modal-media-poster'
+          className='AddMedia__Poster'
           src={
             selectedMedia
               ? selectedMedia.Poster
@@ -304,7 +304,7 @@ const AddMediaModal: React.FC<Props> = ({
           alt='Movie Poster'
         />
       </div>
-      <button className='modal-add-media-button' onClick={handleAddMedia}>
+      <button className='AddMedia__Button' onClick={handleAddMedia}>
         Add Movie/Series
       </button>
     </Modal>

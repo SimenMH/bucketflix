@@ -30,7 +30,7 @@ const App: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <div className='app-container'>
+    <div className='AppContainer'>
       <NavBar />
       {!loading && (
         <Router>

@@ -13,12 +13,12 @@ const NavBar: React.FC<Props> = () => {
   };
 
   return (
-    <div className='navbar-container'>
-      <a href='/' className='navbar-title-container'>
-        <div className='navbar-logo' />
-        <h1 className='navbar-title'>BucketFlix</h1>
+    <div className='NavBar'>
+      <a href='/' className='NavBar__TitleContainer'>
+        <div className='NavBar__Logo' />
+        <div className='NavBar__Title'>BucketFlix</div>
       </a>
-      <div className='navbar-links'>
+      <div className='NavBar__Links'>
         {loggedIn ? (
           <a href='/logout' onClick={handleLogout}>
             Logout

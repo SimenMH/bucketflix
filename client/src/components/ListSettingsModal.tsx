@@ -103,20 +103,21 @@ const ListSettingsModal: React.FC<Props> = ({
 
   return (
     <Modal
-      className='modal add-list-modal'
-      overlayClassName='modal-overlay'
+      className='Modal'
+      overlayClassName='Modal__Overlay'
       isOpen={isOpen}
       onRequestClose={() => closeModal()}
       shouldCloseOnOverlayClick={true}
       contentLabel='New List Modal'
     >
-      <div className='modal-close' onClick={() => closeModal()} />
-      <div className='modal-title'>List Settings</div>
+      <div className='Modal__Close' onClick={() => closeModal()} />
+      <div className='Modal__Title'>List Settings</div>
       <div className='FadedSeperator' />
-      <div className='list-details'>
+      <div className='ListSettings'>
         <div className='ErrorText'>{errorText}</div>
-        <div className='list-name'>
+        <div>
           <input
+            className='ListSettings__NameInput'
             type='text'
             placeholder='List Name'
             maxLength={15}
@@ -133,29 +134,30 @@ const ListSettingsModal: React.FC<Props> = ({
           </button>
         </div>
         {/* Shared Users */}
-        <div className='shared-users'>
+        <div className='ListSettings__SharedUsers'>
           <h3>
-            Shared Users <span>Editor</span>
+            Shared Users{' '}
+            {lists[activeList].sharedUsers.length > 0 && <span>Editor</span>}
           </h3>
           {lists[activeList].sharedUsers.map(user => (
-            <div className='shared-user' key={user.user_id}>
+            <div className='SharedUser' key={user.user_id}>
               <div
-                className='modal-close'
+                className='Modal__Close'
                 onClick={() => handleRemoveSharedUser(user)}
               />
-              <p>{user.username}</p>
-              <label className='switch'>
+              <p className='SharedUser__Username'>{user.username}</p>
+              <label className='Switch'>
                 <input
                   type='checkbox'
                   checked={user.canEdit}
                   onChange={e => handleUpdateSharedUser(e, user)}
                 />
-                <span className='slider'></span>
+                <span className='Switch__Slider'></span>
               </label>
             </div>
           ))}
           <input
-            className='list-invite-link'
+            className='ListSettings__InviteLink'
             type='text'
             placeholder='Generate a link to invite other users to this list'
             value={

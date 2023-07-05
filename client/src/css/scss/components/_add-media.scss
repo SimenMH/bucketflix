@@ -1,107 +1,107 @@
-.add-media-modal {
-  @include media-modal-input;
-  max-width: 1085px;
+.AddMedia {
+  &__Modal {
+    @include media-modal-input;
+    max-width: 1085px;
 
-  .FadedSeperator {
-    margin-bottom: 20px;
-  }
-}
-
-.media-modal-content {
-  display: flex;
-  margin: 0 15px;
-}
-
-.media-modal-top-left {
-  display: flex;
-}
-
-.upper-input-container {
-  margin-right: 40px;
-}
-
-.media-title-input {
-  input:focus + .suggestions {
-    display: block;
-  }
-  .suggestions:hover {
-    display: block;
-  }
-}
-
-.suggestions {
-  position: absolute;
-  box-sizing: border-box;
-  display: none;
-  color: black;
-  width: 345px;
-  max-height: 150px;
-  border: 1px solid #999999;
-  background-color: #e5e5e5;
-  overflow: auto;
-  z-index: 5;
-}
-
-.suggestion-item {
-  min-height: 30px;
-  padding: 0 10px;
-  line-height: 27px;
-  border-bottom: 1px solid rgba($color: #999999, $alpha: 0.1);
-  cursor: pointer;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-
-  .suggestion-item-name {
-    font-size: 14px;
-    span {
-      color: #a1a1a1;
+    .FadedSeperator {
+      margin-bottom: 20px;
     }
   }
-}
 
-.media-modal-media-info {
-  margin-left: 5px;
-  width: 20vw;
-  max-width: 410px;
+  &__Content {
+    display: flex;
+    margin: 0 15px;
 
-  .media-modal-media-title {
-    font-family: sans-serif;
-    font-size: 36px;
-    margin-left: -5px;
+    &--TopLeft {
+      display: flex;
+      gap: 40px;
+    }
   }
 
-  .media-modal-media-year {
-    color: #ffffff6e;
-    font-size: 28px;
-    margin-top: -10px;
+  &__TitleInput {
+    input:focus + .Suggestions {
+      display: block;
+    }
   }
 
-  .media-modal-media-type {
-    font-size: 18px;
+  .Suggestions {
+    position: absolute;
+    box-sizing: border-box;
+    display: none;
+    color: black;
+    width: 345px;
+    max-height: 150px;
+    border: 1px solid #999999;
+    background-color: #e5e5e5;
+    overflow: auto;
+    z-index: 5;
+
+    &:hover {
+      display: block;
+    }
+
+    &__Item {
+      min-height: 30px;
+      padding: 0 10px;
+      line-height: 27px;
+      border-bottom: 1px solid rgba($color: #999999, $alpha: 0.1);
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    &__ItemName {
+      font-size: 14px;
+      span {
+        color: #a1a1a1;
+      }
+    }
   }
 
-  .media-modal-media-description {
-    color: #c0c0c0;
-    font-size: 18px;
-    margin-bottom: 3px;
+  .MediaInfo {
+    margin-left: 5px;
+    width: 20vw;
+    max-width: 410px;
+
+    &__Title {
+      font-family: sans-serif;
+      font-size: 28px;
+      margin-left: -5px;
+    }
+
+    &__Year {
+      color: #ffffff6e;
+      font-size: 22px;
+      margin-top: -10px;
+    }
+
+    &__Type {
+      font-size: 18px;
+    }
+
+    &__Description {
+      color: #c0c0c0;
+      font-size: 18px;
+      margin-bottom: 3px;
+    }
+
+    .FadedSeperator {
+      margin: 8px 0;
+    }
   }
 
-  .FadedSeperator {
-    margin: 8px 0;
+  &__Poster {
+    width: 200px;
+    height: 300px;
+    margin-left: 50px;
   }
-}
 
-.media-modal-media-poster {
-  width: 200px;
-  height: 300px;
-  margin-left: 50px;
-}
-
-.modal-add-media-button {
-  position: absolute;
-  bottom: 20px;
-  right: 30px;
-  height: 30px;
+  &__Button {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    height: 30px;
+  }
 }

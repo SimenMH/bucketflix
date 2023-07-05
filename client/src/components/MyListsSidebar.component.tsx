@@ -18,14 +18,14 @@ const MyListsSidebar: React.FC<Props> = ({ lists, activeList }) => {
     return lists.map((list, idx) => {
       return (
         <div
-          className='mylists-item'
+          className='Sidebar__Item'
           key={idx}
           onClick={() => dispatch(updateActiveList(idx))}
         >
-          <div className='mylists-list-name'>
+          <div className='Sidebar__ListName'>
             <svg
-              className={`mylists-selector ${
-                idx === activeList ? 'mylists-active-selector' : ''
+              className={`Sidebar__Selector ${
+                idx === activeList ? 'Sidebar__Selector--active' : ''
               }`}
               width='15'
               height='15'
@@ -43,29 +43,30 @@ const MyListsSidebar: React.FC<Props> = ({ lists, activeList }) => {
   };
 
   return (
-    <div className='mylists-sidebar'>
-      <div className='mylists-title-container'>
+    <div className='MyLists__Sidebar'>
+      <div className='Sidebar__Top'>
         <h2>My Lists</h2>
         <button onClick={() => setListModalIsOpen(true)}>+ New</button>
       </div>
       <div>{renderLists()}</div>
       <Modal
-        className='modal add-list-modal'
-        overlayClassName='modal-overlay'
+        className='Modal NewList__Modal'
+        overlayClassName='Modal__Overlay'
         isOpen={listModalIsOpen}
         onRequestClose={() => setListModalIsOpen(false)}
         shouldCloseOnOverlayClick={true}
         contentLabel='New List Modal'
       >
         <div
-          className='modal-close'
+          className='Modal__Close'
           onClick={() => setListModalIsOpen(false)}
         />
-        <div className='modal-title'>Create New List</div>
+        <div className='Modal__Title'>Create New List</div>
         <div className='FadedSeperator' />
-        <div className='add-list-modal-content'>
-          <p>Name your list!</p>
+        <div className='NewList__Content'>
+          <div className='NewList__Heading'>Name your list:</div>
           <input
+            className='NewList__Input'
             type='text'
             placeholder='List Name'
             maxLength={15}

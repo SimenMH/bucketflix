@@ -74,15 +74,15 @@ const MediaDetailsModal: React.FC<Props> = ({
 
   return (
     <Modal
-      className='modal media-detail-modal'
-      overlayClassName='modal-overlay'
+      className='Modal MediaDetails__Modal'
+      overlayClassName='Modal__Overlay'
       isOpen={isOpen}
       shouldCloseOnOverlayClick={true}
       onRequestClose={() => handleCloseModal()}
       contentLabel='Media Details Modal'
     >
-      <div className='modal-close' onClick={() => handleCloseModal()} />
-      <div className='modal-title'>
+      <div className='Modal__Close' onClick={() => handleCloseModal()} />
+      <div className='Modal__Title'>
         {mediaToDisplay.Title}{' '}
         {mediaToDisplay.Year && (
           <span>
@@ -92,9 +92,9 @@ const MediaDetailsModal: React.FC<Props> = ({
         )}
       </div>
       <div className='FadedSeperator' />
-      <div className='media-details-modal-content'>
+      <div className='MediaDetails__Content'>
         <img
-          className='media-details-poster'
+          className='MediaDetails__Poster'
           src={
             mediaToDisplay.Poster
               ? mediaToDisplay.Poster
@@ -107,18 +107,18 @@ const MediaDetailsModal: React.FC<Props> = ({
           mediaToDisplay.WhereToWatch ||
           mediaToDisplay.Notes ||
           isEditing) && (
-          <div className='media-details'>
+          <div className='MediaDetails__Details'>
             {mediaToDisplay.Plot && (
               <div>
-                <p className='media-details-description'>
+                <p className='MediaDetails__Description'>
                   {mediaToDisplay.Plot}
                 </p>
                 <div className='FadedSeperator' />
               </div>
             )}
             {isEditing ? (
-              <div className='media-input-container'>
-                <div className='input-item'>
+              <div>
+                <div className='MediaInput__Item'>
                   <p>
                     Current{' '}
                     {mediaToDisplay.Type === 'movie' ? 'timestamp' : 'episode'}
@@ -131,7 +131,7 @@ const MediaDetailsModal: React.FC<Props> = ({
                     value={mediaEditInput.timestamp}
                   />
                 </div>
-                <div className='input-item'>
+                <div className='MediaInput__Item'>
                   <p>Where to watch</p>
                   <input
                     type='text'
@@ -174,7 +174,7 @@ const MediaDetailsModal: React.FC<Props> = ({
           </div>
         )}
       </div>
-      <div className='media-details-button-container'>
+      <div className='MediaDetails__Buttons'>
         {isEditing ? (
           <>
             <button onClick={handleUpdateMedia}>Save</button>

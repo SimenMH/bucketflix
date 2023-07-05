@@ -1,6 +1,6 @@
 import Modal from 'react-modal';
 import { List, SharedUser } from '../types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../redux/Hooks';
 import {
   editList,
@@ -100,6 +100,10 @@ const ListSettingsModal: React.FC<Props> = ({
     setNewListName(lists[activeList].name);
     handleCloseModal();
   };
+
+  useEffect(() => {
+    setNewListName(lists[activeList].name);
+  }, [lists, activeList]);
 
   return (
     <Modal

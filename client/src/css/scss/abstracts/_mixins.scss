@@ -14,3 +14,34 @@
     height: 170px;
   }
 }
+
+@mixin cross-button($scale: 2rem, $thickness: 3px) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: $scale;
+  height: $scale;
+  opacity: 0.5;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:before,
+  &:after {
+    position: absolute;
+    height: $scale;
+    width: $thickness;
+    background-color: rgb(200, 200, 200);
+    content: ' ';
+  }
+
+  &:before {
+    transform: rotate(45deg);
+  }
+
+  &:after {
+    transform: rotate(-45deg);
+  }
+}

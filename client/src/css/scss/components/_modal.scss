@@ -23,35 +23,10 @@
   }
 
   &__Close {
+    @include cross-button(2rem, 3px);
     position: absolute;
     right: 20px;
-    top: 15px;
-    width: 32px;
-    height: 32px;
-    opacity: 0.5;
-    cursor: pointer;
-
-    &:hover {
-      opacity: 1;
-    }
-
-    &:before,
-    &:after {
-      position: absolute;
-      left: 15px;
-      height: 33px;
-      width: 3px;
-      background-color: rgb(200, 200, 200);
-      content: ' ';
-    }
-
-    &:before {
-      transform: rotate(45deg);
-    }
-
-    &:after {
-      transform: rotate(-45deg);
-    }
+    top: 12px;
   }
 
   &__Title {

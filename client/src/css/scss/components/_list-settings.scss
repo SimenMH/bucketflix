@@ -46,19 +46,10 @@
       margin: 0;
     }
 
-    .Modal__Close {
-      position: relative;
-      top: 0;
-      right: 0;
-      width: 16px;
-      height: 18px;
-
-      &:before,
-      &:after {
-        height: 16px;
-        width: 3px;
-        left: 2.5px;
-      }
+    &__Remove {
+      @include cross-button(1rem, 3px);
+      margin-right: 2.5px;
+      margin-bottom: 1px;
     }
 
     .Switch {

@@ -142,7 +142,7 @@ const ListSettingsModal: React.FC<Props> = ({
           {lists[activeList].sharedUsers.map(user => (
             <div className='SharedUser' key={user.user_id}>
               <div
-                className='Modal__Close'
+                className='SharedUser__Remove'
                 onClick={() => handleRemoveSharedUser(user)}
               />
               <p className='SharedUser__Username'>{user.username}</p>

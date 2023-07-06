@@ -107,8 +107,13 @@ export const listsSlice = createSlice({
     });
     builder.addCase(
       getLists.fulfilled,
-      (state, action: PayloadAction<{ lists: List[] }>) => {
+      (
+        state,
+        action: PayloadAction<{ lists: List[]; shared_lists: List[] }>
+      ) => {
         state.lists = action.payload.lists;
+        state.sharedLists = action.payload.shared_lists;
+        console.log(state.sharedLists);
         if (state.selectedList == null && state.lists[0]) {
           state.selectedList = state.lists[0];
         }

@@ -12,7 +12,6 @@ export const axiosAuthInstance = axios.create();
 axiosAuthInstance.interceptors.request.use(
   config => {
     if (!config.headers) config.headers = {};
-    console.log(cookies.get('access_token'));
     config.headers['Authorization'] = `Bearer ${cookies.get('access-token')}`;
     return config;
   },

@@ -22,6 +22,7 @@ interface Props {
 }
 
 const Invite: React.FC<Props> = ({ history }) => {
+  const [inviteCode, setInviteCode] = useState<string | null>(null);
   const [codeStatus, setCodeStatus] = useState<CodeStatus>(CodeStatus.PENDING);
   const [inviteInfo, setInviteInfo] = useState<InviteInfo | null>(null);
 
@@ -32,6 +33,7 @@ const Invite: React.FC<Props> = ({ history }) => {
           `/lists/invite?i=${code}`
         );
 
+        setInviteCode(code);
         setInviteInfo(res.data);
         setCodeStatus(CodeStatus.VALID);
       } catch (err: any) {
@@ -69,6 +71,17 @@ const Invite: React.FC<Props> = ({ history }) => {
     [history]
   );
 
+  const handleAcceptInvite = async () => {
+    try {
+      // TODO: Move this to redux. Update list state and set active list to new shared list
+      await axiosAuthInstance.post(`/lists/users?i=${inviteCode}`);
+
+      history.push('/');
+    } catch (err) {
+      setCodeStatus(CodeStatus.ERROR);
+    }
+  };
+
   const renderContent = () => {
     switch (codeStatus) {
       case CodeStatus.PENDING:
@@ -80,7 +93,10 @@ const Invite: React.FC<Props> = ({ history }) => {
               {inviteInfo?.listOwner} has invited you to join{' '}
               {inviteInfo?.listName}!
             </div>
-            <button className='InviteScreen__AcceptButton'>
+            <button
+              className='InviteScreen__AcceptButton'
+              onClick={handleAcceptInvite}
+            >
               Accept Invite
             </button>
           </div>

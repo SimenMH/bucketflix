@@ -1,4 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
+import { useAppDispatch } from '../redux/Hooks';
+import { updateSelectedList } from '../redux/List/ListSlice';
 import { AxiosResponse } from 'axios';
 import { axiosAuthInstance } from '../api/AxiosInstances';
 import { History } from 'history';
@@ -22,6 +24,7 @@ interface Props {
 }
 
 const Invite: React.FC<Props> = ({ history }) => {
+  const dispatch = useAppDispatch();
   const [inviteCode, setInviteCode] = useState<string | null>(null);
   const [codeStatus, setCodeStatus] = useState<CodeStatus>(CodeStatus.PENDING);
   const [inviteInfo, setInviteInfo] = useState<InviteInfo | null>(null);
@@ -74,8 +77,9 @@ const Invite: React.FC<Props> = ({ history }) => {
   const handleAcceptInvite = async () => {
     try {
       // TODO: Move this to redux. Update list state and set active list to new shared list
-      await axiosAuthInstance.post(`/lists/users?i=${inviteCode}`);
+      const res = await axiosAuthInstance.post(`/lists/users?i=${inviteCode}`);
 
+      dispatch(updateSelectedList(res.data));
       history.push('/');
     } catch (err) {
       setCodeStatus(CodeStatus.ERROR);

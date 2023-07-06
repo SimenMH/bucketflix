@@ -8,6 +8,7 @@ import {
   editListAPI,
   editSharedUserAPI,
   removeSharedUserAPI,
+  deleteListAPI,
 } from './ListApi';
 import { List, Media, EditMediaData } from '../../types';
 
@@ -30,6 +31,11 @@ export const editList = createAsyncThunk(
     },
     thunkAPI
   ) => editListAPI(listData, thunkAPI)
+);
+
+export const deleteList = createAsyncThunk(
+  'lists/deleteList',
+  async (listID, thunkAPI) => deleteListAPI(listID, thunkAPI)
 );
 
 export const addMediaToList = createAsyncThunk(
@@ -126,6 +132,22 @@ export const listsSlice = createSlice({
     });
     builder.addCase(
       editList.fulfilled,
+      (state, action: PayloadAction<string>) => {
+        const idx = state.lists.findIndex(el => el._id === action.payload);
+        state.lists.splice(idx, 1);
+        state.status = 'success';
+      }
+    );
+    builder.addCase(editList.rejected, (state, _action) => {
+      state.status = 'failed';
+    });
+
+    // Delete List
+    builder.addCase(deleteList.pending, (state, _action) => {
+      state.status = 'loading';
+    });
+    builder.addCase(
+      deleteList.fulfilled,
       (state, action: PayloadAction<List>) => {
         const idx = state.lists.findIndex(el => el._id === action.payload._id);
         state.lists[idx] = action.payload;
@@ -182,6 +204,7 @@ export const listsSlice = createSlice({
         const listIdx = state.lists.findIndex(
           list => list._id === action.payload._id
         );
+        state.activeList = 0;
         state.lists[listIdx] = action.payload;
         state.status = 'success';
       }

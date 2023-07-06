@@ -82,7 +82,9 @@ export const deleteListAPI = async (listID: string, thunkAPI: any) => {
   const { rejectWithValue, dispatch } = thunkAPI;
 
   try {
-    await axiosAuthInstance.delete('/lists', { listID });
+    await axiosAuthInstance.delete('/lists', {
+      data: { listID },
+    });
     return listID;
   } catch (err: any) {
     return rejectWithValue(errorHandler(err, dispatch));

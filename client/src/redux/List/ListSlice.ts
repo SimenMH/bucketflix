@@ -35,7 +35,7 @@ export const editList = createAsyncThunk(
 
 export const deleteList = createAsyncThunk(
   'lists/deleteList',
-  async (listID, thunkAPI) => deleteListAPI(listID, thunkAPI)
+  async (listID: string, thunkAPI) => deleteListAPI(listID, thunkAPI)
 );
 
 export const addMediaToList = createAsyncThunk(
@@ -154,7 +154,7 @@ export const listsSlice = createSlice({
         state.status = 'success';
       }
     );
-    builder.addCase(editList.rejected, (state, _action) => {
+    builder.addCase(deleteList.rejected, (state, _action) => {
       state.status = 'failed';
     });
 

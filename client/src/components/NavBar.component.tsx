@@ -15,7 +15,7 @@ const NavBar: React.FC<Props> = () => {
   return (
     <div className='NavBar'>
       <a href='/' className='NavBar__TitleContainer'>
-        <div className='NavBar__Logo' />
+        {/* <div className='NavBar__Logo' /> */}
         <div className='NavBar__Title'>BucketFlix</div>
       </a>
       <div className='NavBar__Links'>

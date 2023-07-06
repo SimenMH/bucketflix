@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { useAppDispatch } from '../redux/Hooks';
-import { updateActiveList, addList } from '../redux/List/ListSlice';
+import { updateSelectedList, addList } from '../redux/List/ListSlice';
 import Modal from 'react-modal';
 import { List } from '../types';
 
 interface Props {
   lists: Array<List>;
-  activeList: number;
+  selectedList: List | null;
 }
 
-const MyListsSidebar: React.FC<Props> = ({ lists, activeList }) => {
+const MyListsSidebar: React.FC<Props> = ({ lists, selectedList }) => {
   const dispatch = useAppDispatch();
   const [listModalIsOpen, setListModalIsOpen] = useState<boolean>(false);
   const [newListName, setNewListName] = useState<string>('');
@@ -19,15 +19,17 @@ const MyListsSidebar: React.FC<Props> = ({ lists, activeList }) => {
       return (
         <div
           className={`Sidebar__Item ${
-            idx === activeList && 'Sidebar__Item--active'
+            selectedList &&
+            list._id === selectedList._id &&
+            'Sidebar__Item--active'
           }`}
           key={idx}
-          onClick={() => dispatch(updateActiveList(idx))}
+          onClick={() => dispatch(updateSelectedList(list))}
         >
           <div className='Sidebar__ListName'>
             {/* <svg
               className={`Sidebar__Selector ${
-                idx === activeList ? 'Sidebar__Selector--active' : ''
+                list._id === selectedList._id ? 'Sidebar__Selector--active' : ''
               }`}
               width='15'
               height='15'

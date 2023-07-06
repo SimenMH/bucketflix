@@ -12,7 +12,7 @@ interface Props {}
 
 const MyLists: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
-  const { activeList, lists } = useAppSelector(state => state.lists);
+  const { selectedList, lists } = useAppSelector(state => state.lists);
   const { loggedIn } = useAppSelector(state => state.user);
   const [filter, setFilter] = useState('all');
   const [addMediaModalVisible, setAddMediaModalVisible] =
@@ -64,20 +64,20 @@ const MyLists: React.FC<Props> = () => {
 
   return (
     <div className='MyLists'>
-      <MyListsSidebar lists={lists} activeList={activeList} />
-      {lists[activeList] && (
+      <MyListsSidebar lists={lists} selectedList={selectedList} />
+      {selectedList && (
         <div className='MyLists__Content'>
           <AddMediaModal
             isOpen={addMediaModalVisible}
             handleCloseModal={handleAddMediaClose}
             lists={lists}
-            activeList={activeList}
+            selectedList={selectedList}
           />
           <ListSettingsModal
             isOpen={listSettingsModalVisible}
             handleCloseModal={handleListSettingsClose}
             lists={lists}
-            activeList={activeList}
+            selectedList={selectedList}
           />
           {mediaToDisplay && (
             <MediaDetailsModal
@@ -124,7 +124,7 @@ const MyLists: React.FC<Props> = () => {
           </div>
           <div className='MyLists__Media'>
             {/* Movies */}
-            {lists[activeList].movies.length > 0 &&
+            {selectedList.movies.length > 0 &&
               (filter === 'movies' || filter === 'all') && (
                 <div>
                   <div className='Media__Category'>
@@ -132,13 +132,13 @@ const MyLists: React.FC<Props> = () => {
                     <div className='Seperator' />
                   </div>
                   <div className='Media__Container'>
-                    {renderMedia(lists[activeList].movies)}
+                    {renderMedia(selectedList.movies)}
                   </div>
                 </div>
               )}
             {/*  */}
             {/* TV-Series */}
-            {lists[activeList].series.length > 0 &&
+            {selectedList.series.length > 0 &&
               (filter === 'series' || filter === 'all') && (
                 <div>
                   <div className='Media__Category'>
@@ -146,7 +146,7 @@ const MyLists: React.FC<Props> = () => {
                     <div className='Seperator' />
                   </div>
                   <div className='Media__Container'>
-                    {renderMedia(lists[activeList].series)}
+                    {renderMedia(selectedList.series)}
                   </div>
                 </div>
               )}

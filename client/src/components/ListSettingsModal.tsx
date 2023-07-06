@@ -14,25 +14,23 @@ interface Props {
   isOpen: boolean;
   handleCloseModal: Function;
   lists: Array<List>;
-  activeList: number;
+  selectedList: List;
 }
 
 const ListSettingsModal: React.FC<Props> = ({
   isOpen,
   handleCloseModal,
   lists,
-  activeList,
+  selectedList,
 }) => {
   const dispatch = useAppDispatch();
   const [errorText, setErrorText] = useState<string | null>(null);
-  const [newListName, setNewListName] = useState<string>(
-    lists[activeList].name
-  );
+  const [newListName, setNewListName] = useState<string>(selectedList.name);
   const [listInviteCode, setListInviteCode] = useState<string | null>(null);
   const [deleteModalVisible, setDeleteModalVisible] = useState<boolean>(false);
 
   const handleGenerateInvite = async () => {
-    const newInviteCode = await generateListInvite(lists[activeList]._id);
+    const newInviteCode = await generateListInvite(selectedList._id);
     setListInviteCode(newInviteCode);
   };
 
@@ -41,7 +39,7 @@ const ListSettingsModal: React.FC<Props> = ({
 
     const res = await dispatch(
       editList({
-        listID: lists[activeList]._id,
+        listID: selectedList._id,
         updatedValues: {
           name: newListName,
         },
@@ -63,7 +61,7 @@ const ListSettingsModal: React.FC<Props> = ({
   ) => {
     const res = await dispatch(
       editSharedUser({
-        listID: lists[activeList]._id,
+        listID: selectedList._id,
         sharedUserID: user.user_id,
         updatedValues: {
           canEdit: e.target.checked,
@@ -83,7 +81,7 @@ const ListSettingsModal: React.FC<Props> = ({
   const handleRemoveSharedUser = async (user: SharedUser) => {
     const res = await dispatch(
       removeSharedUser({
-        listID: lists[activeList]._id,
+        listID: selectedList._id,
         sharedUserID: user.user_id,
       })
     );
@@ -98,7 +96,7 @@ const ListSettingsModal: React.FC<Props> = ({
   };
 
   const handleDeleteList = async () => {
-    const res = await dispatch(deleteList(lists[activeList]._id));
+    const res = await dispatch(deleteList(selectedList._id));
     closeDeleteModal();
     if (res.meta.requestStatus === 'rejected') {
       if (res.payload) {
@@ -113,7 +111,7 @@ const ListSettingsModal: React.FC<Props> = ({
 
   const closeModal = () => {
     setListInviteCode(null);
-    setNewListName(lists[activeList].name);
+    setNewListName(selectedList.name);
     closeDeleteModal();
     handleCloseModal();
   };
@@ -123,8 +121,8 @@ const ListSettingsModal: React.FC<Props> = ({
   };
 
   useEffect(() => {
-    setNewListName(lists[activeList].name);
-  }, [lists, activeList]);
+    setNewListName(selectedList.name);
+  }, [lists, selectedList]);
 
   return (
     <Modal
@@ -153,7 +151,7 @@ const ListSettingsModal: React.FC<Props> = ({
           />
           <button
             onClick={handleUpdateListName}
-            disabled={lists[activeList].name === newListName || !newListName}
+            disabled={selectedList.name === newListName || !newListName}
           >
             Save
           </button>
@@ -162,10 +160,10 @@ const ListSettingsModal: React.FC<Props> = ({
         <div className='ListSettings__SharedUsers'>
           <h3>
             Shared Users{' '}
-            {lists[activeList].sharedUsers.length > 0 && <span>Editor</span>}
+            {selectedList.sharedUsers.length > 0 && <span>Editor</span>}
           </h3>
           <div className='Seperator' />
-          {lists[activeList].sharedUsers.map(user => (
+          {selectedList.sharedUsers.map(user => (
             <div className='SharedUser' key={user.user_id}>
               <div
                 className='SharedUser__Remove'

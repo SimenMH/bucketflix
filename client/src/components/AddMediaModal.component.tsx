@@ -9,21 +9,21 @@ interface Props {
   isOpen: boolean;
   handleCloseModal: Function;
   lists: Array<List>;
-  activeList: number;
+  selectedList: List;
 }
 
 const AddMediaModal: React.FC<Props> = ({
   isOpen,
   handleCloseModal,
   lists,
-  activeList,
+  selectedList,
 }) => {
   const [mediaInput, setMediaInput] = useState({
     title: '',
     type: 'movie',
     timestamp: '',
     whereToWatch: '',
-    list: lists[activeList].name,
+    list: selectedList.name,
     notes: '',
   });
   const [searchResult, setSearchResult] = useState<Media[]>([]);
@@ -165,7 +165,7 @@ const AddMediaModal: React.FC<Props> = ({
         setMediaInput(prevState => {
           return {
             ...prevState,
-            list: lists[activeList].name,
+            list: selectedList.name,
           };
         })
       }

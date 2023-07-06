@@ -21,7 +21,7 @@ const MediaDetailsModal: React.FC<Props> = ({
     whereToWatch: mediaToDisplay.WhereToWatch,
     notes: mediaToDisplay.Notes,
   });
-  const { activeList, lists } = useAppSelector(state => state.lists);
+  const { selectedList } = useAppSelector(state => state.lists);
   const dispatch = useAppDispatch();
 
   const handleInputChange = (
@@ -41,7 +41,8 @@ const MediaDetailsModal: React.FC<Props> = ({
   };
 
   const handleUpdateMedia = async () => {
-    const listID = lists[activeList]._id;
+    if (!selectedList) return;
+    const listID = selectedList._id;
     const mediaID = mediaToDisplay._id;
     if (!mediaID) return;
     await dispatch(
@@ -56,7 +57,8 @@ const MediaDetailsModal: React.FC<Props> = ({
   };
 
   const handleRemoveMedia = () => {
-    const listID = lists[activeList]._id;
+    if (!selectedList) return;
+    const listID = selectedList._id;
     const mediaID = mediaToDisplay._id;
     if (!mediaID) return;
 

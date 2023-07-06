@@ -1,10 +1,23 @@
-import { generateAccessToken } from './GenerateAccessToken';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
+import { generateAccessToken } from './GenerateAccessToken';
+
+const cookies = new Cookies();
 
 axios.defaults.baseURL = 'http://localhost:5000';
 axios.defaults.withCredentials = true;
 
 export const axiosAuthInstance = axios.create();
+
+axiosAuthInstance.interceptors.request.use(
+  config => {
+    config.headers['Authorization'] = `Bearer ${cookies.get('access_token')}`;
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
 
 axiosAuthInstance.interceptors.response.use(
   response => {

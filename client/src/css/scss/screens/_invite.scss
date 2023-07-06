@@ -1,0 +1,24 @@
+.InviteScreen {
+  font-size: 2.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+
+  &__ValidContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+  &__AcceptButton {
+    font-size: 2rem;
+  }
+
+  &__ReturnButton {
+    background-color: $primay-color-dark-1;
+  }
+}

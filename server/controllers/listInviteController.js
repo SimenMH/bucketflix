@@ -7,11 +7,9 @@ import User from '../models/userModel.js';
 const getInvite = asyncHandler(async (req, res) => {
   const list = req.list;
 
-  const listOwner = await User.findById({ user_id: list.user_id });
+  const listOwner = await User.findById(list.user_id);
 
-  res
-    .status(200)
-    .json({ listName: list.listName, listOwner: listOwner.username });
+  res.status(200).json({ listName: list.name, listOwner: listOwner.username });
 });
 
 const createInvite = asyncHandler(async (req, res) => {

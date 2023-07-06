@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler';
 import List from '../models/listModel.js';
 import ListInvite from '../models/listInviteModel.js';
 
-const validateInviteCode = asyncHandler(async (req, res) => {
+const validateInviteCode = asyncHandler(async (req, res, next) => {
   const inviteCode = req.query.i;
   const user = req.user;
 
@@ -32,7 +32,7 @@ const validateInviteCode = asyncHandler(async (req, res) => {
     throw new Error('List can no longer be found');
   }
 
-  if (list.user_id === user._id) {
+  if (list.user_id.toString() === user._id) {
     res.status(400);
     throw new Error('Cannot invite yourself to your own list');
   }

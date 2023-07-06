@@ -56,4 +56,29 @@
       margin-left: auto;
     }
   }
+
+  &__ButtonsContainer {
+    display: flex;
+    justify-content: end;
+    margin-top: 1.5rem;
+  }
+}
+
+.DeleteModal {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  &__Buttons {
+    display: flex;
+    gap: 2rem;
+  }
+}
+
+.ListSettings__DeleteButton,
+.DeleteModal__Confirm {
+  background-color: #ff6f6f;
 }

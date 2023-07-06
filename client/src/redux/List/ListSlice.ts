@@ -132,9 +132,9 @@ export const listsSlice = createSlice({
     });
     builder.addCase(
       editList.fulfilled,
-      (state, action: PayloadAction<string>) => {
-        const idx = state.lists.findIndex(el => el._id === action.payload);
-        state.lists.splice(idx, 1);
+      (state, action: PayloadAction<List>) => {
+        const idx = state.lists.findIndex(el => el._id === action.payload._id);
+        state.lists[idx] = action.payload;
         state.status = 'success';
       }
     );
@@ -148,9 +148,10 @@ export const listsSlice = createSlice({
     });
     builder.addCase(
       deleteList.fulfilled,
-      (state, action: PayloadAction<List>) => {
-        const idx = state.lists.findIndex(el => el._id === action.payload._id);
-        state.lists[idx] = action.payload;
+      (state, action: PayloadAction<string>) => {
+        state.activeList = 0;
+        const idx = state.lists.findIndex(el => el._id === action.payload);
+        state.lists.splice(idx, 1);
         state.status = 'success';
       }
     );
@@ -204,7 +205,6 @@ export const listsSlice = createSlice({
         const listIdx = state.lists.findIndex(
           list => list._id === action.payload._id
         );
-        state.activeList = 0;
         state.lists[listIdx] = action.payload;
         state.status = 'success';
       }

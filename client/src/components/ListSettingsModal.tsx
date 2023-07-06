@@ -3,6 +3,7 @@ import { List, SharedUser } from '../types';
 import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../redux/Hooks';
 import {
+  deleteList,
   editList,
   editSharedUser,
   removeSharedUser,
@@ -28,6 +29,7 @@ const ListSettingsModal: React.FC<Props> = ({
     lists[activeList].name
   );
   const [listInviteCode, setListInviteCode] = useState<string | null>(null);
+  const [deleteModalVisible, setDeleteModalVisible] = useState<boolean>(false);
 
   const handleGenerateInvite = async () => {
     const newInviteCode = await generateListInvite(lists[activeList]._id);
@@ -95,10 +97,29 @@ const ListSettingsModal: React.FC<Props> = ({
     }
   };
 
+  const handleDeleteList = async () => {
+    const res = await dispatch(deleteList(lists[activeList]._id));
+    closeDeleteModal();
+    if (res.meta.requestStatus === 'rejected') {
+      if (res.payload) {
+        setErrorText(res.payload);
+      } else {
+        setErrorText('Unknown error occured, please try again later.');
+      }
+    } else {
+      closeModal();
+    }
+  };
+
   const closeModal = () => {
     setListInviteCode(null);
     setNewListName(lists[activeList].name);
+    closeDeleteModal();
     handleCloseModal();
+  };
+
+  const closeDeleteModal = () => {
+    setDeleteModalVisible(false);
   };
 
   useEffect(() => {
@@ -176,6 +197,34 @@ const ListSettingsModal: React.FC<Props> = ({
           <button onClick={handleGenerateInvite}>Generate link</button>
         </div>
         {/*  */}
+        <div className='ListSettings__ButtonsContainer'>
+          <button
+            className='PrimaryButton ListSettings__DeleteButton'
+            onClick={() => setDeleteModalVisible(true)}
+          >
+            Delete
+          </button>
+        </div>
+        <Modal
+          className='Modal DeleteModal'
+          overlayClassName='Modal__Overlay'
+          isOpen={deleteModalVisible}
+          onRequestClose={() => closeDeleteModal()}
+          shouldCloseOnOverlayClick={true}
+          contentLabel='New List Modal'
+        >
+          <div className='DeleteModal__Text'>
+            Are you sure you want to delete this list?
+          </div>
+          <div className='DeleteModal__Buttons'>
+            <button className='DeleteModal__Confirm' onClick={handleDeleteList}>
+              Confirm
+            </button>
+            <button className='DeleteModal__Cancel' onClick={closeDeleteModal}>
+              Cancel
+            </button>
+          </div>
+        </Modal>
       </div>
     </Modal>
   );

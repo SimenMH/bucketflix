@@ -22,8 +22,9 @@ import {
   editMedia,
   deleteMedia,
 } from './controllers/mediaController.js';
-import { createInvite } from './controllers/listInviteController.js';
+import { createInvite, getInvite } from './controllers/listInviteController.js';
 import { createAccessToken } from './controllers/tokenController.js';
+import validateInviteCode from './middleware/validateInviteCodeMiddleware.js';
 
 const router = express.Router();
 
@@ -55,11 +56,15 @@ router
 router
   .route('/lists/users')
   .all(authenticate)
-  .post(addSharedUser)
+  .post(validateInviteCode, addSharedUser)
   .all(isListOwner)
   .put(editSharedUser)
   .delete(removeSharedUser);
-router.route('/lists/invite').all(authenticate, isListOwner).post(createInvite);
+router
+  .route('/lists/invite')
+  .all(authenticate)
+  .get(validateInviteCode, getInvite)
+  .post(isListOwner, createInvite);
 
 router.post('/token', createAccessToken);
 

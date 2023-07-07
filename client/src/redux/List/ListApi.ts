@@ -196,3 +196,17 @@ export const removeSharedUserAPI = async (
     return rejectWithValue(errorHandler(err, dispatch));
   }
 };
+
+export const leaveSharedListAPI = async (listID: string, thunkAPI: any) => {
+  const { rejectWithValue, dispatch } = thunkAPI;
+
+  try {
+    await axiosAuthInstance.delete('/lists/leave', {
+      data: { listID },
+    });
+
+    return listID;
+  } catch (err: any) {
+    return rejectWithValue(errorHandler(err, dispatch));
+  }
+};

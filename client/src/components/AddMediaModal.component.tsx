@@ -85,10 +85,10 @@ const AddMediaModal: React.FC<Props> = ({
     }
   };
 
-  const checkForDuplicate = (listIdx: number, newMedia: Media) => {
+  const checkForDuplicate = (newMedia: Media) => {
     let mediaList: Array<Media>;
-    if (mediaInput.type === 'movie') mediaList = lists[listIdx].movies;
-    else mediaList = lists[listIdx].series;
+    if (mediaInput.type === 'movie') mediaList = selectedList.movies;
+    else mediaList = selectedList.series;
 
     for (let i = 0; i < mediaList.length; i++) {
       if (
@@ -120,7 +120,7 @@ const AddMediaModal: React.FC<Props> = ({
         Type: mediaInput.type,
         Plot: '',
         Poster:
-          'http://www.theprintworks.com/wp-content/themes/psBella/assets/img/film-poster-placeholder.png',
+          'https://printworks-manchester.com/cinema-poster/images/film-poster-placeholder.png',
       };
     }
     newMediaObj = {
@@ -130,12 +130,11 @@ const AddMediaModal: React.FC<Props> = ({
       Notes: mediaInput.notes,
     };
 
-    const listIdx = lists.findIndex(list => list.name === mediaInput.list);
-    if (checkForDuplicate(listIdx, newMediaObj)) {
+    if (checkForDuplicate(newMediaObj)) {
       // TODO: Improve this alert
       alert('Movie/Series already exists in this list.');
     } else {
-      const listID = lists[listIdx]._id;
+      const listID = selectedList._id;
       dispatch(addMediaToList({ listID, media: newMediaObj }));
       handleCloseModal();
     }

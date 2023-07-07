@@ -6,41 +6,34 @@ import { List } from '../types';
 
 interface Props {
   lists: Array<List>;
+  sharedLists: Array<List>;
   selectedList: List | null;
 }
 
-const MyListsSidebar: React.FC<Props> = ({ lists, selectedList }) => {
+const MyListsSidebar: React.FC<Props> = ({
+  lists,
+  sharedLists,
+  selectedList,
+}) => {
   const dispatch = useAppDispatch();
   const [listModalIsOpen, setListModalIsOpen] = useState<boolean>(false);
   const [newListName, setNewListName] = useState<string>('');
 
-  const renderLists = (): JSX.Element[] => {
-    return lists.map((list, idx) => {
+  const renderLists = (list: Array<List>): JSX.Element[] => {
+    return list.map((item, idx) => {
       return (
         <div
           className={`Sidebar__Item ${
             selectedList &&
-            list._id === selectedList._id &&
+            item._id === selectedList._id &&
             'Sidebar__Item--active'
           }`}
           key={idx}
-          onClick={() => dispatch(updateSelectedList(list))}
+          onClick={() => dispatch(updateSelectedList(item))}
         >
           <div className='Sidebar__ListName'>
-            {/* <svg
-              className={`Sidebar__Selector ${
-                list._id === selectedList._id ? 'Sidebar__Selector--active' : ''
-              }`}
-              width='15'
-              height='15'
-              viewBox='0 0 13 13'
-              xmlns='http://www.w3.org/2000/svg'
-            >
-              <path d='M10.5413 5.64324C11.2103 6.02396 11.2164 6.98619 10.5521 7.37525L2.33209 12.19C1.66785 12.579 0.831519 12.1031 0.826699 11.3333L0.767052 1.80725C0.762232 1.03746 1.59254 0.551128 2.2616 0.931846L10.5413 5.64324Z' />
-            </svg> */}
-            <h3>{list.name}</h3>
+            <h3>{item.name}</h3>
           </div>
-          {/* <div className='Seperator' /> */}
         </div>
       );
     });
@@ -52,7 +45,14 @@ const MyListsSidebar: React.FC<Props> = ({ lists, selectedList }) => {
         <h2>My Lists</h2>
         <button onClick={() => setListModalIsOpen(true)}>+ New</button>
       </div>
-      <div>{renderLists()}</div>
+      <div>{renderLists(lists)}</div>
+
+      {sharedLists.length > 0 && (
+        <div className='Sidebar__Top'>
+          <h2>Shared Lists</h2>
+        </div>
+      )}
+      <div>{renderLists(sharedLists)}</div>
       <Modal
         className='Modal NewList__Modal'
         overlayClassName='Modal__Overlay'

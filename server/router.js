@@ -16,6 +16,7 @@ import {
   addSharedUser,
   editSharedUser,
   removeSharedUser,
+  leaveSharedList,
 } from './controllers/listController.js';
 import {
   addMedia,
@@ -57,9 +58,12 @@ router
   .route('/lists/users')
   .all(authenticate)
   .post(validateInviteCode, addSharedUser)
+  .delete(removeSharedUser)
   .all(isListOwner)
-  .put(editSharedUser)
-  .delete(removeSharedUser);
+  .put(editSharedUser);
+
+router.route('/lists/leave').all(authenticate).delete(leaveSharedList);
+
 router
   .route('/lists/invite')
   .all(authenticate)

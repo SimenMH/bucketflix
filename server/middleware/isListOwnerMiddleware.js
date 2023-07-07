@@ -11,7 +11,7 @@ const isListOwner = asyncHandler(async (req, res, next) => {
   }
 
   if (list.user_id != req.user._id) {
-    res.status(403);
+    res.status(401);
     throw new Error('Unauthorized to edit this list');
   }
 

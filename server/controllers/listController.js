@@ -5,10 +5,17 @@ import User from '../models/userModel.js';
 const getLists = asyncHandler(async (req, res) => {
   const userID = req.user._id;
 
-  const lists = await List.find({ user_id: userID }).select('-user_id');
-  const shared_lists = await List.find({
+  const lists = await List.find({ user_id: userID });
+  let shared_lists = await List.find({
     'sharedUsers.user_id': userID,
-  }).select('-sharedUsers');
+  }).lean();
+
+  shared_lists = shared_lists.map(list => {
+    list.canEdit = list.sharedUsers.some(user => {
+      return user.user_id == userID && user.canEdit;
+    });
+    return list;
+  });
 
   res.status(200).json({ lists, shared_lists });
 });
@@ -136,6 +143,26 @@ const removeSharedUser = asyncHandler(async (req, res) => {
   res.status(200).json(req.list);
 });
 
+const leaveSharedList = asyncHandler(async (req, res) => {
+  const { listID } = req.body;
+
+  const list = await List.findById(listID);
+
+  const idx = list.sharedUsers.findIndex(
+    el => el.user_id.toString() === req.user._id
+  );
+
+  if (idx > -1) {
+    list.sharedUsers.splice(idx, 1);
+  } else {
+    res.status(404);
+    throw new Error('This user is not a shared user on this list');
+  }
+
+  await list.save();
+  res.sendStatus(204);
+});
+
 export {
   getLists,
   createList,
@@ -144,4 +171,5 @@ export {
   addSharedUser,
   editSharedUser,
   removeSharedUser,
+  leaveSharedList,
 };

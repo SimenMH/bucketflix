@@ -29,6 +29,7 @@ export const sessionLogin = createAsyncThunk(
 );
 
 interface UserState {
+  userID: string;
   username: string;
   email: string;
   loggedIn: boolean;
@@ -36,6 +37,7 @@ interface UserState {
 }
 
 const initialState: UserState = {
+  userID: '',
   username: '',
   email: '',
   loggedIn: false,
@@ -59,6 +61,7 @@ export const userSlice = createSlice({
       state.status = 'loading';
     });
     builder.addCase(userRegister.fulfilled, (state, action) => {
+      state.userID = action.payload._id;
       state.username = action.payload.username;
       state.email = action.payload.email;
       state.loggedIn = true;
@@ -73,6 +76,7 @@ export const userSlice = createSlice({
       state.status = 'loading';
     });
     builder.addCase(userLogin.fulfilled, (state, action) => {
+      state.userID = action.payload._id;
       state.username = action.payload.username;
       state.email = action.payload.email;
       state.loggedIn = true;
@@ -87,6 +91,7 @@ export const userSlice = createSlice({
       state.status = 'loading';
     });
     builder.addCase(userLogout.fulfilled, state => {
+      state.userID = '';
       state.username = '';
       state.email = '';
       state.loggedIn = false;
@@ -101,6 +106,7 @@ export const userSlice = createSlice({
       state.status = 'loading';
     });
     builder.addCase(sessionLogin.fulfilled, (state, action) => {
+      state.userID = action.payload._id;
       state.username = action.payload.username;
       state.email = action.payload.email;
       state.loggedIn = true;

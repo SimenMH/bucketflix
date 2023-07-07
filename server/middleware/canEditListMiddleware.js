@@ -13,12 +13,12 @@ const canEditList = asyncHandler(async (req, res, next) => {
 
   if (list.user_id != req.user._id) {
     const sharedUsers = list.sharedUsers;
-    const idx = req.list.sharedUsers.findIndex(
+    const idx = list.sharedUsers.findIndex(
       el => el.user_id.toString() === req.user._id
     );
 
     if (idx === -1 || !sharedUsers[idx].canEdit) {
-      res.status(403);
+      res.status(401);
       throw new Error('Unauthorized to edit this list');
     }
   }

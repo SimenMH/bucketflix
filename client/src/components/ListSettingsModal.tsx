@@ -9,6 +9,7 @@ import {
   removeSharedUser,
 } from '../redux/List/ListSlice';
 import { generateListInvite } from '../api/GenerateListInvite';
+import ConfirmModal from './ConfirmModal.component';
 
 interface Props {
   isOpen: boolean;
@@ -27,7 +28,8 @@ const ListSettingsModal: React.FC<Props> = ({
   const [errorText, setErrorText] = useState<string | null>(null);
   const [newListName, setNewListName] = useState<string>(selectedList.name);
   const [listInviteCode, setListInviteCode] = useState<string | null>(null);
-  const [deleteModalVisible, setDeleteModalVisible] = useState<boolean>(false);
+  const [confirmDeleteModalVisible, setConfirmDeleteModalVisible] =
+    useState<boolean>(false);
 
   const handleGenerateInvite = async () => {
     const newInviteCode = await generateListInvite(selectedList._id);
@@ -95,29 +97,29 @@ const ListSettingsModal: React.FC<Props> = ({
     }
   };
 
-  const handleDeleteList = async () => {
-    const res = await dispatch(deleteList(selectedList._id));
-    closeDeleteModal();
-    if (res.meta.requestStatus === 'rejected') {
-      if (res.payload) {
-        setErrorText(res.payload);
+  const handleDeleteList = async (bool: boolean) => {
+    if (bool) {
+      const res = await dispatch(deleteList(selectedList._id));
+      setConfirmDeleteModalVisible(false);
+      if (res.meta.requestStatus === 'rejected') {
+        if (res.payload) {
+          setErrorText(res.payload);
+        } else {
+          setErrorText('Unknown error occured, please try again later.');
+        }
       } else {
-        setErrorText('Unknown error occured, please try again later.');
+        closeModal();
       }
     } else {
-      closeModal();
+      setConfirmDeleteModalVisible(false);
     }
   };
 
   const closeModal = () => {
     setListInviteCode(null);
     setNewListName(selectedList.name);
-    closeDeleteModal();
+    setConfirmDeleteModalVisible(false);
     handleCloseModal();
-  };
-
-  const closeDeleteModal = () => {
-    setDeleteModalVisible(false);
   };
 
   useEffect(() => {
@@ -197,32 +199,17 @@ const ListSettingsModal: React.FC<Props> = ({
         {/*  */}
         <div className='ListSettings__ButtonsContainer'>
           <button
-            className='PrimaryButton ListSettings__DeleteButton'
-            onClick={() => setDeleteModalVisible(true)}
+            className='PrimaryButton--red'
+            onClick={() => setConfirmDeleteModalVisible(true)}
           >
             Delete
           </button>
         </div>
-        <Modal
-          className='Modal DeleteModal'
-          overlayClassName='Modal__Overlay'
-          isOpen={deleteModalVisible}
-          onRequestClose={() => closeDeleteModal()}
-          shouldCloseOnOverlayClick={true}
-          contentLabel='New List Modal'
-        >
-          <div className='DeleteModal__Text'>
-            Are you sure you want to delete this list?
-          </div>
-          <div className='DeleteModal__Buttons'>
-            <button className='DeleteModal__Confirm' onClick={handleDeleteList}>
-              Confirm
-            </button>
-            <button className='DeleteModal__Cancel' onClick={closeDeleteModal}>
-              Cancel
-            </button>
-          </div>
-        </Modal>
+        <ConfirmModal
+          isOpen={confirmDeleteModalVisible}
+          confirmText='Are you sure you want to delete this list?'
+          handleClick={handleDeleteList}
+        />
       </div>
     </Modal>
   );

@@ -9,6 +9,7 @@ import {
   editSharedUserAPI,
   removeSharedUserAPI,
   deleteListAPI,
+  leaveSharedListAPI,
 } from './ListApi';
 import { List, Media, EditMediaData } from '../../types';
 
@@ -73,6 +74,11 @@ export const removeSharedUser = createAsyncThunk(
     removeSharedUserAPI(data, thunkAPI)
 );
 
+export const leaveSharedList = createAsyncThunk(
+  'lists/leaveSharedList',
+  async (listID: string, thunkAPI) => leaveSharedListAPI(listID, thunkAPI)
+);
+
 interface ListState {
   selectedList: List | null;
   lists: Array<List>;
@@ -101,6 +107,34 @@ export const listsSlice = createSlice({
     },
   },
   extraReducers: builder => {
+    // Helpers
+    const updateListByID = (state: any, listID: string, newList: List) => {
+      const ownListIdx = state.lists.findIndex(
+        (list: List) => list._id === listID
+      );
+
+      if (ownListIdx > -1) {
+        state.lists[ownListIdx] = newList;
+        state.selectedList = state.lists[ownListIdx];
+        return true;
+      }
+
+      const sharedListIdx = state.sharedLists.findIndex(
+        (list: List) => list._id === listID
+      );
+
+      if (sharedListIdx > -1) {
+        state.sharedLists[sharedListIdx] = {
+          ...state.sharedLists[sharedListIdx],
+          ...newList,
+        };
+        state.selectedList = state.sharedLists[sharedListIdx];
+        return true;
+      }
+
+      return false;
+    };
+
     // Get Lists
     builder.addCase(getLists.pending, (state, _action) => {
       state.status = 'loading';
@@ -113,10 +147,14 @@ export const listsSlice = createSlice({
       ) => {
         state.lists = action.payload.lists;
         state.sharedLists = action.payload.shared_lists;
-        console.log(state.sharedLists);
-        if (state.selectedList == null && state.lists[0]) {
-          state.selectedList = state.lists[0];
+
+        if (
+          state.selectedList == null &&
+          [...state.lists, ...state.sharedLists][0]
+        ) {
+          state.selectedList = [...state.lists, ...state.sharedLists][0];
         }
+
         state.status = 'success';
       }
     );
@@ -162,8 +200,8 @@ export const listsSlice = createSlice({
       (state, action: PayloadAction<string>) => {
         const idx = state.lists.findIndex(el => el._id === action.payload);
         state.lists.splice(idx, 1);
-        if (state.lists[0]) {
-          state.selectedList = state.lists[0];
+        if ([...state.lists, ...state.sharedLists][0]) {
+          state.selectedList = [...state.lists, ...state.sharedLists][0];
         } else {
           state.selectedList = null;
         }
@@ -181,11 +219,7 @@ export const listsSlice = createSlice({
     builder.addCase(
       addMediaToList.fulfilled,
       (state, action: PayloadAction<List>) => {
-        const idx = state.lists.findIndex(
-          list => list._id === action.payload._id
-        );
-        state.lists[idx] = action.payload;
-        state.selectedList = state.lists[idx];
+        updateListByID(state, action.payload._id, action.payload);
         state.status = 'success';
       }
     );
@@ -200,11 +234,7 @@ export const listsSlice = createSlice({
     builder.addCase(
       editMediaInList.fulfilled,
       (state, action: PayloadAction<List>) => {
-        const idx = state.lists.findIndex(
-          list => list._id === action.payload._id
-        );
-        state.lists[idx] = action.payload;
-        state.selectedList = state.lists[idx];
+        updateListByID(state, action.payload._id, action.payload);
         state.status = 'success';
       }
     );
@@ -219,11 +249,7 @@ export const listsSlice = createSlice({
     builder.addCase(
       deleteMediaFromList.fulfilled,
       (state, action: PayloadAction<List>) => {
-        const idx = state.lists.findIndex(
-          list => list._id === action.payload._id
-        );
-        state.lists[idx] = action.payload;
-        state.selectedList = state.lists[idx];
+        updateListByID(state, action.payload._id, action.payload);
         state.status = 'success';
       }
     );
@@ -266,6 +292,30 @@ export const listsSlice = createSlice({
       }
     );
     builder.addCase(removeSharedUser.rejected, (state, _action) => {
+      state.status = 'failed';
+    });
+
+    // Leave Shared List
+    builder.addCase(leaveSharedList.pending, (state, _action) => {
+      state.status = 'loading';
+    });
+    builder.addCase(
+      leaveSharedList.fulfilled,
+      (state, action: PayloadAction<string>) => {
+        const idx = state.sharedLists.findIndex(
+          el => el._id === action.payload
+        );
+
+        state.sharedLists.splice(idx, 1);
+        if ([...state.lists, ...state.sharedLists][0]) {
+          state.selectedList = [...state.lists, ...state.sharedLists][0];
+        } else {
+          state.selectedList = null;
+        }
+        state.status = 'success';
+      }
+    );
+    builder.addCase(leaveSharedList.rejected, (state, _action) => {
       state.status = 'failed';
     });
   },

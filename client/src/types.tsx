@@ -19,10 +19,12 @@ export interface SharedUser {
 
 export interface List {
   _id: string;
+  user_id: string;
   name: string;
   movies: Array<Media>;
   series: Array<Media>;
   sharedUsers: Array<SharedUser>;
+  canEdit?: boolean;
 }
 
 export interface User {

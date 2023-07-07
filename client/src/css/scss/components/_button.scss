@@ -15,4 +15,8 @@ button {
     background-color: $bg-color-dark-4;
     color: $font-color-light-3;
   }
+
+  &--red {
+    background-color: #ff6f6f;
+  }
 }

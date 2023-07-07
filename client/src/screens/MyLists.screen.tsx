@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../redux/Hooks';
-import { getLists } from '../redux/List/ListSlice';
+import { getLists, leaveSharedList } from '../redux/List/ListSlice';
 import { Media } from '../types';
 
 import MyListsSidebar from '../components/MyListsSidebar.component';
 import AddMediaModal from '../components/AddMediaModal.component';
 import MediaDetailsModal from '../components/MediaDetailsModal.component';
 import ListSettingsModal from '../components/ListSettingsModal';
+import ConfirmModal from '../components/ConfirmModal.component';
 
 interface Props {}
 
 const MyLists: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
-  const { selectedList, lists } = useAppSelector(state => state.lists);
+  const { selectedList, lists, sharedLists } = useAppSelector(
+    state => state.lists
+  );
   const { loggedIn } = useAppSelector(state => state.user);
   const [filter, setFilter] = useState('all');
   const [addMediaModalVisible, setAddMediaModalVisible] =
@@ -22,6 +25,8 @@ const MyLists: React.FC<Props> = () => {
   const [mediaDetailsModalVisible, setMediaDetailsModalVisible] =
     useState<boolean>(false);
   const [mediaToDisplay, setMediaToDisplay] = useState<Media | null>(null);
+  const [confirmLeaveModalVisible, setConfirmLeaveModalVisible] =
+    useState<boolean>(false);
 
   const handleShowMediaDetails = (media: Media) => {
     setMediaToDisplay(media);
@@ -48,6 +53,19 @@ const MyLists: React.FC<Props> = () => {
     });
   };
 
+  const handleLeaveList = async (bool: boolean) => {
+    try {
+      if (bool && selectedList) {
+        await dispatch(leaveSharedList(selectedList._id));
+        setConfirmLeaveModalVisible(false);
+      } else {
+        setConfirmLeaveModalVisible(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleAddMediaClose = () => {
     setAddMediaModalVisible(false);
   };
@@ -64,7 +82,11 @@ const MyLists: React.FC<Props> = () => {
 
   return (
     <div className='MyLists'>
-      <MyListsSidebar lists={lists} selectedList={selectedList} />
+      <MyListsSidebar
+        lists={lists}
+        sharedLists={sharedLists}
+        selectedList={selectedList}
+      />
       {selectedList && (
         <div className='MyLists__Content'>
           <AddMediaModal
@@ -114,12 +136,27 @@ const MyLists: React.FC<Props> = () => {
               </div>
             </div>
             <div className='MyLists__Options--right'>
-              <button onClick={() => setAddMediaModalVisible(true)}>
+              <button
+                onClick={() => setAddMediaModalVisible(true)}
+                disabled={
+                  selectedList.hasOwnProperty('canEdit') &&
+                  !selectedList.canEdit
+                }
+              >
                 + Add Media
               </button>
-              <button onClick={() => seListSettinsModalVisible(true)}>
-                Settings
-              </button>
+              {selectedList.hasOwnProperty('canEdit') ? (
+                <button
+                  onClick={() => setConfirmLeaveModalVisible(true)}
+                  className='PrimaryButton--red'
+                >
+                  Leave List
+                </button>
+              ) : (
+                <button onClick={() => seListSettinsModalVisible(true)}>
+                  Settings
+                </button>
+              )}
             </div>
           </div>
           <div className='MyLists__Media'>
@@ -154,6 +191,12 @@ const MyLists: React.FC<Props> = () => {
           </div>
         </div>
       )}
+
+      <ConfirmModal
+        isOpen={confirmLeaveModalVisible}
+        confirmText={`Are you sure you want to leave ${selectedList?.name}?`}
+        handleClick={handleLeaveList}
+      />
     </div>
   );
 };

@@ -176,19 +176,22 @@ const MediaDetailsModal: React.FC<Props> = ({
           </div>
         )}
       </div>
-      <div className='MediaDetails__Buttons'>
-        {isEditing ? (
-          <>
-            <button onClick={handleUpdateMedia}>Save</button>
-            <button onClick={() => setIsEditing(false)}>Cancel</button>
-          </>
-        ) : (
-          <>
-            <button onClick={() => setIsEditing(true)}>Edit</button>
-            <button onClick={handleRemoveMedia}>Remove</button>
-          </>
+      {selectedList &&
+        (!selectedList.hasOwnProperty('canEdit') || selectedList.canEdit) && (
+          <div className='MediaDetails__Buttons'>
+            {isEditing ? (
+              <>
+                <button onClick={handleUpdateMedia}>Save</button>
+                <button onClick={() => setIsEditing(false)}>Cancel</button>
+              </>
+            ) : (
+              <>
+                <button onClick={() => setIsEditing(true)}>Edit</button>
+                <button onClick={handleRemoveMedia}>Remove</button>
+              </>
+            )}
+          </div>
         )}
-      </div>
     </Modal>
   );
 };

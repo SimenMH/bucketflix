@@ -4,11 +4,7 @@ import { updateSelectedList } from '../redux/List/ListSlice';
 import { AxiosResponse } from 'axios';
 import { axiosAuthInstance } from '../api/AxiosInstances';
 import { History } from 'history';
-
-interface InviteInfo {
-  listName: string;
-  listOwner: string;
-}
+import { List } from '../types';
 
 enum CodeStatus {
   PENDING,
@@ -17,6 +13,11 @@ enum CodeStatus {
   EXPIRED,
   UNAUTHORIZED,
   ERROR,
+}
+
+interface InviteInfo {
+  listName: string;
+  listOwner: string;
 }
 
 interface Props {
@@ -76,10 +77,11 @@ const Invite: React.FC<Props> = ({ history }) => {
 
   const handleAcceptInvite = async () => {
     try {
-      // TODO: Move this to redux. Update list state and set active list to new shared list
-      const res = await axiosAuthInstance.post(`/lists/users?i=${inviteCode}`);
+      const res: AxiosResponse<List> = await axiosAuthInstance.post(
+        `/lists/users?i=${inviteCode}`
+      );
 
-      dispatch(updateSelectedList(res.data));
+      await dispatch(updateSelectedList({ ...res.data, canEdit: false }));
       history.push('/');
     } catch (err) {
       setCodeStatus(CodeStatus.ERROR);

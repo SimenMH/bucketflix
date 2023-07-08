@@ -1,0 +1,29 @@
+.AccountSettings {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 15vh;
+
+  &__Section {
+    width: fit-content;
+    input {
+      margin-top: 5px;
+      margin-right: 0.5rem;
+    }
+  }
+
+  &__ChangePassword {
+    width: 297px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  &__DeleteAccount {
+    margin-top: 25px;
+    height: 2.5rem;
+  }
+}

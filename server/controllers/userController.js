@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import generateAccessToken from '../utils/generateAccessToken.js';
 
 import User from '../models/userModel.js';
+import List from '../models/listModel.js';
 import RefreshToken from '../models/refreshTokenModel.js';
 
 const registerUser = asyncHandler(async (req, res) => {
@@ -118,6 +119,75 @@ const logoutUser = asyncHandler(async (req, res) => {
     .sendStatus(204);
 });
 
+const updateUser = asyncHandler(async (req, res) => {
+  const { newUsername, newEmail, newPassword } = req.body.updatedValues;
+  const user = await User.findById(req.user._id);
+
+  if (newUsername) {
+    // Update username
+    const userExists = await User.findOne({ username: newUsername });
+    if (userExists) {
+      res.status(409);
+      throw new Error(`An account with this username already exists.`);
+    }
+    user.username = newUsername;
+  }
+
+  if (newEmail) {
+    // Update email
+    const userExists = await User.findOne({ email: newEmail });
+    if (userExists) {
+      res.status(409);
+      throw new Error(`An account with this email already exists.`);
+    }
+    user.email = newEmail;
+  }
+
+  if (newPassword) {
+    // Update password
+    user.password = newPassword;
+  }
+
+  await user.save();
+
+  const accessToken = generateAccessToken({
+    _id: user._id,
+    username: user.username,
+    email: user.email,
+  });
+
+  res
+    .status(200)
+    .cookie('access-token', accessToken, {
+      path: '/',
+      maxAge: 5 * 60 * 1000, // 5 min
+    })
+    .json({ accessToken });
+});
+
+const deleteUser = asyncHandler(async (req, res) => {
+  const userID = req.user._id;
+  await User.deleteOne({ _id: userID });
+  await List.deleteMany({ user_id: userID });
+
+  const sharedLists = await List.find({
+    'sharedUsers.user_id': userID,
+  });
+
+  for (const list of sharedLists) {
+    const idx = list.sharedUsers.findIndex(
+      el => el.user_id.toString() === userID
+    );
+
+    if (idx > -1) {
+      list.sharedUsers.splice(idx, 1);
+    }
+  }
+  await List.bulkSave(sharedLists);
+
+  res.sendStatus(204);
+});
+
 const getUser = asyncHandler(async (req, res) => {
   const { username } = req.params;
   const user = await User.findOne({ username });
@@ -128,4 +198,4 @@ const getUser = asyncHandler(async (req, res) => {
   res.status(200).json({ user_id: user._id, username: user.username });
 });
 
-export { registerUser, loginUser, logoutUser, getUser };
+export { registerUser, loginUser, logoutUser, updateUser, deleteUser, getUser };

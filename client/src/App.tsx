@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import { sessionLogin } from './redux/User/UserSlice';
 import LoginRegister from './screens/LoginRegister.screen';
 import Invite from './screens/Invite.screen';
+import Account from './screens/Account.screen';
 
 Modal.setAppElement('#root');
 
@@ -41,6 +42,7 @@ const App: React.FC = () => {
             </Route>
             <Route path='/login' exact component={LoginRegister} />
             <Route path='/invite' exact component={Invite} />
+            <Route path='/account' exact component={Account} />
             <Redirect from='/*' to='/' />
           </Switch>
         </Router>

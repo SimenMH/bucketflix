@@ -20,9 +20,13 @@ const NavBar: React.FC<Props> = () => {
       </a>
       <div className='NavBar__Links'>
         {loggedIn ? (
-          <a href='/logout' onClick={handleLogout}>
-            Logout
-          </a>
+          <>
+            <a href='/'>Home</a>
+            <a href='/account'>Account</a>
+            <a href='/logout' onClick={handleLogout}>
+              Logout
+            </a>
+          </>
         ) : (
           <a href='/login'>Login / Register</a>
         )}

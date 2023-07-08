@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
+import User from '../models/userModel.js';
 
 const authenticate = asyncHandler(async (req, res, next) => {
   let token;
@@ -13,7 +14,9 @@ const authenticate = asyncHandler(async (req, res, next) => {
 
       req.user = decoded;
 
-      if (!req.user._id) {
+      const userExists = await User.findById(req.user._id);
+
+      if (!req.user._id || !userExists) {
         res.status(401);
         throw new Error('Unauthorized, could not find user');
       }

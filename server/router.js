@@ -7,6 +7,8 @@ import {
   loginUser,
   logoutUser,
   getUser,
+  updateUser,
+  deleteUser,
 } from './controllers/userController.js';
 import {
   getLists,
@@ -33,10 +35,15 @@ router.get('/', (req, res) => {
   res.send('hello world');
 });
 
-router.get('/users/:username', getUser);
-router.post('/users', registerUser);
+router
+  .route('/users')
+  .post(registerUser)
+  .all(authenticate)
+  .put(updateUser)
+  .delete(deleteUser);
 router.post('/users/login', loginUser);
 router.post('/users/logout', logoutUser);
+router.get('/users/:username', getUser);
 
 router
   .route('/lists')

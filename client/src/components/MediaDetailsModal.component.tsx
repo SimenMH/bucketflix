@@ -15,14 +15,17 @@ const MediaDetailsModal: React.FC<Props> = ({
   handleCloseModal,
   mediaToDisplay,
 }) => {
+  // Redux
+  const dispatch = useAppDispatch();
+  const { selectedList } = useAppSelector(state => state.lists);
+
+  // React States
   const [isEditing, setIsEditing] = useState(false);
   const [mediaEditInput, setMediaEditInput] = useState({
     timestamp: mediaToDisplay.Timestamp,
     whereToWatch: mediaToDisplay.WhereToWatch,
     notes: mediaToDisplay.Notes,
   });
-  const { selectedList } = useAppSelector(state => state.lists);
-  const dispatch = useAppDispatch();
 
   const handleInputChange = (
     e: React.ChangeEvent<

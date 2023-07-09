@@ -15,7 +15,10 @@ const MyListsSidebar: React.FC<Props> = ({
   sharedLists,
   selectedList,
 }) => {
+  // Redux
   const dispatch = useAppDispatch();
+
+  // React States
   const [listModalIsOpen, setListModalIsOpen] = useState<boolean>(false);
   const [newListName, setNewListName] = useState<string>('');
 

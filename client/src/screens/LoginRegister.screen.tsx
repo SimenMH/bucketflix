@@ -10,7 +10,10 @@ interface Props {
 }
 
 const LoginRegister: React.FC<Props> = ({ history }) => {
+  // Redux
   const { status, loggedIn } = useAppSelector(state => state.user);
+
+  // React States
   const [register, setRegister] = useState<boolean>(false);
 
   useEffect(() => {

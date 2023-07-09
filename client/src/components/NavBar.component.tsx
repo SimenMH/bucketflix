@@ -4,6 +4,7 @@ import { userLogout } from '../redux/User/UserSlice';
 interface Props {}
 
 const NavBar: React.FC<Props> = () => {
+  // Redux
   const dispatch = useAppDispatch();
   const { loggedIn } = useAppSelector(state => state.user);
 

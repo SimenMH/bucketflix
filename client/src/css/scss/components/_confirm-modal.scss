@@ -6,6 +6,10 @@
   align-items: center;
   gap: 1rem;
 
+  &__Text {
+    text-align: center;
+  }
+
   &__Buttons {
     display: flex;
     gap: 2rem;

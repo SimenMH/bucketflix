@@ -12,11 +12,14 @@ import ConfirmModal from '../components/ConfirmModal.component';
 interface Props {}
 
 const MyLists: React.FC<Props> = () => {
+  // Redux
   const dispatch = useAppDispatch();
+  const { loggedIn } = useAppSelector(state => state.user);
   const { selectedList, lists, sharedLists } = useAppSelector(
     state => state.lists
   );
-  const { loggedIn } = useAppSelector(state => state.user);
+
+  // React States
   const [filter, setFilter] = useState('all');
   const [addMediaModalVisible, setAddMediaModalVisible] =
     useState<boolean>(false);

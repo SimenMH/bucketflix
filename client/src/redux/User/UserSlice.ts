@@ -1,9 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {
+  deleteUserAPI,
   loginUserApi,
   logoutUserApi,
   registerUserApi,
   sessionLoginApi,
+  updateUserAPI,
 } from './UserApi';
 import { NewUser, LoginCredentials } from '../../types';
 
@@ -26,6 +28,23 @@ export const userLogout = createAsyncThunk(
 export const sessionLogin = createAsyncThunk(
   'user/sessionLogin',
   async (_, thunkAPI) => sessionLoginApi(thunkAPI)
+);
+
+export const updateUser = createAsyncThunk(
+  'user/updateUser',
+  async (
+    updatedValues: {
+      newEmail?: string;
+      newUsername?: string;
+      newPassword?: { currentPassword: string; newPassword: string };
+    },
+    thunkAPI
+  ) => updateUserAPI(updatedValues, thunkAPI)
+);
+
+export const deleteUser = createAsyncThunk(
+  'user/deleteUser',
+  async (password: string, thunkAPI) => deleteUserAPI(password, thunkAPI)
 );
 
 interface UserState {
@@ -113,6 +132,35 @@ export const userSlice = createSlice({
       state.status = 'success';
     });
     builder.addCase(sessionLogin.rejected, state => {
+      state.status = 'failed';
+    });
+
+    // Update User
+    builder.addCase(updateUser.pending, state => {
+      state.status = 'loading';
+    });
+    builder.addCase(updateUser.fulfilled, (state, action) => {
+      state.userID = action.payload._id;
+      state.username = action.payload.username;
+      state.email = action.payload.email;
+      state.status = 'success';
+    });
+    builder.addCase(updateUser.rejected, state => {
+      state.status = 'failed';
+    });
+
+    // Delete User
+    builder.addCase(deleteUser.pending, state => {
+      state.status = 'loading';
+    });
+    builder.addCase(deleteUser.fulfilled, state => {
+      state.userID = '';
+      state.username = '';
+      state.email = '';
+      state.loggedIn = false;
+      state.status = 'success';
+    });
+    builder.addCase(deleteUser.rejected, state => {
       state.status = 'failed';
     });
   },

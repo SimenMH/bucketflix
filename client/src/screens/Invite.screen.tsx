@@ -25,7 +25,10 @@ interface Props {
 }
 
 const Invite: React.FC<Props> = ({ history }) => {
+  // Redux
   const dispatch = useAppDispatch();
+
+  // React States
   const [inviteCode, setInviteCode] = useState<string | null>(null);
   const [codeStatus, setCodeStatus] = useState<CodeStatus>(CodeStatus.PENDING);
   const [inviteInfo, setInviteInfo] = useState<InviteInfo | null>(null);

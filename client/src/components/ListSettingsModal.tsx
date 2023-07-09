@@ -24,7 +24,10 @@ const ListSettingsModal: React.FC<Props> = ({
   lists,
   selectedList,
 }) => {
+  // Redux
   const dispatch = useAppDispatch();
+
+  // React States
   const [errorText, setErrorText] = useState<string | null>(null);
   const [newListName, setNewListName] = useState<string>(selectedList.name);
   const [listInviteCode, setListInviteCode] = useState<string | null>(null);

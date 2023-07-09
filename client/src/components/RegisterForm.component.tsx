@@ -8,7 +8,10 @@ interface Props {
 }
 
 const RegisterForm: React.FC<Props> = ({ history }) => {
+  // Redux
   const dispatch = useAppDispatch();
+
+  // React States
   const [errorText, setErrorText] = useState<string | null>(null);
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {

@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import { axiosAuthInstance } from '../../api/AxiosInstances';
 import jwt_decode from 'jwt-decode';
 import { resetListState } from '../List/ListSlice';
 import { User, NewUser, LoginCredentials } from '../../types';
@@ -82,6 +83,42 @@ export const sessionLoginApi = async (thunkAPI: any) => {
     return decoded;
   } catch (err) {
     return rejectWithValue(null);
+  }
+};
+
+export const updateUserAPI = async (
+  updatedValues: {
+    newEmail?: string;
+    newUsername?: string;
+    newPassword?: { currentPassword: string; newPassword: string };
+  },
+  thunkAPI: any
+) => {
+  const { rejectWithValue } = thunkAPI;
+  try {
+    const res: AxiosResponse<{ accessToken: string }> =
+      await axiosAuthInstance.put('/users', { updatedValues });
+
+    const decoded: User = jwt_decode(res.data.accessToken);
+    return decoded;
+  } catch (err: any) {
+    if (err.response) {
+      return rejectWithValue(err.response.data);
+    }
+    throw err;
+  }
+};
+
+export const deleteUserAPI = async (password: string, thunkAPI: any) => {
+  const { dispatch, rejectWithValue } = thunkAPI;
+  try {
+    await axiosAuthInstance.delete('/users', { data: { password } });
+    dispatch(resetListState());
+  } catch (err: any) {
+    if (err.response) {
+      return rejectWithValue(err.response.data);
+    }
+    throw err;
   }
 };
 

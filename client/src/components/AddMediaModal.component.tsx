@@ -18,6 +18,10 @@ const AddMediaModal: React.FC<Props> = ({
   lists,
   selectedList,
 }) => {
+  // Redux
+  const dispatch = useAppDispatch();
+
+  // React States
   const [mediaInput, setMediaInput] = useState({
     title: '',
     type: 'movie',
@@ -28,7 +32,6 @@ const AddMediaModal: React.FC<Props> = ({
   });
   const [searchResult, setSearchResult] = useState<Media[]>([]);
   const [selectedMedia, setSelectedMedia] = useState<Media | null>(null);
-  const dispatch = useAppDispatch();
 
   const handleInputChange = (
     e: React.ChangeEvent<

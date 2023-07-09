@@ -8,7 +8,10 @@ interface Props {
 }
 
 const LoginForm: React.FC<Props> = ({ history }) => {
+  // Redux
   const dispatch = useAppDispatch();
+
+  // React States
   const [errorText, setErrorText] = useState<string | null>(null);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {

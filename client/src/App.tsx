@@ -42,7 +42,10 @@ const App: React.FC = () => {
             </Route>
             <Route path='/login' exact component={LoginRegister} />
             <Route path='/invite' exact component={Invite} />
-            <Route path='/account' exact component={Account} />
+            <Route path='/account' exact>
+              {loggedIn ? <Account /> : <Redirect to='/login' />}
+            </Route>
+
             <Redirect from='/*' to='/' />
           </Switch>
         </Router>

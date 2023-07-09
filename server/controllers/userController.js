@@ -128,7 +128,7 @@ const updateUser = asyncHandler(async (req, res) => {
     const userExists = await User.findOne({ username: newUsername });
     if (userExists) {
       res.status(409);
-      throw new Error(`An account with this username already exists.`);
+      throw new Error('An account with this username already exists.');
     }
     user.username = newUsername;
   }
@@ -138,14 +138,18 @@ const updateUser = asyncHandler(async (req, res) => {
     const userExists = await User.findOne({ email: newEmail });
     if (userExists) {
       res.status(409);
-      throw new Error(`An account with this email already exists.`);
+      throw new Error('An account with this email already exists.');
     }
     user.email = newEmail;
   }
 
   if (newPassword) {
     // Update password
-    user.password = newPassword;
+    if (await user.matchPassword(newPassword.currentPassword)) {
+      user.password = newPassword.newPassword;
+    } else {
+      throw new Error('Incorrect password');
+    }
   }
 
   await user.save();
@@ -167,25 +171,35 @@ const updateUser = asyncHandler(async (req, res) => {
 
 const deleteUser = asyncHandler(async (req, res) => {
   const userID = req.user._id;
-  await User.deleteOne({ _id: userID });
-  await List.deleteMany({ user_id: userID });
+  const { password } = req.body;
 
-  const sharedLists = await List.find({
-    'sharedUsers.user_id': userID,
-  });
+  const user = await User.findById(userID);
 
-  for (const list of sharedLists) {
-    const idx = list.sharedUsers.findIndex(
-      el => el.user_id.toString() === userID
-    );
+  if (!password) throw new Error('Missing password in body');
 
-    if (idx > -1) {
-      list.sharedUsers.splice(idx, 1);
+  if (await user.matchPassword(password)) {
+    await User.deleteOne({ _id: userID });
+    await List.deleteMany({ user_id: userID });
+
+    const sharedLists = await List.find({
+      'sharedUsers.user_id': userID,
+    });
+
+    for (const list of sharedLists) {
+      const idx = list.sharedUsers.findIndex(
+        el => el.user_id.toString() === userID
+      );
+
+      if (idx > -1) {
+        list.sharedUsers.splice(idx, 1);
+      }
     }
-  }
-  await List.bulkSave(sharedLists);
+    await List.bulkSave(sharedLists);
 
-  res.sendStatus(204);
+    res.sendStatus(204);
+  } else {
+    throw new Error('Incorrect password');
+  }
 });
 
 const getUser = asyncHandler(async (req, res) => {

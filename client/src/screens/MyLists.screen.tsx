@@ -97,6 +97,7 @@ const MyLists: React.FC<Props> = () => {
             handleCloseModal={handleAddMediaClose}
             lists={lists}
             selectedList={selectedList}
+            sharedLists={sharedLists}
           />
           <ListSettingsModal
             isOpen={listSettingsModalVisible}

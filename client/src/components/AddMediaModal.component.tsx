@@ -9,6 +9,7 @@ interface Props {
   isOpen: boolean;
   handleCloseModal: Function;
   lists: Array<List>;
+  sharedLists: Array<List>;
   selectedList: List;
 }
 
@@ -16,6 +17,7 @@ const AddMediaModal: React.FC<Props> = ({
   isOpen,
   handleCloseModal,
   lists,
+  sharedLists,
   selectedList,
 }) => {
   // Redux
@@ -27,11 +29,12 @@ const AddMediaModal: React.FC<Props> = ({
     type: 'movie',
     timestamp: '',
     whereToWatch: '',
-    list: selectedList.name,
+    list: selectedList._id,
     notes: '',
   });
   const [searchResult, setSearchResult] = useState<Media[]>([]);
   const [selectedMedia, setSelectedMedia] = useState<Media | null>(null);
+  const [errorText, setErrorText] = useState<string>('');
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -88,58 +91,52 @@ const AddMediaModal: React.FC<Props> = ({
     }
   };
 
-  const checkForDuplicate = (newMedia: Media) => {
-    let mediaList: Array<Media>;
-    if (mediaInput.type === 'movie') mediaList = selectedList.movies;
-    else mediaList = selectedList.series;
-
-    for (let i = 0; i < mediaList.length; i++) {
-      if (
-        mediaList[i].Title === newMedia.Title &&
-        mediaList[i].imdbID === newMedia.imdbID
-      ) {
-        return true;
+  const handleAddMedia = async () => {
+    setErrorText('');
+    try {
+      let newMediaObj;
+      if (selectedMedia) {
+        newMediaObj = {
+          imdbID: selectedMedia.imdbID,
+          Title: selectedMedia.Title,
+          Year: selectedMedia.Year,
+          Type: selectedMedia.Type,
+          Plot: selectedMedia.Plot,
+          Poster: selectedMedia.Poster,
+        };
+      } else {
+        newMediaObj = {
+          imdbID: '',
+          Title: mediaInput.title,
+          Year: '',
+          Type: mediaInput.type,
+          Plot: '',
+          Poster:
+            'https://printworks-manchester.com/cinema-poster/images/film-poster-placeholder.png',
+        };
       }
-    }
-    return false;
-  };
-
-  const handleAddMedia = () => {
-    let newMediaObj;
-    if (selectedMedia) {
       newMediaObj = {
-        imdbID: selectedMedia.imdbID,
-        Title: selectedMedia.Title,
-        Year: selectedMedia.Year,
-        Type: selectedMedia.Type,
-        Plot: selectedMedia.Plot,
-        Poster: selectedMedia.Poster,
+        ...newMediaObj,
+        Timestamp: mediaInput.timestamp,
+        WhereToWatch: mediaInput.whereToWatch,
+        Notes: mediaInput.notes,
       };
-    } else {
-      newMediaObj = {
-        imdbID: '',
-        Title: mediaInput.title,
-        Year: '',
-        Type: mediaInput.type,
-        Plot: '',
-        Poster:
-          'https://printworks-manchester.com/cinema-poster/images/film-poster-placeholder.png',
-      };
-    }
-    newMediaObj = {
-      ...newMediaObj,
-      Timestamp: mediaInput.timestamp,
-      WhereToWatch: mediaInput.whereToWatch,
-      Notes: mediaInput.notes,
-    };
 
-    if (checkForDuplicate(newMediaObj)) {
-      // TODO: Improve this alert
-      alert('Movie/Series already exists in this list.');
-    } else {
-      const listID = selectedList._id;
-      dispatch(addMediaToList({ listID, media: newMediaObj }));
-      handleCloseModal();
+      const res = await dispatch(
+        addMediaToList({ listID: mediaInput.list, media: newMediaObj })
+      );
+
+      if (res.meta.requestStatus === 'rejected') {
+        if (res.payload) {
+          setErrorText(res.payload);
+        } else {
+          setErrorText('Unknown error occured, please try again later.');
+        }
+      } else {
+        handleCloseModal();
+      }
+    } catch (err: any) {
+      setErrorText('Unknown error occured, please try again later.');
     }
   };
 
@@ -167,7 +164,7 @@ const AddMediaModal: React.FC<Props> = ({
         setMediaInput(prevState => {
           return {
             ...prevState,
-            list: selectedList.name,
+            list: selectedList._id,
           };
         })
       }
@@ -258,12 +255,27 @@ const AddMediaModal: React.FC<Props> = ({
                   value={mediaInput.list}
                   onChange={handleInputChange}
                 >
-                  {lists.map((list, idx) => {
+                  {lists.map(list => {
                     return (
-                      <option value={list.name} key={idx}>
+                      <option value={list._id} key={list._id}>
                         {list.name}
                       </option>
                     );
+                  })}
+                  {sharedLists.some(list => list.canEdit) && (
+                    <option className='OptionSeperator' disabled>
+                      &nbsp;
+                    </option>
+                  )}
+                  {sharedLists.map(list => {
+                    if (list.canEdit) {
+                      return (
+                        <option value={list._id} key={list._id}>
+                          {list.name}
+                        </option>
+                      );
+                    }
+                    return null;
                   })}
                 </select>
               </div>
@@ -294,6 +306,7 @@ const AddMediaModal: React.FC<Props> = ({
             onChange={handleInputChange}
             placeholder='Notes (Optional)'
           />
+          {errorText && <div className='ErrorText'>{errorText}</div>}
         </div>
         {/* Right Side Content */}
         <img

@@ -44,7 +44,7 @@ const RegisterForm: React.FC<Props> = ({ history }) => {
         setErrorText('Unknown error occured, please try again later.');
       }
     } else {
-      history.push('/');
+      history.push('/verify-email');
     }
   };
 

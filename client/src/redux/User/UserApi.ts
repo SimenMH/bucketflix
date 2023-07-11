@@ -12,14 +12,8 @@ export const registerUserApi = async (newUser: NewUser, thunkAPI: any) => {
   const { rejectWithValue } = thunkAPI;
 
   try {
-    const res: AxiosResponse<{ accessToken: string }> = await axios.post(
-      '/users',
-      newUser,
-      { withCredentials: true }
-    );
-
-    const decoded: User = jwt_decode(res.data.accessToken);
-    return decoded;
+    await axios.post('/users', newUser, { withCredentials: true });
+    return true;
   } catch (err: any) {
     if (err.response) {
       return rejectWithValue(err.response.data);

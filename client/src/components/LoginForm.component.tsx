@@ -28,6 +28,13 @@ const LoginForm: React.FC<Props> = ({ history }) => {
     );
 
     if (res.meta.requestStatus === 'rejected') {
+      if (res.payload && res.payload.message) {
+        const message = res.payload.message;
+
+        if (message.includes('verify your email')) {
+          history.push('/verify-email/send');
+        }
+      }
       setErrorText('Incorrect password or email');
     } else {
       history.push('/');

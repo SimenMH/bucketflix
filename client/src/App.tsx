@@ -14,6 +14,8 @@ import { sessionLogin } from './redux/User/UserSlice';
 import LoginRegister from './screens/LoginRegister.screen';
 import Invite from './screens/Invite.screen';
 import Account from './screens/Account.screen';
+import EmailVerification from './screens/EmailVerification.screen';
+import SendEmailVerification from './screens/SendEmailVerification.screen';
 
 Modal.setAppElement('#root');
 
@@ -44,6 +46,16 @@ const App: React.FC = () => {
             <Route path='/invite' exact component={Invite} />
             <Route path='/account' exact>
               {loggedIn ? <Account /> : <Redirect to='/login' />}
+            </Route>
+            <Route path='/verify-email' exact>
+              {loggedIn ? (
+                <Redirect to='/' />
+              ) : (
+                <Route component={EmailVerification} />
+              )}
+            </Route>
+            <Route path='/verify-email/send' exact>
+              {loggedIn ? <Redirect to='/' /> : <SendEmailVerification />}
             </Route>
 
             <Redirect from='/*' to='/' />

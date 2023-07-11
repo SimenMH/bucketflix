@@ -80,10 +80,6 @@ export const userSlice = createSlice({
       state.status = 'loading';
     });
     builder.addCase(userRegister.fulfilled, (state, action) => {
-      state.userID = action.payload._id;
-      state.username = action.payload.username;
-      state.email = action.payload.email;
-      state.loggedIn = true;
       state.status = 'success';
     });
     builder.addCase(userRegister.rejected, state => {

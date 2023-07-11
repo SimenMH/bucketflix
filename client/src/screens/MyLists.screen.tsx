@@ -65,7 +65,7 @@ const MyLists: React.FC<Props> = () => {
         setConfirmLeaveModalVisible(false);
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 

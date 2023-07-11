@@ -28,6 +28,10 @@ import {
 import { createInvite, getInvite } from './controllers/listInviteController.js';
 import { createAccessToken } from './controllers/tokenController.js';
 import validateInviteCode from './middleware/validateInviteCodeMiddleware.js';
+import {
+  sendNewEmailVerification,
+  verifyEmail,
+} from './controllers/emailVerificationController.js';
 
 const router = express.Router();
 
@@ -44,6 +48,10 @@ router
 router.post('/users/login', loginUser);
 router.post('/users/logout', logoutUser);
 router.get('/users/:username', getUser);
+router
+  .route('/users/verify-email')
+  .post(sendNewEmailVerification)
+  .put(verifyEmail);
 
 router
   .route('/lists')

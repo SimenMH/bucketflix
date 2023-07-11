@@ -19,9 +19,9 @@ const createAccessToken = asyncHandler(async (req, res) => {
   }
 
   const dateNow = new Date();
-  const elapsedTimeSinceUse = (dateNow - tokenExists.last_used) / 1000;
+  const elapsedTimeSinceUse = dateNow - tokenExists.last_used;
   // If time since use is greater than 1 year
-  if (elapsedTimeSinceUse > 365 * 24 * 60 * 60 * 1000) {
+  if (elapsedTimeSinceUse > 365 * 24 * 60 * 60) {
     return res
       .cookie('refresh-token', '', {
         maxAge: 0,
@@ -63,7 +63,6 @@ const createAccessToken = asyncHandler(async (req, res) => {
           path: '/',
           httpOnly: true,
           maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year
-          // secure: true,
         })
         .cookie('access-token', accessToken, {
           path: '/',

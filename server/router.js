@@ -32,6 +32,10 @@ import {
   sendNewEmailVerification,
   verifyEmail,
 } from './controllers/emailVerificationController.js';
+import {
+  sendPasswordReset,
+  updatePassword,
+} from './controllers/resetPasswordController.js';
 
 const router = express.Router();
 
@@ -52,6 +56,10 @@ router
   .route('/users/verify-email')
   .post(sendNewEmailVerification)
   .put(verifyEmail);
+router
+  .route('/users/reset-password')
+  .post(sendPasswordReset)
+  .put(updatePassword);
 
 router
   .route('/lists')

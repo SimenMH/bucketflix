@@ -25,7 +25,7 @@ transporter.verify(function (error, _success) {
 });
 
 const verifyEmailHtmlTemplate = fs
-  .readFileSync('./views/email-verification.html')
+  .readFileSync('./views/email-verification-email.html')
   .toString();
 
 export const sendVerificationEmail = async (emailAddress, token) => {
@@ -38,6 +38,32 @@ export const sendVerificationEmail = async (emailAddress, token) => {
     to: emailAddress,
     subject: 'Verify your Bucketflix email address',
     html: verifyEmailHtml,
+  };
+
+  return new Promise((resolve, reject) => {
+    transporter.sendMail(message, (error, _info) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(true);
+    });
+  });
+};
+
+const passwordResetHtmlTemplate = fs
+  .readFileSync('./views/password-reset-email.html')
+  .toString();
+
+export const sendPasswordResetEmail = async (emailAddress, token) => {
+  const resetPasswordHtml = passwordResetHtmlTemplate
+    .replace(/{{email}}/g, emailAddress)
+    .replace(/{{token}}/g, token);
+
+  const message = {
+    from: 'noreply@simenmh.com',
+    to: emailAddress,
+    subject: 'Reset your Bucketflix password',
+    html: resetPasswordHtml,
   };
 
   return new Promise((resolve, reject) => {

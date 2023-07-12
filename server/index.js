@@ -9,7 +9,24 @@ import connectDB from './config/db.js';
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+const whitelist = ['https://www.bucketflix.com', 'https://bucketflix.com'];
+
+if (process.env.NODE_ENV === 'development') {
+  whitelist.push('http://localhost:3000');
+}
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 

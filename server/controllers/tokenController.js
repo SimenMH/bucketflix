@@ -6,7 +6,7 @@ import User from '../models/userModel.js';
 import RefreshToken from '../models/refreshTokenModel.js';
 
 const createAccessToken = asyncHandler(async (req, res) => {
-  const refreshToken = req.cookies['refresh-token'];
+  const { refreshToken } = req.body;
   if (refreshToken == null) return res.sendStatus(403);
 
   const tokenExists = await RefreshToken.findOne({ token: refreshToken });
@@ -65,7 +65,6 @@ const createAccessToken = asyncHandler(async (req, res) => {
         .status(201)
         .cookie('refresh-token', refreshToken, {
           path: '/',
-          httpOnly: true,
           maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year
           domain: process.env.COOKIE_DOMAIN,
         })

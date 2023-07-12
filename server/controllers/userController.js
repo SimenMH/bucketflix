@@ -90,7 +90,6 @@ const loginUser = asyncHandler(async (req, res) => {
     .status(200)
     .cookie('refresh-token', refreshToken, {
       path: '/',
-      httpOnly: true,
       maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year
       domain: process.env.COOKIE_DOMAIN,
     })
@@ -103,7 +102,7 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
-  const refreshToken = req.cookies['refresh-token'];
+  const { refreshToken } = req.body;
 
   if (refreshToken) {
     await RefreshToken.deleteOne({ token: refreshToken });

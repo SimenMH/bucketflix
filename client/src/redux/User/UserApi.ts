@@ -50,7 +50,7 @@ export const logoutUserApi = async (thunkAPI: any) => {
   const { dispatch, rejectWithValue } = thunkAPI;
   try {
     await axios.post('/users/logout', {
-      withCredentials: true,
+      refreshToken: cookies.get('refresh-token'),
     });
 
     dispatch(resetListState());

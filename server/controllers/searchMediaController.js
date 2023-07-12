@@ -50,7 +50,7 @@ const searchForMedia = asyncHandler(async (req, res) => {
 
   let results = [];
 
-  // Search cache
+  // Check cache
   const cacheResult = titleSearchCache.get(title);
 
   if (cacheResult !== undefined) {

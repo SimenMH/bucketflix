@@ -14,7 +14,7 @@ const mediaSchema = mongoose.Schema({
   Year: {
     type: String,
     default: '',
-    maxLength: 4,
+    maxLength: 30,
   },
   Type: {
     type: String,

@@ -48,6 +48,12 @@ const LoginRegister: React.FC<Props> = ({ history }) => {
           <div className='LinkText' onClick={() => setRegister(true)}>
             Click here to signup!
           </div>
+          <div
+            className='LoginRegister__ForgotPassword'
+            onClick={() => history.push('/reset-password')}
+          >
+            Forgotten password?
+          </div>
         </>
       )}
     </div>

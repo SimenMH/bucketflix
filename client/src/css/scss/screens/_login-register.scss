@@ -22,4 +22,12 @@
       margin-top: 15px;
     }
   }
+
+  &__ForgotPassword {
+    margin-top: 15px;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 14px;
+    color: $font-color-light-3;
+  }
 }

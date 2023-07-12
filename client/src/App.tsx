@@ -16,6 +16,7 @@ import Invite from './screens/Invite.screen';
 import Account from './screens/Account.screen';
 import EmailVerification from './screens/EmailVerification.screen';
 import SendEmailVerification from './screens/SendEmailVerification.screen';
+import PasswordReset from './screens/PasswordReset.screen';
 
 Modal.setAppElement('#root');
 
@@ -56,6 +57,13 @@ const App: React.FC = () => {
             </Route>
             <Route path='/verify-email/send' exact>
               {loggedIn ? <Redirect to='/' /> : <SendEmailVerification />}
+            </Route>
+            <Route path='/reset-password' exact>
+              {loggedIn ? (
+                <Redirect to='/' />
+              ) : (
+                <Route component={PasswordReset} />
+              )}
             </Route>
 
             <Redirect from='/*' to='/' />

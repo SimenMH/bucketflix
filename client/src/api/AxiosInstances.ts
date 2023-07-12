@@ -4,7 +4,7 @@ import { generateAccessToken } from './GenerateAccessToken';
 
 const cookies = new Cookies();
 
-axios.defaults.baseURL = 'http://localhost:5000';
+axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 axios.defaults.withCredentials = true;
 
 export const axiosAuthInstance = axios.create();

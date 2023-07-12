@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useAppDispatch } from '../redux/Hooks';
 import Modal from 'react-modal';
 import { Media, List } from '../types';
-import { searchForTitle, searchByTitle, searchById } from '../api/SearchMedia';
+import { searchForTitle, searchForId } from '../api/SearchMedia';
 import { addMediaToList } from '../redux/List/ListSlice';
 
 interface Props {
@@ -63,20 +63,8 @@ const AddMediaModal: React.FC<Props> = ({
   const handleTitleSearch = useCallback(async () => {
     try {
       // Looking for title...
-      let res = await searchForTitle(mediaInput.title);
-      if (res.Response === 'True') {
-        // Found multiple titles
-        setSearchResult(res.Search);
-      } else {
-        res = await searchByTitle(mediaInput.title);
-        if (res.Response === 'True') {
-          // Found one title
-          setSearchResult([res]);
-        } else {
-          // Found no titles
-          setSearchResult([]);
-        }
-      }
+      const res = await searchForTitle(mediaInput.title);
+      setSearchResult(res);
     } catch (err) {
       console.error(err);
     }
@@ -84,7 +72,7 @@ const AddMediaModal: React.FC<Props> = ({
 
   const handleSelectMedia = async (media: Media) => {
     try {
-      const res = await searchById(media.imdbID);
+      const res = await searchForId(media.imdbID);
       setSelectedMedia(res);
     } catch (err) {
       console.error(err);

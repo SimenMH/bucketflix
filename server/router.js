@@ -36,6 +36,10 @@ import {
   sendPasswordReset,
   updatePassword,
 } from './controllers/resetPasswordController.js';
+import {
+  searchForMedia,
+  searchForMediaById,
+} from './controllers/searchMediaController.js';
 
 const router = express.Router();
 
@@ -94,5 +98,8 @@ router
   .post(isListOwner, createInvite);
 
 router.post('/token', createAccessToken);
+
+router.route('/media').get(authenticate, searchForMedia);
+router.route('/media/:mediaID').get(authenticate, searchForMediaById);
 
 export default router;

@@ -1,24 +1,29 @@
-const baseUrl = `http://www.omdbapi.com/?apikey=${process.env.REACT_APP_OMDB_API_KEY}`;
+import { AxiosResponse } from 'axios';
+import { axiosAuthInstance } from './AxiosInstances';
+import { Media } from '../types';
 
-export const searchForTitle = (title: string) => {
-  title = title.trim().replace(' ', '+');
-  return fetch(`${baseUrl}&s=${title}`)
-    .then(res => res.json())
-    .then(data => data)
-    .catch(err => console.error(err));
+export const searchForTitle = async (title: string) => {
+  try {
+    title = title.toLowerCase().trim();
+    const res: AxiosResponse<{ results: Array<Media> }> =
+      await axiosAuthInstance.get(`/media?s=${title}`);
+    if (res.data.results) {
+      return res.data.results;
+    } else {
+      return [];
+    }
+  } catch (err) {
+    return [];
+  }
 };
 
-export const searchById = (imdbID: string) => {
-  return fetch(`${baseUrl}&i=${imdbID}`)
-    .then(res => res.json())
-    .then(data => data)
-    .catch(err => console.error(err));
-};
-
-export const searchByTitle = (title: string) => {
-  title = title.trim().replace(' ', '+');
-  return fetch(`${baseUrl}&t=${title}`)
-    .then(res => res.json())
-    .then(data => data)
-    .catch(err => console.error(err));
+export const searchForId = async (id: string) => {
+  try {
+    const res: AxiosResponse<Media> = await axiosAuthInstance.get(
+      `/media/${id}`
+    );
+    return res.data;
+  } catch (err) {
+    return null;
+  }
 };

@@ -26,6 +26,7 @@ const MediaDetailsModal: React.FC<Props> = ({
     whereToWatch: mediaToDisplay.WhereToWatch,
     notes: mediaToDisplay.Notes,
   });
+  const [errorText, setErrorText] = useState<string>('');
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -44,19 +45,33 @@ const MediaDetailsModal: React.FC<Props> = ({
   };
 
   const handleUpdateMedia = async () => {
-    if (!selectedList) return;
-    const listID = selectedList._id;
-    const mediaID = mediaToDisplay._id;
-    if (!mediaID) return;
-    await dispatch(
-      editMediaInList({
-        listID,
-        mediaID,
-        type: mediaToDisplay.Type,
-        updatedValues: mediaEditInput,
-      })
-    );
-    handleCloseModal();
+    try {
+      if (!selectedList) return;
+      const listID = selectedList._id;
+      const mediaID = mediaToDisplay._id;
+      if (!mediaID) return;
+
+      const res = await dispatch(
+        editMediaInList({
+          listID,
+          mediaID,
+          type: mediaToDisplay.Type,
+          updatedValues: mediaEditInput,
+        })
+      );
+
+      if (res.meta.requestStatus === 'rejected') {
+        if (res.payload) {
+          setErrorText(res.payload);
+        } else {
+          setErrorText('Unknown error occured, please try again later.');
+        }
+      } else {
+        handleCloseModal();
+      }
+    } catch (err: any) {
+      setErrorText('Unknown error occured, please try again later.');
+    }
   };
 
   const handleRemoveMedia = () => {
@@ -156,6 +171,7 @@ const MediaDetailsModal: React.FC<Props> = ({
                   value={mediaEditInput.notes}
                   maxLength={300}
                 />
+                {errorText && <div className='ErrorText'>{errorText}</div>}
               </div>
             ) : (
               <div>

@@ -92,10 +92,12 @@ const loginUser = asyncHandler(async (req, res) => {
       path: '/',
       httpOnly: true,
       maxAge: 365 * 24 * 60 * 60 * 1000, // 1 year
+      domain: process.env.COOKIE_DOMAIN,
     })
     .cookie('access-token', accessToken, {
       path: '/',
       maxAge: 5 * 60 * 1000, // 5 min
+      domain: process.env.COOKIE_DOMAIN,
     })
     .json({ accessToken });
 });
@@ -109,9 +111,11 @@ const logoutUser = asyncHandler(async (req, res) => {
   res
     .cookie('refresh-token', '', {
       maxAge: 0,
+      domain: process.env.COOKIE_DOMAIN,
     })
     .cookie('access-token', '', {
       maxAge: 0,
+      domain: process.env.COOKIE_DOMAIN,
     })
     .sendStatus(204);
 });
@@ -162,6 +166,7 @@ const updateUser = asyncHandler(async (req, res) => {
     .cookie('access-token', accessToken, {
       path: '/',
       maxAge: 5 * 60 * 1000, // 5 min
+      domain: process.env.COOKIE_DOMAIN,
     })
     .json({ accessToken });
 });

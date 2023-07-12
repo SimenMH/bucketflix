@@ -100,6 +100,7 @@ const Account = () => {
           placeholder='New Username'
           value={newUsername}
           onChange={e => setNewUSername(e.target.value)}
+          maxLength={30}
         />
         <button
           disabled={newUsername === username || newUsername.length <= 0}
@@ -117,6 +118,7 @@ const Account = () => {
           placeholder='New Email'
           value={newEmail}
           onChange={e => setNewEmail(e.target.value)}
+          maxLength={150}
         />
         <button
           disabled={newEmail === email || newEmail.length <= 0}
@@ -134,6 +136,7 @@ const Account = () => {
           id='currentPassword'
           value={currentPassword}
           onChange={e => setCurrentPassword(e.target.value)}
+          maxLength={150}
         />
         <input
           placeholder='New Password'
@@ -142,6 +145,7 @@ const Account = () => {
           id='newPassword'
           value={newPassword}
           onChange={e => setNewPassword(e.target.value)}
+          maxLength={150}
         />
         <input
           placeholder='Confirm Password'
@@ -150,6 +154,7 @@ const Account = () => {
           id='confirmPassword'
           value={confirmPassword}
           onChange={e => setConfirmPassword(e.target.value)}
+          maxLength={150}
         />
         <button
           disabled={!currentPassword || !newPassword || !confirmPassword}
@@ -186,6 +191,7 @@ const Account = () => {
           id='confirmDeletePassword'
           value={confirmDeletePassword}
           onChange={e => setConfirmDeletePassword(e.target.value)}
+          maxLength={150}
         />
         {confirmDeleteErrorText && (
           <div className='ErrorText'>{confirmDeleteErrorText}</div>

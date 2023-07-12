@@ -48,7 +48,7 @@ const editMedia = asyncHandler(async (req, res) => {
         [`${category}.$.Notes`]: updatedValues.notes,
       },
     },
-    { new: true }
+    { new: true, runValidators: true }
   );
 
   res.status(200).json(updatedList);

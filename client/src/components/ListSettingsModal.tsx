@@ -148,7 +148,7 @@ const ListSettingsModal: React.FC<Props> = ({
             className='ListSettings__NameInput'
             type='text'
             placeholder='List Name'
-            maxLength={15}
+            maxLength={30}
             value={newListName}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
               setNewListName(e.currentTarget.value)

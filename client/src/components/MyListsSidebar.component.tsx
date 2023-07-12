@@ -76,7 +76,7 @@ const MyListsSidebar: React.FC<Props> = ({
             className='NewList__Input'
             type='text'
             placeholder='List Name'
-            maxLength={15}
+            maxLength={30}
             value={newListName}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
               setNewListName(e.currentTarget.value)

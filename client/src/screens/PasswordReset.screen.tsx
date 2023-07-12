@@ -46,6 +46,7 @@ const PasswordReset: React.FC<Props> = ({ history }) => {
                   value={newPassword}
                   onChange={e => setNewPassword(e.target.value)}
                   required={true}
+                  maxLength={150}
                 />
               </div>
               <div className='PasswordReset__FormInput'>
@@ -59,6 +60,7 @@ const PasswordReset: React.FC<Props> = ({ history }) => {
                   value={confirmPassword}
                   onChange={e => setConfirmPassword(e.target.value)}
                   required={true}
+                  maxLength={150}
                 />
               </div>
               {errorText && <div className='ErrorText'>{errorText}</div>}
@@ -170,6 +172,7 @@ const PasswordReset: React.FC<Props> = ({ history }) => {
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   required={true}
+                  maxLength={150}
                 />
                 <button
                   className='PrimaryButton'

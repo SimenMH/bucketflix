@@ -59,6 +59,7 @@ const RegisterForm: React.FC<Props> = ({ history }) => {
           autoComplete='email'
           placeholder='Email'
           required={true}
+          maxLength={150}
         />
         <label htmlFor='newUsername'>Username:</label>
         <input
@@ -68,6 +69,7 @@ const RegisterForm: React.FC<Props> = ({ history }) => {
           autoComplete='username'
           placeholder='Username'
           required={true}
+          maxLength={30}
         />
         <label htmlFor='newPassword'>Create Password:</label>
         <input
@@ -77,6 +79,7 @@ const RegisterForm: React.FC<Props> = ({ history }) => {
           autoComplete='new-password'
           placeholder='Create Password'
           required={true}
+          maxLength={150}
         />
         <label htmlFor='confirmPassword'>Confirm Password:</label>
         <input
@@ -86,6 +89,7 @@ const RegisterForm: React.FC<Props> = ({ history }) => {
           autoComplete='new-password'
           placeholder='Confirm Password'
           required={true}
+          maxLength={150}
         />
         {errorText && <div className='ErrorText'>{errorText}</div>}
         <button type='submit'>Signup</button>

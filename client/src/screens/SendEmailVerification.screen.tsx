@@ -43,6 +43,7 @@ const SendEmailVerification: React.FC = () => {
               value={email}
               onChange={e => setEmail(e.target.value)}
               required={true}
+              maxLength={150}
             />
             <button
               className='PrimaryButton'

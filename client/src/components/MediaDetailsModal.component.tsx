@@ -134,6 +134,7 @@ const MediaDetailsModal: React.FC<Props> = ({
                     placeholder='Current Timestamp / Episode (Optional)'
                     onChange={handleInputChange}
                     value={mediaEditInput.timestamp}
+                    maxLength={150}
                   />
                 </div>
                 <div className='MediaInput__Item'>
@@ -144,15 +145,16 @@ const MediaDetailsModal: React.FC<Props> = ({
                     placeholder='Where to Watch (Optional)'
                     onChange={handleInputChange}
                     value={mediaEditInput.whereToWatch}
+                    maxLength={200}
                   />
                 </div>
                 <p>Notes</p>
                 <textarea
-                  maxLength={350}
                   name='notes'
                   placeholder='Notes (Optional)'
                   onChange={handleInputChange}
                   value={mediaEditInput.notes}
+                  maxLength={300}
                 />
               </div>
             ) : (

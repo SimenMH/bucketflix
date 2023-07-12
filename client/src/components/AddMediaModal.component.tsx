@@ -177,6 +177,7 @@ const AddMediaModal: React.FC<Props> = ({
                   placeholder='Movie / Series Title'
                   onChange={handleInputChange}
                   value={mediaInput.title}
+                  maxLength={200}
                 />
                 {searchResult.length > 0 && (
                   <div className='Suggestions'>
@@ -227,6 +228,7 @@ const AddMediaModal: React.FC<Props> = ({
                   name='timestamp'
                   onChange={handleInputChange}
                   placeholder='Current Timestamp / Episode (Optional)'
+                  maxLength={150}
                 />
               </div>
               <div className='MediaInput__Item'>
@@ -235,6 +237,7 @@ const AddMediaModal: React.FC<Props> = ({
                   name='whereToWatch'
                   onChange={handleInputChange}
                   placeholder='Where to Watch (Optional)'
+                  maxLength={200}
                 />
               </div>
               <div className='MediaInput__Item'>
@@ -289,7 +292,7 @@ const AddMediaModal: React.FC<Props> = ({
           </div>
           {/* Notes Text Area */}
           <textarea
-            maxLength={350}
+            maxLength={300}
             name='notes'
             onChange={handleInputChange}
             placeholder='Notes (Optional)'

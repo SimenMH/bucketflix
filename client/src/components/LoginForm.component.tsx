@@ -51,6 +51,7 @@ const LoginForm: React.FC<Props> = ({ history }) => {
         autoComplete='email'
         placeholder='Email'
         required={true}
+        maxLength={150}
       />
       <label htmlFor='password'>Password:</label>
       <input
@@ -60,6 +61,7 @@ const LoginForm: React.FC<Props> = ({ history }) => {
         autoComplete='current-password'
         placeholder='Password'
         required={true}
+        maxLength={150}
       />
       {errorText && <div className='ErrorText'>{errorText}</div>}
       <button type='submit'>Login</button>

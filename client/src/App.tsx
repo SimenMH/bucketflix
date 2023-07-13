@@ -35,42 +35,44 @@ const App: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <div className='AppContainer'>
+    <>
       <NavBar />
-      {!loading && (
-        <Router>
-          <Switch>
-            <Route path='/' exact>
-              {loggedIn ? <MyLists /> : <Redirect to='/login' />}
-            </Route>
-            <Route path='/login' exact component={LoginRegister} />
-            <Route path='/invite' exact component={Invite} />
-            <Route path='/account' exact>
-              {loggedIn ? <Account /> : <Redirect to='/login' />}
-            </Route>
-            <Route path='/verify-email' exact>
-              {loggedIn ? (
-                <Redirect to='/' />
-              ) : (
-                <Route component={EmailVerification} />
-              )}
-            </Route>
-            <Route path='/verify-email/send' exact>
-              {loggedIn ? <Redirect to='/' /> : <SendEmailVerification />}
-            </Route>
-            <Route path='/reset-password' exact>
-              {loggedIn ? (
-                <Redirect to='/' />
-              ) : (
-                <Route component={PasswordReset} />
-              )}
-            </Route>
+      <div className='AppContainer'>
+        {!loading && (
+          <Router>
+            <Switch>
+              <Route path='/' exact>
+                {loggedIn ? <MyLists /> : <Redirect to='/login' />}
+              </Route>
+              <Route path='/login' exact component={LoginRegister} />
+              <Route path='/invite' exact component={Invite} />
+              <Route path='/account' exact>
+                {loggedIn ? <Account /> : <Redirect to='/login' />}
+              </Route>
+              <Route path='/verify-email' exact>
+                {loggedIn ? (
+                  <Redirect to='/' />
+                ) : (
+                  <Route component={EmailVerification} />
+                )}
+              </Route>
+              <Route path='/verify-email/send' exact>
+                {loggedIn ? <Redirect to='/' /> : <SendEmailVerification />}
+              </Route>
+              <Route path='/reset-password' exact>
+                {loggedIn ? (
+                  <Redirect to='/' />
+                ) : (
+                  <Route component={PasswordReset} />
+                )}
+              </Route>
 
-            <Redirect from='/*' to='/' />
-          </Switch>
-        </Router>
-      )}
-    </div>
+              <Redirect from='/*' to='/' />
+            </Switch>
+          </Router>
+        )}
+      </div>
+    </>
   );
 };
 

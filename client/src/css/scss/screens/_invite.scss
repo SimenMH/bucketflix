@@ -1,11 +1,12 @@
 .InviteScreen {
   font-size: 2.5rem;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   gap: 1.5rem;
+  margin: auto 15vw;
 
   &__ValidContainer {
     display: flex;

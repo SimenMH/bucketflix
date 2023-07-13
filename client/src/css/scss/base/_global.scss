@@ -15,9 +15,27 @@ code {
     monospace;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 0.6rem;
+  max-height: 69px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  opacity: 0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 7px;
+}
+
 .AppContainer {
-  height: 100vh;
-  max-height: 100vh;
+  height: calc(100vh - 75px);
+  display: flex;
+  flex-direction: column;
 }
 
 .LinkText {

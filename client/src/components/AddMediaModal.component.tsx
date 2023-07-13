@@ -121,6 +121,19 @@ const AddMediaModal: React.FC<Props> = ({
           setErrorText('Unknown error occured, please try again later.');
         }
       } else {
+        setMediaInput(state => {
+          return {
+            ...state,
+            title: '',
+            type: 'movie',
+            timestamp: '',
+            whereToWatch: '',
+            notes: '',
+          };
+        });
+        setSelectedMedia(null);
+        setErrorText('');
+        setSearchResult([]);
         handleCloseModal();
       }
     } catch (err: any) {
@@ -228,6 +241,7 @@ const AddMediaModal: React.FC<Props> = ({
                   name='timestamp'
                   onChange={handleInputChange}
                   placeholder='Current Timestamp / Episode (Optional)'
+                  value={mediaInput.timestamp}
                   maxLength={150}
                 />
               </div>
@@ -237,6 +251,7 @@ const AddMediaModal: React.FC<Props> = ({
                   name='whereToWatch'
                   onChange={handleInputChange}
                   placeholder='Where to Watch (Optional)'
+                  value={mediaInput.whereToWatch}
                   maxLength={200}
                 />
               </div>
@@ -296,6 +311,7 @@ const AddMediaModal: React.FC<Props> = ({
             name='notes'
             onChange={handleInputChange}
             placeholder='Notes (Optional)'
+            value={mediaInput.notes}
           />
           {errorText && <div className='ErrorText'>{errorText}</div>}
         </div>

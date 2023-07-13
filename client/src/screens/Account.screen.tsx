@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import Modal from 'react-modal';
+import { usernameRegex } from '../util/Regex';
+
 import { useAppSelector, useAppDispatch } from '../redux/Hooks';
 import { deleteUser, updateUser } from '../redux/User/UserSlice';
-import Modal from 'react-modal';
 
 const Account = () => {
   // Redux
@@ -99,11 +101,20 @@ const Account = () => {
           id='newUsername'
           placeholder='New Username'
           value={newUsername}
-          onChange={e => setNewUSername(e.target.value)}
+          onChange={e => {
+            const regex = /^[A-Za-z_\d]{0,}$/;
+            if (e.target.value.match(regex)) {
+              setNewUSername(e.target.value);
+            }
+          }}
           maxLength={30}
         />
         <button
-          disabled={newUsername === username || newUsername.length <= 0}
+          disabled={
+            newUsername === username ||
+            newUsername.match(usernameRegex) === null ||
+            newUsername.match(usernameRegex)?.length === 0
+          }
           onClick={() => handleUpdateUser({ newUsername })}
         >
           Save

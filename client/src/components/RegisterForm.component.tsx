@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAppDispatch } from '../redux/Hooks';
 import { userRegister } from '../redux/User/UserSlice';
 import { History } from 'history';
+import { usernameRegex } from '../util/Regex';
 
 interface Props {
   history: History;
@@ -13,27 +14,32 @@ const RegisterForm: React.FC<Props> = ({ history }) => {
 
   // React States
   const [errorText, setErrorText] = useState<string | null>(null);
+  const [newEmail, setNewEmail] = useState<string>('');
+  const [newUsername, setNewUSername] = useState<string>('');
+  const [newPassword, setNewPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrorText('');
 
-    const target = e.target as typeof e.target & {
-      newEmail: { value: string };
-      newUsername: { value: string };
-      newPassword: { value: string };
-      confirmPassword: { value: string };
-    };
-
-    if (target.newPassword.value !== target.confirmPassword.value) {
+    if (newPassword !== confirmPassword) {
       setErrorText('Passwords must match');
+      return;
+    }
+
+    if (!newUsername.match(usernameRegex)) {
+      setErrorText(
+        'Invalid username. Must be at least two characters long and contain at least one letter'
+      );
       return;
     }
 
     const res = await dispatch(
       userRegister({
-        email: target.newEmail.value,
-        username: target.newUsername.value,
-        password: target.newPassword.value,
+        email: newEmail,
+        username: newUsername,
+        password: newPassword,
       })
     );
 
@@ -58,6 +64,8 @@ const RegisterForm: React.FC<Props> = ({ history }) => {
           id='newEmail'
           autoComplete='email'
           placeholder='Email'
+          value={newEmail}
+          onChange={e => setNewEmail(e.target.value)}
           required={true}
           maxLength={150}
         />
@@ -68,6 +76,13 @@ const RegisterForm: React.FC<Props> = ({ history }) => {
           id='newUsername'
           autoComplete='username'
           placeholder='Username'
+          value={newUsername}
+          onChange={e => {
+            const regex = /^[A-Za-z_\d]{0,}$/;
+            if (e.target.value.match(regex)) {
+              setNewUSername(e.target.value);
+            }
+          }}
           required={true}
           maxLength={30}
         />
@@ -78,6 +93,8 @@ const RegisterForm: React.FC<Props> = ({ history }) => {
           id='newPassword'
           autoComplete='new-password'
           placeholder='Create Password'
+          value={newPassword}
+          onChange={e => setNewPassword(e.target.value)}
           required={true}
           maxLength={150}
         />
@@ -88,6 +105,8 @@ const RegisterForm: React.FC<Props> = ({ history }) => {
           id='confirmPassword'
           autoComplete='new-password'
           placeholder='Confirm Password'
+          value={confirmPassword}
+          onChange={e => setConfirmPassword(e.target.value)}
           required={true}
           maxLength={150}
         />

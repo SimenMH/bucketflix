@@ -8,8 +8,23 @@ import List from '../models/listModel.js';
 import RefreshToken from '../models/refreshTokenModel.js';
 import EmailVerificationToken from '../models/emailVerificationTokenModel.js';
 
+const usernameRegex = /^(?=[A-Za-z_\d]*[A-Za-z])[A-Za-z_\d]{2,}$/;
+
 const registerUser = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
+  if ((!username || !email, !password)) {
+    res.status(400);
+    throw new Error('Missing fields in request body');
+  }
+
+  // Validate username
+  if (!username.match(usernameRegex)) {
+    res.status(400);
+    throw new Error(
+      'Invalid username. A username can only contain letters, numbers, and underscores. Must be at least 2 characters long and containt at least one letter.'
+    );
+  }
+
   const userExists = await User.findOne({
     $or: [{ username }, { email }],
   });
@@ -45,8 +60,16 @@ const registerUser = asyncHandler(async (req, res) => {
     );
   }
 
-  // Send email
-  await sendVerificationEmail(user.email, emailVerificationToken);
+  try {
+    // Send email
+    await sendVerificationEmail(user.email, emailVerificationToken);
+  } catch (err) {
+    res.status(400);
+    await User.findByIdAndDelete(user._id);
+    throw new Error(
+      'Could not send verification email to this email address. Try using another email or contact support.'
+    );
+  }
 
   res.status(201).json({
     message:
@@ -124,6 +147,13 @@ const updateUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (newUsername) {
+    // Validate username
+    if (!newUsername.match(usernameRegex)) {
+      res.status(400);
+      throw new Error(
+        'Invalid username. A username can only contain letters, numbers, and underscores. Must be at least 2 characters long and containt at least one letter.'
+      );
+    }
     // Update username
     const userExists = await User.findOne({ username: newUsername });
     if (userExists) {

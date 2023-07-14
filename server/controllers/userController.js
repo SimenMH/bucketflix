@@ -35,7 +35,11 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error(`An account with this ${emailUsername} already exists.`);
   }
 
-  const user = await User.create({ username, email, password });
+  const user = await User.create({
+    username,
+    email: email.toLowerCase(),
+    password,
+  });
 
   if (!user) {
     res.status(400);
@@ -143,7 +147,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 });
 
 const updateUser = asyncHandler(async (req, res) => {
-  const { newUsername, newEmail, newPassword } = req.body.updatedValues;
+  const { newUsername, newPassword } = req.body.updatedValues;
   const user = await User.findById(req.user._id);
 
   if (newUsername) {
@@ -161,16 +165,6 @@ const updateUser = asyncHandler(async (req, res) => {
       throw new Error('An account with this username already exists.');
     }
     user.username = newUsername;
-  }
-
-  if (newEmail) {
-    // Update email
-    const userExists = await User.findOne({ email: newEmail });
-    if (userExists) {
-      res.status(409);
-      throw new Error('An account with this email already exists.');
-    }
-    user.email = newEmail;
   }
 
   if (newPassword) {
@@ -198,6 +192,64 @@ const updateUser = asyncHandler(async (req, res) => {
       domain: process.env.COOKIE_DOMAIN,
     })
     .json({ accessToken });
+});
+
+const updateEmail = asyncHandler(async (req, res) => {
+  const { newEmail } = req.body;
+  const user = req.user;
+
+  if (!newEmail) {
+    res.status(400);
+    throw new Error('No email in request body');
+  }
+
+  if (user.email.toLowerCase() === newEmail.toLowerCase()) {
+    res.status(400);
+    throw new Error('You are already using this email');
+  }
+
+  const userExists = await User.findOne({ email: newEmail });
+  if (userExists) {
+    res.status(409);
+    throw new Error('An account with this email already exists.');
+  }
+
+  // Delete old verification tokens
+  await EmailVerificationToken.deleteMany({ userID: user._id });
+
+  // Generate email verification token
+  const emailVerificationToken = jwt.sign(
+    { userID: user._id, newEmail },
+    process.env.EMAIL_VERIFICATION_TOKEN_SECRET
+  );
+
+  const token = await EmailVerificationToken.create({
+    userID: user._id,
+    token: emailVerificationToken,
+  });
+
+  if (!token) {
+    res.status(500);
+    throw new Error(
+      'Something went wrong when generating email verification code. Try again later.'
+    );
+  }
+
+  try {
+    // Send email
+    await sendVerificationEmail(newEmail, emailVerificationToken);
+  } catch (err) {
+    res.status(400);
+    await EmailVerificationToken.deleteMany({ userID: user._id });
+    throw new Error(
+      'Could not send verification email to this email address. Try using another email or contact support.'
+    );
+  }
+
+  res.status(200).json({
+    message:
+      'An email has been sent to your inbox, please verify the new email address to update your account.',
+  });
 });
 
 const deleteUser = asyncHandler(async (req, res) => {
@@ -243,4 +295,12 @@ const getUser = asyncHandler(async (req, res) => {
   res.status(200).json({ user_id: user._id, username: user.username });
 });
 
-export { registerUser, loginUser, logoutUser, updateUser, deleteUser, getUser };
+export {
+  registerUser,
+  loginUser,
+  logoutUser,
+  updateUser,
+  updateEmail,
+  deleteUser,
+  getUser,
+};

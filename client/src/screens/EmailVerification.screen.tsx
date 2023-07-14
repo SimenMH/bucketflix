@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect, useCallback } from 'react';
+import { useAppSelector } from '../redux/Hooks';
 import { History } from 'history';
 
 enum VerifyStatus {
@@ -13,6 +14,9 @@ interface Props {
 }
 
 const EmailVerification: React.FC<Props> = ({ history }) => {
+  // Redux
+  const { loggedIn } = useAppSelector(state => state.user);
+
   // React states
   const [verificationToken, setVerificationToken] = useState<string | null>(
     null
@@ -30,16 +34,33 @@ const EmailVerification: React.FC<Props> = ({ history }) => {
         return (
           <div>
             <h2>Your email has been verified!</h2>
-            <p>
-              Your email has been successfully verified, you may now log in and
-              begin using Bucketflix
-            </p>
-            <button
-              className='PrimaryButton'
-              onClick={() => history.push('/login')}
-            >
-              Go to login
-            </button>
+            {loggedIn ? (
+              <>
+                <p>
+                  Your email has been successfully verified, you may now log in
+                  using your new email address
+                </p>
+                <button
+                  className='PrimaryButton'
+                  onClick={() => history.push('/')}
+                >
+                  Back to my lists
+                </button>
+              </>
+            ) : (
+              <>
+                <p>
+                  Your email has been successfully verified, you may now log in
+                  and begin using Bucketflix
+                </p>
+                <button
+                  className='PrimaryButton'
+                  onClick={() => history.push('/login')}
+                >
+                  Go to login
+                </button>
+              </>
+            )}
           </div>
         );
       case VerifyStatus.FAILURE:
@@ -73,8 +94,10 @@ const EmailVerification: React.FC<Props> = ({ history }) => {
     if (urlParams.has('token')) {
       setVerificationToken(urlParams.get('token'));
       verifyEmail();
+    } else if (loggedIn) {
+      history.push('/');
     }
-  }, [verifyEmail]);
+  }, [verifyEmail, loggedIn, history]);
 
   return (
     <div className='EmailVerification'>
@@ -92,7 +115,7 @@ const EmailVerification: React.FC<Props> = ({ history }) => {
             Didn't receive an email? Click{' '}
             <span
               className='LinkText'
-              onClick={() => history.push('/verify-email/send')}
+              onClick={() => history.push('/verify-email/new')}
             >
               here
             </span>{' '}

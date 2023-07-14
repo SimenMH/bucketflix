@@ -4,6 +4,7 @@ import { usernameRegex } from '../util/Regex';
 
 import { useAppSelector, useAppDispatch } from '../redux/Hooks';
 import { deleteUser, updateUser } from '../redux/User/UserSlice';
+import { axiosAuthInstance } from '../api/AxiosInstances';
 
 const Account = () => {
   // Redux
@@ -42,7 +43,6 @@ const Account = () => {
   };
 
   const handleUpdateUser = async (updatedValues: {
-    newEmail?: string;
     newUsername?: string;
     newPassword?: { currentPassword: string; newPassword: string };
   }) => {
@@ -63,6 +63,23 @@ const Account = () => {
     } catch (err) {
       setErrorText('An unknown error occured, please try again later');
       return false;
+    }
+  };
+
+  const handleUpdateEmail = async () => {
+    setErrorText('');
+    setStatusText('');
+    try {
+      await axiosAuthInstance.post(`/users/update-email`, { newEmail });
+      setStatusText(
+        'An email has been sent to your new email address. Check your inbox for further instructions to verify.'
+      );
+    } catch (err: any) {
+      if (err.response.data && err.response.data.message) {
+        setErrorText(err.response.data.message);
+      } else {
+        setErrorText('Unknown error occured, please try again later.');
+      }
     }
   };
 
@@ -133,7 +150,7 @@ const Account = () => {
         />
         <button
           disabled={newEmail === email || newEmail.length <= 0}
-          onClick={() => handleUpdateUser({ newEmail })}
+          onClick={() => handleUpdateEmail()}
         >
           Save
         </button>

@@ -4,6 +4,7 @@ import { sendVerificationEmail } from '../utils/sendEmail.js';
 
 import EmailVerificationToken from '../models/emailVerificationTokenModel.js';
 import User from '../models/userModel.js';
+import generateAccessToken from '../utils/generateAccessToken.js';
 
 const sendNewEmailVerification = asyncHandler(async (req, res) => {
   const { email } = req.body;
@@ -94,18 +95,45 @@ const verifyEmail = asyncHandler(async (req, res) => {
     );
   }
 
-  if (user.active) {
-    res.status(400);
-    throw new Error('This account has already been verified. Try logging in.');
+  if (decoded.newEmail) {
+    // Update existing user
+    user.email = decoded.newEmail.toLowerCase();
+
+    await user.save();
+
+    await EmailVerificationToken.findByIdAndDelete(emailVerificationToken._id);
+
+    const accessToken = generateAccessToken({
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+    });
+
+    res
+      .status(200)
+      .cookie('access-token', accessToken, {
+        path: '/',
+        maxAge: 5 * 60 * 1000, // 5 min
+        domain: process.env.COOKIE_DOMAIN,
+      })
+      .json({ accessToken });
+  } else {
+    // Verify new user
+    if (user.active) {
+      res.status(400);
+      throw new Error(
+        'This account has already been verified. Try logging in.'
+      );
+    }
+
+    user.active = true;
+
+    await user.save();
+
+    await EmailVerificationToken.findByIdAndDelete(emailVerificationToken._id);
+
+    res.status(200).json({ message: 'Email succesfully verified!' });
   }
-
-  user.active = true;
-
-  await user.save();
-
-  await EmailVerificationToken.findByIdAndDelete(emailVerificationToken._id);
-
-  res.status(200).json({ message: 'Email succesfully verified!' });
 });
 
 export { sendNewEmailVerification, verifyEmail };

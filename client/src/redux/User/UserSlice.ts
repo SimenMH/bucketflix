@@ -34,7 +34,6 @@ export const updateUser = createAsyncThunk(
   'user/updateUser',
   async (
     updatedValues: {
-      newEmail?: string;
       newUsername?: string;
       newPassword?: { currentPassword: string; newPassword: string };
     },

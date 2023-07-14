@@ -82,7 +82,6 @@ export const sessionLoginApi = async (thunkAPI: any) => {
 
 export const updateUserAPI = async (
   updatedValues: {
-    newEmail?: string;
     newUsername?: string;
     newPassword?: { currentPassword: string; newPassword: string };
   },

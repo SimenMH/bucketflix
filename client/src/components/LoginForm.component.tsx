@@ -32,7 +32,7 @@ const LoginForm: React.FC<Props> = ({ history }) => {
         const message = res.payload.message;
 
         if (message.includes('verify your email')) {
-          history.push('/verify-email/send');
+          history.push('/verify-email/new');
         }
       }
       setErrorText('Incorrect password or email');

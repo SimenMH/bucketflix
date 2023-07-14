@@ -9,6 +9,7 @@ import {
   getUser,
   updateUser,
   deleteUser,
+  updateEmail,
 } from './controllers/userController.js';
 import {
   getLists,
@@ -60,6 +61,7 @@ router
   .route('/users/verify-email')
   .post(sendNewEmailVerification)
   .put(verifyEmail);
+router.route('/users/update-email').post(authenticate, updateEmail);
 router
   .route('/users/reset-password')
   .post(sendPasswordReset)

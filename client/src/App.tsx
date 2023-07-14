@@ -49,14 +49,8 @@ const App: React.FC = () => {
               <Route path='/account' exact>
                 {loggedIn ? <Account /> : <Redirect to='/login' />}
               </Route>
-              <Route path='/verify-email' exact>
-                {loggedIn ? (
-                  <Redirect to='/' />
-                ) : (
-                  <Route component={EmailVerification} />
-                )}
-              </Route>
-              <Route path='/verify-email/send' exact>
+              <Route path='/verify-email' exact component={EmailVerification} />
+              <Route path='/verify-email/new' exact>
                 {loggedIn ? <Redirect to='/' /> : <SendEmailVerification />}
               </Route>
               <Route path='/reset-password' exact>

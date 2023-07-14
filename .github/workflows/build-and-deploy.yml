@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 18.x
-      - working-directory: ./client
+      working-directory: ./client
       - run: npm i
       - run: npm run build
 #    - name: Deploy using ssh

@@ -93,11 +93,16 @@ const EmailVerification: React.FC<Props> = ({ history }) => {
 
     if (urlParams.has('token')) {
       setVerificationToken(urlParams.get('token'));
-      verifyEmail();
     } else if (loggedIn) {
       history.push('/');
     }
-  }, [verifyEmail, loggedIn, history]);
+  }, [loggedIn, history]);
+
+  useEffect(() => {
+    if (verificationToken) {
+      verifyEmail();
+    }
+  }, [verificationToken, verifyEmail]);
 
   return (
     <div className='EmailVerification'>

@@ -35,7 +35,7 @@ const LoginForm: React.FC<Props> = ({ history }) => {
           history.push('/verify-email/new');
         }
       }
-      setErrorText('Incorrect password or email');
+      setErrorText('Unkown error occured, please try again later.');
     } else {
       history.push('/');
     }

@@ -17,9 +17,10 @@ jobs:
         with:
           node-version: 18.x
       - name: Build Client
-        working-directory: ./client
       - run: npm i
+        working-directory: ./client
       - run: npm run build
+        working-directory: ./client
 #    - name: Deploy using ssh
 #      uses: appleboy/ssh-action@master
 #      with:

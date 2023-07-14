@@ -46,7 +46,7 @@
       min-width: 150px;
 
       @media #{$mq-xs} {
-        justify-content: start;
+        justify-content: flex-start;
         gap: 10px;
       }
     }
@@ -63,7 +63,7 @@
 
       @media #{$mq-xs} {
         flex-direction: row;
-        justify-content: start;
+        justify-content: flex-start;
 
         button {
           width: 100%;

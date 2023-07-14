@@ -6,12 +6,60 @@
   box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.3);
   overflow: hidden;
 
+  @media #{$mq-md} {
+    position: absolute;
+    left: -240px;
+    transition: 0.25s;
+
+    &--active {
+      left: 0;
+    }
+  }
+
   &:hover {
     overflow: auto;
   }
 }
 
 .Sidebar {
+  &__ExpandButton {
+    position: fixed;
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    box-sizing: border-box;
+    z-index: 5;
+    left: 0px;
+    width: 39px;
+    height: 39px;
+    padding: 6px 7px;
+    border-radius: 0 5px 5px 0;
+    background-color: $bg-color-dark-3;
+    box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.2);
+    transition: 0.25s;
+    cursor: pointer;
+
+    @media #{$mq-md} {
+      display: flex;
+    }
+
+    &--active {
+      left: 240px;
+    }
+
+    .ExpandButton__Line {
+      width: 100%;
+      height: 3px;
+      border-radius: 5px;
+      background-color: $primay-color-light-3;
+    }
+
+    &:hover {
+      box-shadow: 1px 1px 4px $primay-color-light-1;
+    }
+  }
+
   &__Top {
     display: flex;
     align-items: center;

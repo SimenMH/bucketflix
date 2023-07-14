@@ -21,6 +21,7 @@ const MyListsSidebar: React.FC<Props> = ({
   // React States
   const [listModalIsOpen, setListModalIsOpen] = useState<boolean>(false);
   const [newListName, setNewListName] = useState<string>('');
+  const [expandSidebar, setExpandSidebar] = useState<boolean>(false);
 
   const renderLists = (list: Array<List>): JSX.Element[] => {
     return list.map((item, idx) => {
@@ -43,7 +44,21 @@ const MyListsSidebar: React.FC<Props> = ({
   };
 
   return (
-    <div className='MyLists__Sidebar'>
+    <div
+      className={`MyLists__Sidebar ${
+        expandSidebar && 'MyLists__Sidebar--active'
+      }`}
+    >
+      <div
+        className={`Sidebar__ExpandButton ${
+          expandSidebar && 'Sidebar__ExpandButton--active'
+        }`}
+        onClick={() => setExpandSidebar(state => !state)}
+      >
+        <div className='ExpandButton__Line' />
+        <div className='ExpandButton__Line' />
+        <div className='ExpandButton__Line' />
+      </div>
       <div className='Sidebar__Top'>
         <h2>My Lists</h2>
         <button onClick={() => setListModalIsOpen(true)}>+ New</button>
@@ -56,6 +71,7 @@ const MyListsSidebar: React.FC<Props> = ({
         </div>
       )}
       <div>{renderLists(sharedLists)}</div>
+
       <Modal
         className='Modal NewList__Modal'
         overlayClassName='Modal__Overlay'

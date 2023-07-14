@@ -24,3 +24,11 @@ $font-color-light-1: #ececec;
 $font-color-light-2: #c0c0c0;
 $font-color-light-3: #9a9a9a;
 $font-color-light-4: #7a7a7a;
+
+// Media Query Sizes
+$mq-xs: '(max-width: 420px)';
+$mq-s: '(max-width: 640px)';
+$mq-md: '(max-width: 768px)';
+$mq-lg: '(max-width: 1024px)';
+$mq-xl: '(max-width: 1280px)';
+$mq-xxl: '(min-width: 1824px)';

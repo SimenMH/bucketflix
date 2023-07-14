@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../redux/Hooks';
 import { userLogout } from '../redux/User/UserSlice';
 
@@ -8,18 +9,12 @@ const NavBar: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
   const { loggedIn } = useAppSelector(state => state.user);
 
-  const handleLogout = async (e: React.SyntheticEvent<EventTarget>) => {
-    e.preventDefault();
-    dispatch(userLogout());
-  };
+  // React States
+  const [expandDrawer, setExpandDrawer] = useState<boolean>(false);
 
-  return (
-    <div className='NavBar'>
-      <a href='/' className='NavBar__TitleContainer'>
-        {/* <div className='NavBar__Logo' /> */}
-        <div className='NavBar__Title'>BucketFlix</div>
-      </a>
-      <div className='NavBar__Links'>
+  const renderLinks = () => {
+    return (
+      <>
         {loggedIn ? (
           <>
             <a href='/'>Home</a>
@@ -32,6 +27,40 @@ const NavBar: React.FC<Props> = () => {
           <a href='/login'>Login / Register</a>
         )}
         <a href='/about'>About</a>
+      </>
+    );
+  };
+
+  const handleLogout = async (e: React.SyntheticEvent<EventTarget>) => {
+    e.preventDefault();
+    dispatch(userLogout());
+  };
+
+  return (
+    <div className='NavBar'>
+      <a href='/' className='NavBar__TitleContainer'>
+        {/* <div className='NavBar__Logo' /> */}
+        <div className='NavBar__Title'>BucketFlix</div>
+      </a>
+      <div className='NavBar__Links'>{renderLinks()}</div>
+
+      <div
+        className={`NavBar__BurgerButton ${
+          expandDrawer && 'NavBar__BurgerButton--active'
+        }`}
+        onClick={() => setExpandDrawer(state => !state)}
+      >
+        <div className='BurgerButton__Line' />
+        <div className='BurgerButton__Line' />
+        <div className='BurgerButton__Line' />
+      </div>
+
+      <div
+        className={`NavBar__MenuDrawer ${
+          expandDrawer && 'NavBar__MenuDrawer--active'
+        }`}
+      >
+        {renderLinks()}
       </div>
     </div>
   );

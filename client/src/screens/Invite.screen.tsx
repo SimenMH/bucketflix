@@ -33,50 +33,44 @@ const Invite: React.FC<Props> = ({ history }) => {
   const [codeStatus, setCodeStatus] = useState<CodeStatus>(CodeStatus.PENDING);
   const [inviteInfo, setInviteInfo] = useState<InviteInfo | null>(null);
 
-  const checkInviteCode = useCallback(
-    async (code: string | null) => {
-      try {
-        const res: AxiosResponse<InviteInfo> = await axiosAuthInstance.get(
-          `/lists/invite?i=${code}`
-        );
+  const checkInviteCode = useCallback(async (code: string | null) => {
+    try {
+      const res: AxiosResponse<InviteInfo> = await axiosAuthInstance.get(
+        `/lists/invite?i=${code}`
+      );
 
-        setInviteCode(code);
-        setInviteInfo(res.data);
-        setCodeStatus(CodeStatus.VALID);
-      } catch (err: any) {
-        if (err.response) {
-          const response = err.response;
-          const status = response.status;
+      setInviteCode(code);
+      setInviteInfo(res.data);
+      setCodeStatus(CodeStatus.VALID);
+    } catch (err: any) {
+      if (err.response) {
+        const response = err.response;
+        const status = response.status;
 
-          switch (status) {
-            case 401:
-              history.push('/login');
-              break;
-            case 404:
-              // Invalid code
-              setCodeStatus(CodeStatus.INVALID);
-              break;
-            case 410:
-              // Expired/Used code
-              setCodeStatus(CodeStatus.EXPIRED);
-              break;
-            case 400:
-              // Owns or already in list
-              setCodeStatus(CodeStatus.UNAUTHORIZED);
-              break;
-            default:
-              // Unknown error
-              setCodeStatus(CodeStatus.ERROR);
-              break;
-          }
-        } else {
-          // Unknown error
-          setCodeStatus(CodeStatus.ERROR);
+        switch (status) {
+          case 404:
+            // Invalid code
+            setCodeStatus(CodeStatus.INVALID);
+            break;
+          case 410:
+            // Expired/Used code
+            setCodeStatus(CodeStatus.EXPIRED);
+            break;
+          case 400:
+            // Owns or already in list
+            setCodeStatus(CodeStatus.UNAUTHORIZED);
+            break;
+          default:
+            // Unknown error
+            setCodeStatus(CodeStatus.ERROR);
+            break;
         }
+      } else {
+        // Unknown error
+        setCodeStatus(CodeStatus.ERROR);
       }
-    },
-    [history]
-  );
+    }
+  }, []);
 
   const handleAcceptInvite = async () => {
     try {
@@ -141,7 +135,7 @@ const Invite: React.FC<Props> = ({ history }) => {
       {renderContent()}
       <button
         className='InviteScreen__ReturnButton'
-        onClick={() => history.push('/login')}
+        onClick={() => history.push('/')}
       >
         Return
       </button>

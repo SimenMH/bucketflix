@@ -45,7 +45,13 @@ const App: React.FC = () => {
                 {loggedIn ? <MyLists /> : <Redirect to='/login' />}
               </Route>
               <Route path='/login' exact component={LoginRegister} />
-              <Route path='/invite' exact component={Invite} />
+              <Route path='/invite' exact>
+                {loggedIn ? (
+                  <Route component={Invite} />
+                ) : (
+                  <Redirect to='/login' />
+                )}
+              </Route>
               <Route path='/account' exact>
                 {loggedIn ? <Account /> : <Redirect to='/login' />}
               </Route>

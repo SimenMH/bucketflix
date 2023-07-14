@@ -1,16 +1,11 @@
 @mixin media-modal-input {
-  .MediaInput__Item {
-    margin-bottom: 20px;
-  }
-
   input,
-  select {
+  select,
+  textarea {
     width: 345px;
   }
 
   textarea {
-    width: 60%;
-    min-width: 325px;
     height: 100px;
   }
 }

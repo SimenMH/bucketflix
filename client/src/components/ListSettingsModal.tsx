@@ -143,7 +143,7 @@ const ListSettingsModal: React.FC<Props> = ({
       <div className='Seperator' />
       <div className='ListSettings'>
         <div className='ErrorText'>{errorText}</div>
-        <div>
+        <div className='ListSettings__Name'>
           <input
             className='ListSettings__NameInput'
             type='text'
@@ -185,19 +185,23 @@ const ListSettingsModal: React.FC<Props> = ({
               </label>
             </div>
           ))}
-          <input
-            className='ListSettings__InviteLink'
-            type='text'
-            placeholder='Generate a link to invite other users to this list'
-            value={
-              listInviteCode
-                ? `https://${window.location.host}/invite?i=${listInviteCode}`
-                : ''
-            }
-            disabled
-            readOnly
-          />
-          <button onClick={handleGenerateInvite}>Generate link</button>
+          <div className='ListSettings__InviteLink'>
+            <input
+              className='InviteLink__Input'
+              type='text'
+              placeholder='Generate a link to invite other users to this list'
+              value={
+                listInviteCode
+                  ? `https://${window.location.host}/invite?i=${listInviteCode}`
+                  : 'Generate a link to invite other users to this list'
+              }
+              disabled
+              readOnly
+            />
+            <button className='PrimaryButton' onClick={handleGenerateInvite}>
+              Generate link
+            </button>
+          </div>
         </div>
         {/*  */}
         <div className='ListSettings__ButtonsContainer'>

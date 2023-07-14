@@ -1,24 +1,26 @@
 .Modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  right: auto;
-  bottom: auto;
+  position: relative;
+  margin: auto;
   padding: 10px 30px;
-  transform: translate(-50%, -50%);
   background: $bg-color-dark-5;
   border-radius: 4px;
-  overflow: auto;
-  outline: none;
+  margin: 40px;
+
+  @media #{$mq-s} {
+    width: 100%;
+    margin: 20px;
+  }
 
   &__Overlay {
-    position: fixed;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100vw;
+    min-height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
-    overflow: auto;
     z-index: 20;
   }
 
@@ -32,5 +34,10 @@
   &__Title {
     font-size: 30px;
     margin-bottom: 5px;
+    margin-right: 25px;
+
+    @media #{$mq-md} {
+      font-size: 24px;
+    }
   }
 }

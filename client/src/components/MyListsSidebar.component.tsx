@@ -88,27 +88,30 @@ const MyListsSidebar: React.FC<Props> = ({
         <div className='Seperator' />
         <div className='NewList__Content'>
           <div className='NewList__Heading'>Name your list:</div>
-          <input
-            className='NewList__Input'
-            type='text'
-            placeholder='List Name'
-            maxLength={30}
-            value={newListName}
-            onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              setNewListName(e.currentTarget.value)
-            }
-          />
-          <button
-            onClick={() => {
-              if (newListName) {
-                dispatch(addList(newListName));
-                setListModalIsOpen(false);
-                setNewListName('');
+
+          <div className='NewList__Name'>
+            <input
+              className='NewList__Input'
+              type='text'
+              placeholder='List Name'
+              maxLength={30}
+              value={newListName}
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                setNewListName(e.currentTarget.value)
               }
-            }}
-          >
-            Create List
-          </button>
+            />
+            <button
+              onClick={() => {
+                if (newListName) {
+                  dispatch(addList(newListName));
+                  setListModalIsOpen(false);
+                  setNewListName('');
+                }
+              }}
+            >
+              Create List
+            </button>
+          </div>
         </div>
       </Modal>
     </div>

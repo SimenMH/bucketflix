@@ -1,27 +1,76 @@
 .MyLists {
   display: flex;
-  // width: 100%;
+  height: 100%;
   min-height: 250px;
 
   &__Content {
     width: 100%;
-    padding: 15px 40px;
+    padding: 15px;
+    padding-top: 40px;
     overflow: auto;
+
+    @media #{$mq-md} {
+      padding: 15px;
+      padding-top: 50px;
+    }
+
+    @media #{$mq-s} {
+      padding: 15px;
+      padding-top: 45px;
+    }
+
+    @media #{$mq-xs} {
+      padding-top: 40px;
+    }
   }
 
   &__Options {
     display: flex;
     justify-content: space-between;
+    gap: 15px;
     margin: 0 10px 10px;
+
+    @media #{$mq-s} {
+      margin-top: 0;
+    }
+
+    @media #{$mq-xs} {
+      flex-direction: column-reverse;
+      gap: 15px;
+      margin-top: 15px;
+    }
 
     &--left {
       display: flex;
       justify-content: space-between;
       min-width: 150px;
+
+      @media #{$mq-xs} {
+        justify-content: start;
+        gap: 10px;
+      }
     }
     &--right {
       display: flex;
       gap: 15px;
+
+      @media #{$mq-s} {
+        button {
+          font-size: 14px;
+          font-weight: 600;
+        }
+      }
+
+      @media #{$mq-xs} {
+        flex-direction: row;
+        justify-content: start;
+
+        button {
+          width: 100%;
+          font-size: 18px;
+          font-weight: 400;
+        }
+      }
     }
   }
 
@@ -44,40 +93,76 @@
 
   &__Media {
     min-height: calc(100% - 50px);
-    padding: 0 55px;
+    box-sizing: border-box;
+    padding: 0 55px 15px;
     background-color: $bg-color-dark-5;
+
+    @media #{$mq-s} {
+      padding: 15px;
+    }
+
+    @media #{$mq-xs} {
+      min-height: calc(100% - 100px);
+    }
 
     .Media {
       &__Category {
         padding: 20px 0;
+
+        @media #{$mq-s} {
+          padding: 0;
+          padding-bottom: 20px;
+        }
       }
 
       &__Header {
         font-size: 36px;
         font-weight: 400;
         margin: 0 0 15px 5px;
+
+        @media #{$mq-s} {
+          margin: 0;
+        }
       }
 
       &__Container {
         display: flex;
         flex-wrap: wrap;
+        gap: 15px;
+
+        @media #{$mq-lg} {
+          display: grid;
+          grid-template-columns: 33fr 33fr 33fr;
+        }
+
+        @media #{$mq-s} {
+          grid-template-columns: 50fr 50fr;
+        }
+
+        @media #{$mq-xs} {
+          grid-template-columns: 100fr;
+        }
       }
 
       &__Item {
-        max-width: 175px;
-        margin: 0 10px 15px;
         cursor: pointer;
+        width: 175px;
+
+        @media #{$mq-lg} {
+          width: 100%;
+        }
 
         .Item {
           &__Poster {
-            width: 175px;
-            height: 260px;
+            width: 100%;
             box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.25);
           }
           &__Title {
             font-size: 18px;
             font-weight: 400;
-            margin: -3px 0 0 3px;
+            margin: 0;
+            margin-top: 3px;
+            margin-left: 3px;
             text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.5);
           }
         }

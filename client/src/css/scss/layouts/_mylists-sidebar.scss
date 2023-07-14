@@ -33,6 +33,7 @@
     left: 0px;
     width: 39px;
     height: 39px;
+    margin-top: 3px;
     padding: 6px 7px;
     border-radius: 0 5px 5px 0;
     background-color: $bg-color-dark-3;
@@ -129,6 +130,10 @@
 .NewList {
   &__Modal {
     width: 350px;
+
+    @media #{$mq-xs} {
+      padding: 10px;
+    }
   }
 
   &__Content {
@@ -141,8 +146,16 @@
     font-weight: 400;
   }
 
-  &__Input {
+  &__Name {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
     margin-top: 7px;
-    margin-right: 7px;
+  }
+
+  &__Input {
+    width: 100%;
+    max-width: 300px;
   }
 }

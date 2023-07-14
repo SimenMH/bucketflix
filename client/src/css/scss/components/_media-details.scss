@@ -2,7 +2,13 @@
   &__Modal {
     @include media-modal-input;
 
-    max-width: 700px;
+    @media #{$mq-md} {
+      max-width: 80%;
+    }
+
+    @media #{$mq-xs} {
+      max-width: 70%;
+    }
 
     &__Title {
       font-size: 32px;
@@ -29,13 +35,16 @@
   }
 
   &__Details {
+    max-width: 420px;
     @media #{$mq-md} {
+      max-width: 100%;
       input,
       textarea {
         width: 100%;
       }
     }
-    word-break: break-all;
+
+    word-wrap: break-word;
 
     .Seperator {
       margin-top: 15px;

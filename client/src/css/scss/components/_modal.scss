@@ -5,6 +5,7 @@
   background: $bg-color-dark-5;
   border-radius: 4px;
   margin: 40px;
+  outline: none;
 
   @media #{$mq-s} {
     width: 100%;

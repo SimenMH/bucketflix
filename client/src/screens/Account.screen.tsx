@@ -192,7 +192,7 @@ const Account = () => {
         </button>
       </div>
       {errorText && <div className='ErrorText'>{errorText}</div>}
-      {statusText && <div>{statusText}</div>}
+      {statusText && <div className='StatusText'>{statusText}</div>}
       <button
         className='PrimaryButton--red AccountSettings__DeleteAccount'
         onClick={() => setConfirmDeleteModalVisible(true)}

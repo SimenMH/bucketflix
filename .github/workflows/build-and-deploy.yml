@@ -20,19 +20,19 @@ jobs:
         working-directory: ./client
       - run: npm run build
         working-directory: ./client
-   - name: Deploy using ssh
-     uses: appleboy/ssh-action@master
-     with:
-       host: ${{ secrets.HOST }}
-       username: ${{ secrets.USERNAME }}
-       key: ${{ secrets.PRIVATE_KEY }}
-       port: 22
-       script: |
-         cd ~/bucketflix
-         git pull origin master
-         git status
-         cd ./build
-         npm install
-         npm run build
-         cp -r build/* /var/www/bucketflix/client/
-         pm2 reload bucketfllix-api
+      - name: Deploy using ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd ~/bucketflix
+            git pull origin master
+            git status
+            cd ./build
+            npm install
+            npm run build
+            cp -r build/* /var/www/bucketflix/client/
+            pm2 reload bucketfllix-api

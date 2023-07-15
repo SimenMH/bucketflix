@@ -17,6 +17,7 @@ import Account from './screens/Account.screen';
 import EmailVerification from './screens/EmailVerification.screen';
 import SendEmailVerification from './screens/SendEmailVerification.screen';
 import PasswordReset from './screens/PasswordReset.screen';
+import About from './screens/About.screen';
 
 Modal.setAppElement('#root');
 
@@ -66,6 +67,8 @@ const App: React.FC = () => {
                   <Route component={PasswordReset} />
                 )}
               </Route>
+
+              <Route path='/about' exact component={About} />
 
               <Redirect from='/*' to='/' />
             </Switch>

@@ -164,8 +164,7 @@ const ListSettingsModal: React.FC<Props> = ({
         {/* Shared Users */}
         <div className='ListSettings__SharedUsers'>
           <h3>
-            Shared Users{' '}
-            {selectedList.sharedUsers.length > 0 && <span>Editor</span>}
+            Members {selectedList.sharedUsers.length > 0 && <span>Editor</span>}
           </h3>
           <div className='Seperator' />
           {selectedList.sharedUsers.map(user => (

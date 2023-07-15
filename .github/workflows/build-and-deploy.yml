@@ -31,8 +31,8 @@ jobs:
             cd ~/bucketflix
             git pull origin master
             git status
-            cd ./build
+            cd ./client
             npm install
             npm run build
             cp -r build/* /var/www/bucketflix/client/
-            pm2 reload bucketfllix-api
+            pm2 reload bucketflix-api

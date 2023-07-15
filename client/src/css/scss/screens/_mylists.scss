@@ -6,17 +6,11 @@
   &__Content {
     width: 100%;
     padding: 15px;
-    padding-top: 40px;
     overflow: auto;
 
     @media #{$mq-md} {
       padding: 15px;
       padding-top: 50px;
-    }
-
-    @media #{$mq-s} {
-      padding: 15px;
-      padding-top: 45px;
     }
 
     @media #{$mq-xs} {

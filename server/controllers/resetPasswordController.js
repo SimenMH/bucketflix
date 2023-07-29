@@ -70,7 +70,7 @@ const updatePassword = asyncHandler(async (req, res) => {
   const dateNow = new Date();
   const elapsedTime = dateNow - passwordResetToken.createdAt;
   // 30 minutes
-  if (elapsedTime > 30 * 60) {
+  if (elapsedTime > 30 * 60 * 1000) {
     res.status(410); // 410 Gone
     throw new Error('Token has expired');
   }

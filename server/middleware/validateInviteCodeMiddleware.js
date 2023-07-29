@@ -20,7 +20,7 @@ const validateInviteCode = asyncHandler(async (req, res, next) => {
 
   const dateNow = new Date();
   const elapsedTime = dateNow - listInvite.createdAt;
-  if (elapsedTime > 60 * 60 || listInvite.used_by_id) {
+  if (elapsedTime > 60 * 60 * 1000 || listInvite.used_by_id) {
     res.status(410); // 410 Gone
     throw new Error('Invite has expired or already been used');
   }

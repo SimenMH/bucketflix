@@ -6,8 +6,7 @@ const About: React.FC = () => {
         <p className='About__Paragraph'>
           Welcome to Bucketflix, a user-friendly web app designed for movie and
           series enthusiasts. We provide a hassle-free platform for you to keep
-          track of the movies and series you're currently watching or want to
-          watch.
+          track of the movies and series you're currently or planning on watching.
         </p>
         <p className='About__Paragraph'>
           With Bucketflix, you can effortlessly create personalized lists and
@@ -17,8 +16,7 @@ const About: React.FC = () => {
           shows or movies you are watching together.
         </p>
         <p className='About__Paragraph'>
-          Bucketflix is designed to be easily accessible, allowing you to update
-          essential information such as the current timestamp or episode, which
+          Bucketflix is designed to be easily accessible, allowing you to update information such as the current timestamp, episode, which
           streaming platform you are using, and any other personal notes
           whenever you need to.
         </p>

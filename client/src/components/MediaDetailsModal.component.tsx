@@ -4,6 +4,8 @@ import { Media } from '../types';
 import { useAppSelector, useAppDispatch } from '../redux/Hooks';
 import { editMediaInList, deleteMediaFromList } from '../redux/List/ListSlice';
 
+import filmPosterPlaceholder from '../assets/film-poster.png';
+
 interface Props {
   isOpen: boolean;
   handleCloseModal: Function;
@@ -118,7 +120,7 @@ const MediaDetailsModal: React.FC<Props> = ({
           src={
             mediaToDisplay.Poster
               ? mediaToDisplay.Poster
-              : 'https://printworks-manchester.com/cinema-poster/images/film-poster-placeholder.png'
+              : filmPosterPlaceholder
           }
           alt='Movie Poster'
         />

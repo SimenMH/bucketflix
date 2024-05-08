@@ -5,6 +5,8 @@ import { Media, List } from '../types';
 import { searchForTitle, searchForId } from '../api/SearchMedia';
 import { addMediaToList } from '../redux/List/ListSlice';
 
+import filmPosterPlaceholder from '../assets/film-poster.png';
+
 interface Props {
   isOpen: boolean;
   handleCloseModal: Function;
@@ -99,8 +101,7 @@ const AddMediaModal: React.FC<Props> = ({
           Year: '',
           Type: mediaInput.type,
           Plot: '',
-          Poster:
-            'https://printworks-manchester.com/cinema-poster/images/film-poster-placeholder.png',
+          Poster: filmPosterPlaceholder,
         };
       }
       newMediaObj = {
@@ -301,7 +302,7 @@ const AddMediaModal: React.FC<Props> = ({
             src={
               selectedMedia
                 ? selectedMedia.Poster
-                : 'https://printworks-manchester.com/cinema-poster/images/film-poster-placeholder.png'
+                : filmPosterPlaceholder
             }
             alt='Movie Poster'
           />
